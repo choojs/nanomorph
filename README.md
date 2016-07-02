@@ -42,6 +42,13 @@ Experimentin' is fun - all this is is a take on seeing how small we can get
 with real DOM node diffing. And if we can make some good heuristics happen for
 efficient tree updates ([Merkle trees][mt], anyone?) that'd be nice.
 
+### Should I use this right now?
+No, probably not since I haven't tested this yet, but feel free to think along
+how to make this smaller. Currently wondering if I could adapt [this vdom
+guide](https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060)
+into one that operates on real DOM nodes. Probably could hey into one that
+operates on real DOM nodes. Probably could hey.
+
 ## Installation
 ```sh
 $ npm install nanodiff
