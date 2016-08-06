@@ -19,7 +19,7 @@ function nanomorph (newTree, oldTree) {
   //   -> diff nodes and apply patch to old node
   // nodes are the same
   //   -> tbd
-  const newRoot = (function recurse (parent, newNode, oldNode, index) {
+  const tree = (function recurse (newNode, oldNode, index) {
     if (!oldNode) {
       return newNode
     } else if (!newNode) {
@@ -31,15 +31,16 @@ function nanomorph (newTree, oldTree) {
       const newChildren = []
       var i = 0
       for (; i++; i < length) {
-
+        const newEl = recurse(newNode.childNodes, oldNode.childNodes, i)
+        if (newEl) newChildren.push(newEl)
       }
       oldNode.innerHTML = '' // will this maintain the DOM state alright?
       oldNode.appendChild(newChildren)
       return oldNode
     }
-  })(null, newTree, oldTree, 0)
+  })(newTree, oldTree, 0)
 
-  return newRoot
+  return tree
 }
 
 // compare if two nodes are equal
@@ -57,6 +58,8 @@ function childLength (newNode, oldNode) {
 }
 
 // diff elements and apply the resulting patch to the old node
+// todo (yw): copy over events
+// todo (yw): investigate what else to copy over
 // (obj, obj) -> null
 function diff (newNode, oldNode) {
   return newNode

@@ -1,5 +1,5 @@
 {
-  "name": "nanodiff",
+  "name": "nanomorph",
   "version": "1.0.0",
   "description": "Embeddable DOM diffing algorithm",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "test": "standard && npm run deps && NODE_ENV=test node test",
     "test:cov": "standard && npm run deps && NODE_ENV=test istanbul cover test.js"
   },
-  "repository": "yoshuawuyts/nanodiff",
+  "repository": "yoshuawuyts/nanomorph",
   "keywords": [
     "dom",
     "diff",
