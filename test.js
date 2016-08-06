@@ -9,14 +9,37 @@ test('nanomorph', (t) => {
     t.throws(nanomorph.bind(null, {}), /oldTree/)
   })
 
-  t.test('should replace a node one level deep', (t) => {
-    t.plan(1)
+  t.test('root level', (t) => {
+    t.test('should replace a node', (t) => {
+      t.plan(1)
 
-    const oldTree = html`<p>hello world</p>`
-    const newTree = html`<div>hello world</div>`
+      const oldTree = html`<p>hello world</p>`
+      const newTree = html`<div>hello world</div>`
 
-    const res = nanomorph(newTree, oldTree)
-    const expected = '<div>hello world</div>'
-    t.equal(String(res), expected, 'result was expected')
+      const res = nanomorph(newTree, oldTree)
+      const expected = '<div>hello world</div>'
+      t.equal(String(res), expected, 'result was expected')
+    })
+
+    t.test('should morph a node', (t) => {
+      t.plan(1)
+
+      const oldTree = html`<p>hello world</p>`
+      const newTree = html`<p>hello you</p>`
+
+      const res = nanomorph(newTree, oldTree)
+      const expected = '<p>hello you</p>'
+      t.equal(String(res), expected, 'result was expected')
+    })
+
+    t.test('should ignore if node is same', (t) => {
+      t.plan(1)
+
+      const oldTree = html`<p>hello world</p>`
+
+      const res = nanomorph(oldTree, oldTree)
+      const expected = oldTree
+      t.equal(res, expected, 'result was expected')
+    })
   })
 })
