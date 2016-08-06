@@ -42,4 +42,48 @@ test('nanomorph', (t) => {
       t.equal(res, expected, 'result was expected')
     })
   })
+
+  t.test('nested', (t) => {
+    t.test('should replace a node', (t) => {
+      t.plan(1)
+
+      const oldTree = html`
+        <main><p>hello world</p></main>
+      `
+      const newTree = html`
+        <main><div>hello world</div></main>
+      `
+
+      const res = nanomorph(newTree, oldTree)
+      const expected = '<main><div>hello world</div></main>'
+      t.equal(String(res), expected, 'result was expected')
+    })
+
+    t.test('should replace a node', (t) => {
+      t.plan(1)
+
+      const oldTree = html`
+        <main><p>hello world</p></main>
+      `
+      const newTree = html`
+        <main><p>hello you</p></main>
+      `
+
+      const res = nanomorph(newTree, oldTree)
+      const expected = '<main><p>hello you</p></main>'
+      t.equal(String(res), expected, 'result was expected')
+    })
+
+    t.test('should replace a node', (t) => {
+      t.plan(1)
+
+      const oldTree = html`
+        <main><p>hello world</p></main>
+      `
+
+      const res = nanomorph(oldTree, oldTree)
+      const expected = oldTree
+      t.equal(res, expected, 'result was expected')
+    })
+  })
 })
