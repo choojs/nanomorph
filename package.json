@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "bel": "^4.4.3",
     "dependency-check": "^2.5.1",
     "istanbul": "^0.4.4",
     "standard": "^7.1.2",
