@@ -2,10 +2,7 @@
 [![npm version][2]][3] [![build status][4]][5] [![test coverage][6]][7]
 [![downloads][8]][9] [![js-standard-style][10]][11]
 
-Embeddable DOM diffing algorithm. Currently a fork of [morphdom][morphdom] with
-hooks and IE7 support removed, and event copying added, but will probably
-change in the future.
-
+Hyper fast diffing algorithm for real DOM nodes :zap:
 ## Usage
 ```js
 const nanomorph = require('nanomorph')
