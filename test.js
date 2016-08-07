@@ -85,5 +85,36 @@ test('nanomorph', (t) => {
       const expected = oldTree
       t.equal(res, expected, 'result was expected')
     })
+
+    t.test('should append a node', (t) => {
+      t.plan(1)
+
+      const oldTree = html`
+        <main></main>
+      `
+      const newTree = html`
+        <main><p>hello you</p></main>
+      `
+
+      const res = nanomorph(newTree, oldTree)
+      const expected = '<main><p>hello you</p></main>'
+      t.equal(String(res), expected, 'result was expected')
+    })
+
+    t.test('should remove a node', (t) => {
+      t.plan(1)
+
+      const oldTree = html`
+        <main><p>hello you</p></main>
+      `
+
+      const newTree = html`
+        <main></main>
+      `
+
+      const res = nanomorph(newTree, oldTree)
+      const expected = '<main></main>'
+      t.equal(String(res), expected, 'result was expected')
+    })
   })
 })

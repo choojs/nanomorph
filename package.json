@@ -19,7 +19,9 @@
     "yo-yo"
   ],
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "xtend": "^4.0.1"
+  },
   "devDependencies": {
     "bel": "^4.4.3",
     "dependency-check": "^2.5.1",
