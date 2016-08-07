@@ -23,6 +23,7 @@ function morph (newNode, oldNode) {
   })
 
   if (newNode.nodeValue) oldNode.nodeValue = newNode.nodeValue
+  if (newNode.data) oldNode.data = newNode.data
 }
 
 function setAttribute (target, name, value) {

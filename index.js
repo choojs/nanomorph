@@ -61,7 +61,7 @@ function updateChildren (newNode, oldNode) {
       if (oldChildNode) oldNode.removeChild(oldChildNode)
     } else if (!oldChildNode) {
       if (retChildNode) oldNode.appendChild(retChildNode)
-    } else {
+    } else if (retChildNode !== oldChildNode) {
       oldNode.replaceChild(retChildNode, oldChildNode)
     }
   }
