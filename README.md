@@ -26,15 +26,16 @@ document.body.appendChild(tree)
 update(nanomorph(bel`<div>hello people</div>`, tree))
 update(nanomorph(bel`<div>nanananana-na-no</div>`, tree))
 
-function create (el) {
-  var tree = el
+function create (initialTree) {
+  var tree = initialTree
 
-  return function update (el) {
-    if (el === tree) {
+  return function update (newTree) {
+    const oldTree = tree
+    tree = nanomorph(newTree, tree)
+    if (newTree === oldTree) {
       return tree
     } else {
-      tree.parent.replaceChild(el, tree)
-      tree = el
+      oldTree.parentNode.replaceChild(tree, oldTree)
       return tree
     }
   }
