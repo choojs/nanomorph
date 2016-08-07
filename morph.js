@@ -1,4 +1,5 @@
 const xtend = require('xtend')
+const empty = {}
 
 module.exports = morph
 
@@ -12,13 +13,18 @@ function morph (newNode, oldNode) {
   const props = xtend(newAttrs, oldAttrs)
 
   Object.keys(props).forEach(function (attrName) {
-    const newVal = newAttrs[attrName]
-    const oldVal = oldAttrs[attrName]
+    const newKv = newAttrs[attrName] || empty
+    const newName = newKv.name
+    const newVal = newKv.value
 
-    if (!newVal) {
-      removeAttribute(oldNode, attrName, oldVal)
-    } else if (!oldVal || newVal !== oldVal) {
-      setAttribute(oldNode, attrName, newVal)
+    const oldKv = oldAttrs[attrName] || empty
+    const oldName = oldKv.name
+    const oldVal = oldKv.value
+
+    if (newVal !== undefined) {
+      removeAttribute(oldNode, oldName, oldVal)
+    } else if (oldVal !== undefined || newVal !== oldVal) {
+      setAttribute(oldNode, newName, newVal)
     }
   })
 
