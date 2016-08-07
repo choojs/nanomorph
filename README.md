@@ -8,10 +8,7 @@ Hyper fast diffing algorithm for real DOM nodes :zap:
 const nanomorph = require('nanomorph')
 const bel = require('bel')
 
-var tree = null
-
-tree = nanomorph(bel`<div>hello people</div>`, tree)
-tree = nanomorph(bel`<div>hello people</div>`, tree)
+var tree = bel`<div>hello people</div>`
 tree = nanomorph(bel`<div>nanananana-na-no</div>`, tree)
 tree = nanomorph(`<div>teeny, tiny, tin bottle</div>`, tree)
 ```
