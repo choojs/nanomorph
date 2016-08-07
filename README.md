@@ -15,31 +15,17 @@ tree = nanomorph(`<div>teeny, tiny, tin bottle</div>`, tree)
 
 ## Appending to the DOM
 ```js
-const nanomorph = require('nanomorph')
+const updateDom = require('nanomorph/update-dom')
+const bel = require('bel')
 
 // create the initial tree, save it and append to DOM
 const tree = bel`<div>hello people</div>`
-const update = create(tree)
+const update = updateDom(tree)
 document.body.appendChild(tree)
 
 // now each consecutive update will be rendered on the DOM
-update(nanomorph(bel`<div>hello people</div>`, tree))
-update(nanomorph(bel`<div>nanananana-na-no</div>`, tree))
-
-function create (initialTree) {
-  var tree = initialTree
-
-  return function update (newTree) {
-    const oldTree = tree
-    tree = nanomorph(newTree, tree)
-    if (newTree === oldTree) {
-      return tree
-    } else {
-      oldTree.parentNode.replaceChild(tree, oldTree)
-      return tree
-    }
-  }
-}
+update(bel`<div>hello people</div>`, tree)
+update(bel`<div>nanananana-na-no</div>`, tree)
 ```
 
 ## API
