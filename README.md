@@ -14,8 +14,6 @@ tree = nanomorph(bel`<div>hello people</div>`, tree)
 tree = nanomorph(bel`<div>hello people</div>`, tree)
 tree = nanomorph(bel`<div>nanananana-na-no</div>`, tree)
 tree = nanomorph(`<div>teeny, tiny, tin bottle</div>`, tree)
-
-function update (oldTree, new)
 ```
 
 ## Appending to the DOM
