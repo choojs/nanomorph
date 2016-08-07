@@ -10,20 +10,38 @@ const bel = require('bel')
 
 var tree = null
 
-var el1 = bel`<div>hello people</div>`
-var el2 = bel`<div>nanananana-na-no</div>`
-var el2 = bel`<div>teeny, tiny, tin bottle</div>`
+tree = nanomorph(bel`<div>hello people</div>`, tree)
+tree = nanomorph(bel`<div>hello people</div>`, tree)
+tree = nanomorph(bel`<div>nanananana-na-no</div>`, tree)
+tree = nanomorph(`<div>teeny, tiny, tin bottle</div>`, tree)
 
-update(el1)
-update(el2)
-update(el3)
+function update (oldTree, new)
+```
 
-function update (el) {
-  if (!tree) {
-    tree = el
-    document.body.appendChild(tree)
-  } else {
-    tree = nanomorph(el, tree)
+## Appending to the DOM
+```js
+const nanomorph = require('nanomorph')
+
+// create the initial tree, save it and append to DOM
+const tree = bel`<div>hello people</div>`
+const update = create(tree)
+document.body.appendChild(tree)
+
+// now each consecutive update will be rendered on the DOM
+update(nanomorph(bel`<div>hello people</div>`, tree))
+update(nanomorph(bel`<div>nanananana-na-no</div>`, tree))
+
+function create (el) {
+  var tree = el
+
+  return function update (el) {
+    if (el === tree) {
+      return tree
+    } else {
+      tree.parent.replaceChild(el, tree)
+      tree = el
+      return tree
+    }
   }
 }
 ```

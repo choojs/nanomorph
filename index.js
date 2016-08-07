@@ -18,7 +18,7 @@ function nanomorph (newTree, oldTree) {
   // nodes are not the same
   //   -> diff nodes and apply patch to old node
   // nodes are the same
-  //   -> tbd
+  //   -> recurse all child nodes and append to old node
   const tree = (function recurse (newNode, oldNode, index) {
     if (!oldNode) {
       return newNode
