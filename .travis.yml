@@ -1,5 +1,4 @@
 node_js:
-- "0.12"
 - "4"
 sudo: false
 language: node_js
