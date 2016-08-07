@@ -65,7 +65,9 @@ $ npm install nanomorph
 ## See Also
 - [morphdom][morphdom]
 - [yo-yo][yo-yo]
-- [virtual-raf](https://github.com/yoshuawuyts/virtual-raf)
+- [bel][bel]
+- [nanoraf][nanoraf]
+- [min-document][mindoc]
 - [how to write your own virtual dom 1][own-vdom-1]
 - [how to write your own virtual dom 2][own-vdom-2]
 
@@ -74,6 +76,9 @@ $ npm install nanomorph
 
 [own-vdom-1]: https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060
 [own-vdom-2]: https://medium.com/@deathmood/write-your-virtual-dom-2-props-events-a957608f5c76
+[mindoc]: https://github.com/Raynos/min-document
+[nanoraf]: https://github.com/yoshuawuyts/nanoraf
+[bel]: https://github.com/shama/bel
 
 [0]: https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square
 [1]: https://nodejs.org/api/documentation.html#documentation_stability_index
