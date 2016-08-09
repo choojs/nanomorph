@@ -54,6 +54,8 @@ $ npm install nanomorph
 - [yo-yo][yo-yo]
 - [bel][bel]
 - [nanoraf][nanoraf]
+- [choo][choo]
+- [set-dom][set-dom]
 - [min-document][mindoc]
 - [how to write your own virtual dom 1][own-vdom-1]
 - [how to write your own virtual dom 2][own-vdom-2]
@@ -66,6 +68,8 @@ $ npm install nanomorph
 [mindoc]: https://github.com/Raynos/min-document
 [nanoraf]: https://github.com/yoshuawuyts/nanoraf
 [bel]: https://github.com/shama/bel
+[choo]: https://github.com/yoshuawuyts/choo
+[set-dom]: https://github.com/DylanPiercey/set-dom
 
 [0]: https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square
 [1]: https://nodejs.org/api/documentation.html#documentation_stability_index
