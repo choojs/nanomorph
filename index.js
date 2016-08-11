@@ -2,7 +2,7 @@ const morph = require('./morph')
 
 module.exports = nanomorph
 
-// morph one tree into another tree
+// walk and morph one dom tree into another dom tree
 // (obj, obj) -> obj
 // no parent
 //   -> same: diff and walk children
@@ -15,11 +15,7 @@ module.exports = nanomorph
 //   -> diff nodes and apply patch to old node
 // nodes are the same
 //   -> walk all child nodes and append to old node
-function nanomorph (newTree, oldTree) { return walk(newTree, oldTree) }
-
-// walk and morph a dom tree
-// (obj, obj) -> obj
-function walk (newNode, oldNode) {
+function nanomorph (newNode, oldNode) {
   if (!oldNode) {
     return newNode
   } else if (!newNode) {
