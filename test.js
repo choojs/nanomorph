@@ -41,6 +41,16 @@ test('nanomorph', (t) => {
       const expected = oldTree
       t.equal(res, expected, 'result was expected')
     })
+
+    t.test('can copy over input type correctly', function (t) {
+      t.plan(1)
+      var expected = strip('<input type="password">')
+      var  oldTree = html`<input type="password">`
+      var  newTree = html`<input type="password">`
+      const res = nanomorph(newTree, oldTree)
+      t.equal(strip(String(res)), expected, 'nanomorph copied over input type correctly')
+    })
+
   })
 
   t.test('nested', (t) => {
