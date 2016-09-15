@@ -2,6 +2,10 @@ const test = require('tape')
 const html = require('bel')
 const nanomorph = require('./')
 
+function strip (str) {
+  return str.replace(/\s+/g, '')
+}
+
 test('nanomorph', (t) => {
   t.test('should assert input types', (t) => {
     t.plan(2)
@@ -45,12 +49,11 @@ test('nanomorph', (t) => {
     t.test('can copy over input type correctly', function (t) {
       t.plan(1)
       var expected = strip('<input type="password">')
-      var  oldTree = html`<input type="password">`
-      var  newTree = html`<input type="password">`
+      var oldTree = html`<input type="password">`
+      var newTree = html`<input type="password">`
       const res = nanomorph(newTree, oldTree)
       t.equal(strip(String(res)), expected, 'nanomorph copied over input type correctly')
     })
-
   })
 
   t.test('nested', (t) => {
@@ -125,6 +128,21 @@ test('nanomorph', (t) => {
       const res = nanomorph(newTree, oldTree)
       const expected = '<main></main>'
       t.equal(String(res), expected, 'result was expected')
+    })
+  })
+
+  t.test('events', (t) => {
+    t.test('should copy events', (t) => {
+      const oldTree = html`
+        <button
+          onclick=${() => { t.ok(false) }}
+        >
+          TEST
+        </button>`
+      const newTree = html`<button>UPDATED</button>`
+      const res = nanomorph(newTree, oldTree)
+      t.ok(typeof res.onclick === 'function')
+      t.end()
     })
   })
 })

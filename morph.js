@@ -11,6 +11,17 @@ function morph (newNode, oldNode) {
   const newAttrs = newNode.attributes
   const oldAttrs = oldNode.attributes
   const props = xtend(newAttrs, oldAttrs)
+  const keys = xtend(newNode, oldNode)
+
+  Object.keys(keys).map(function (prop) {
+    if (/^on/.test(prop)) {
+      if (oldNode[prop]) {
+        newNode[prop] = keys[prop]
+      } else if (!newNode[prop]) {
+        oldNode[prop] = undefined
+      }
+    }
+  })
 
   Object.keys(props).forEach(function (attrName) {
     const newKv = newAttrs[attrName] || empty
