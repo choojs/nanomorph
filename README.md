@@ -6,26 +6,26 @@ Hyper fast diffing algorithm for real DOM nodes :zap:
 ## Usage
 ```js
 const nanomorph = require('nanomorph')
-const bel = require('bel')
+const html = require('bel')
 
-var tree = bel`<div>hello people</div>`
-tree = nanomorph(bel`<div>nanananana-na-no</div>`, tree)
-tree = nanomorph(`<div>teeny, tiny, tin bottle</div>`, tree)
+var tree = html`<div>hello people</div>`
+tree = nanomorph(html`<div>nanananana-na-no</div>`, tree)
+tree = nanomorph(html`<div>teeny, tiny, tin bottle</div>`, tree)
 ```
 
 ## Appending to the DOM
 ```js
 const updateDom = require('nanomorph/update-dom')
-const bel = require('bel')
+const html = require('bel')
 
 // create the initial tree, save it and append to DOM
-const tree = bel`<div>hello people</div>`
+const tree = html`<div>hello people</div>`
 const update = updateDom(tree)
 document.body.appendChild(tree)
 
 // now each consecutive update will be rendered on the DOM
-update(bel`<div>hello people</div>`, tree)
-update(bel`<div>nanananana-na-no</div>`, tree)
+update(html`<div>hello people</div>`, tree)
+update(html`<div>nanananana-na-no</div>`, tree)
 ```
 
 ## API
