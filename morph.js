@@ -8,11 +8,21 @@ module.exports = morph
 // todo (yw): investigate what else to copy over
 // (obj, obj) -> null
 function morph (newNode, oldNode) {
+  copyAttributes(newNode, oldNode)
+  copyEvents(newNode, oldNode)
+  if (newNode.nodeValue) oldNode.nodeValue = newNode.nodeValue
+  if (newNode.data) oldNode.data = newNode.data
+}
+
+function copyAttributes (newNode, oldNode) {
   const newAttrs = newNode.attributes
   const oldAttrs = oldNode.attributes
-  const props = xtend(newAttrs, oldAttrs)
-
-  Object.keys(props).forEach(function (attrName) {
+  const attrs = xtend(newAttrs, oldAttrs)
+  const al = Object.keys(attrs).length
+  var attrName
+  var i = 0
+  for (i; i < al; i++) {
+    attrName = attrs[i]
     const newKv = newAttrs[attrName] || empty
     const newName = newKv.name
     const newVal = newKv.value
@@ -26,14 +36,28 @@ function morph (newNode, oldNode) {
     } else if (oldVal !== undefined || newVal !== oldVal) {
       setAttribute(oldNode, newName, newVal)
     }
-  })
+  }
+}
 
-  if (newNode.nodeValue) oldNode.nodeValue = newNode.nodeValue
-  if (newNode.data) oldNode.data = newNode.data
+function copyEvents (newNode, oldNode) {
+  const keys = xtend(newNode, oldNode)
+  const kl = Object.keys(keys).length
+  var i = 0
+  var prop
+  for (i; i < kl; i++) {
+    prop = keys[i]
+    if (/^on/.test(prop)) {
+      if (oldNode[prop]) {
+        newNode[prop] = keys[prop]
+      } else if (!newNode[prop]) {
+        oldNode[prop] = undefined
+      }
+    }
+  }
 }
 
 function setAttribute (target, name, value) {
-  if (/^on/.test(name) || name === 'forceUpdate') {
+  if (name === 'forceUpdate') {
     return
   } else if (name === 'className') {
     target.setAttribute('class', value)
@@ -50,7 +74,7 @@ function setAttribute (target, name, value) {
 }
 
 function removeAttribute (target, name, value) {
-  if (/^on/.test(name) || name === 'forceUpdate') {
+  if (name === 'forceUpdate') {
     return
   } else if (name === 'className') {
     target.removeAttribute('class')
