@@ -7,7 +7,7 @@ module.exports = morph
 // todo (yw): copy over events
 // todo (yw): investigate what else to copy over
 // (obj, obj) -> null
-function morph (newNode, oldNode) {
+function morph(newNode, oldNode) {
   copyAttrs(newNode, oldNode)
   copyAttrsNS(newNode, oldNode)
 
@@ -15,12 +15,14 @@ function morph (newNode, oldNode) {
   if (newNode.data) oldNode.data = newNode.data
 }
 
-function copyAttrs (newNode, oldNode) {
+function copyAttrs(newNode, oldNode) {
   const newAttrs = newNode.attributes
   const oldAttrs = oldNode.attributes
   const props = xtend(newAttrs, oldAttrs)
-
-  Object.keys(props).forEach(function (attrName) {
+  if (!props) {
+    return
+  }
+  Object.keys(props).forEach(function(attrName) {
     const newKv = newAttrs[attrName] || empty
     const newName = newKv.name
     const newVal = newKv.value
@@ -37,14 +39,16 @@ function copyAttrs (newNode, oldNode) {
   })
 }
 
-function copyAttrsNS (newNode, oldNode) {
+function copyAttrsNS(newNode, oldNode) {
   const newAttrs = newNode._attributes
   const oldAttrs = oldNode._attributes
   const props = xtend(newAttrs, oldAttrs)
-
-  Object.keys(props).forEach(function (namespace) {
+  if (!props) {
+    return
+  }
+  Object.keys(props).forEach(function(namespace) {
     const vo = props[namespace]
-    Object.keys(vo).forEach(function (attrName) {
+    Object.keys(vo).forEach(function(attrName) {
       const newKv = newAttrs[namespace][attrName] || empty
       const newName = `${newKv.prefix}:${attrName}`
       const newVal = newKv.value
@@ -61,7 +65,7 @@ function copyAttrsNS (newNode, oldNode) {
   })
 }
 
-function setAttribute (target, name, value) {
+function setAttribute(target, name, value) {
   if (/^on/.test(name) || name === 'forceUpdate') {
     return
   } else if (name === 'className') {
@@ -78,7 +82,7 @@ function setAttribute (target, name, value) {
   }
 }
 
-function setAttributeNS (target, name, value, namespace) {
+function setAttributeNS(target, name, value, namespace) {
   if (typeof value === 'boolean') {
     if (value) {
       target.setAttributeNS(namespace, name, value)
@@ -91,7 +95,7 @@ function setAttributeNS (target, name, value, namespace) {
   }
 }
 
-function removeAttribute (target, name, value) {
+function removeAttribute(target, name, value) {
   if (/^on/.test(name) || name === 'forceUpdate') {
     return
   } else if (name === 'className') {
@@ -104,7 +108,7 @@ function removeAttribute (target, name, value) {
   }
 }
 
-function removeAttributeNS (target, name, value, namespace) {
+function removeAttributeNS(target, name, value, namespace) {
   if (typeof value === 'boolean') {
     target.removeAttributeNS(namespace, name)
     target[name] = false
