@@ -32,6 +32,17 @@ test('nanomorph', (t) => {
       t.equal(String(res), expected, 'result was expected')
     })
 
+    t.test('should morph a node with namespaced attribute', (t) => {
+      t.plan(1)
+
+      const oldTree = html`<use xlink:href="#heybooboo"></use>`
+      const newTree = html`<use xlink:href="#boobear"></use>`
+
+      const res = nanomorph(newTree, oldTree)
+      const expected = '<use xlink:href="#boobear"></use>'
+      t.equal(String(res), expected, 'result was expected')
+    })
+
     t.test('should ignore if node is same', (t) => {
       t.plan(1)
 
