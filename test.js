@@ -35,11 +35,11 @@ test('nanomorph', (t) => {
     t.test('should morph a node with namespaced attribute', (t) => {
       t.plan(1)
 
-      const oldTree = html`<use xlink:href="#heybooboo"></use>`
-      const newTree = html`<use xlink:href="#boobear"></use>`
+      const oldTree = html`<svg><use xlink:href="#heybooboo"></use></svg>`
+      const newTree = html`<svg><use xlink:href="#boobear"></use></svg>`
 
       const res = nanomorph(newTree, oldTree)
-      const expected = '<use xlink:href="#boobear"></use>'
+      const expected = '<svg><use xlink:href="#boobear"></use></svg>'
       t.equal(String(res), expected, 'result was expected')
     })
 
