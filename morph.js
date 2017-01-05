@@ -5,7 +5,8 @@ module.exports = morph
 
 // diff elements and apply the resulting patch to the old node
 // todo (yw): copy over events
-// todo (yw): investigate what else to copy over // (obj, obj) -> null
+// todo (yw): investigate what else to copy over
+// (obj, obj) -> null
 function morph (newNode, oldNode) {
   copyAttrs(newNode, oldNode)
   copyAttrsNS(newNode, oldNode)
