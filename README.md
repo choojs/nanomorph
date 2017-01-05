@@ -50,26 +50,23 @@ $ npm install nanomorph
 ```
 
 ## See Also
-- [morphdom][morphdom]
-- [yo-yo][yo-yo]
-- [bel][bel]
-- [nanoraf][nanoraf]
-- [choo][choo]
-- [set-dom][set-dom]
-- [min-document][mindoc]
+- [yoshuawuyts/nanoraf](https://github.com/yoshawuyts/nanoraf)
+- [yoshuawuyts/nanocomponent](https://github.com/yoshuawuyts/nanocomponent)
+- [yoshuawuyts/nanotick](https://github.com/yoshuawuyts/nanotick)
+- [bendrucker/document-ready](https://github.com/bendrucker/document-ready)
+- [shama/on-load](https://github.com/shama/on-load)
+- [shama/bel](https://github.com/shama/bel)
+
+## Similar Packages
+- [patrick-steele-idem/morphdom](https://github.com/patrick-steele-idem/morphdom)
+- [tbranyen/diffhtml](https://github.com/tbranyen/diffhtml)
+
+## Further Reading
 - [how to write your own virtual dom 1][own-vdom-1]
 - [how to write your own virtual dom 2][own-vdom-2]
 
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
-
-[own-vdom-1]: https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060
-[own-vdom-2]: https://medium.com/@deathmood/write-your-virtual-dom-2-props-events-a957608f5c76
-[mindoc]: https://github.com/Raynos/min-document
-[nanoraf]: https://github.com/yoshuawuyts/nanoraf
-[bel]: https://github.com/shama/bel
-[choo]: https://github.com/yoshuawuyts/choo
-[set-dom]: https://github.com/DylanPiercey/set-dom
 
 [0]: https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square
 [1]: https://nodejs.org/api/documentation.html#documentation_stability_index
@@ -83,6 +80,7 @@ $ npm install nanomorph
 [9]: https://npmjs.org/package/nanomorph
 [10]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
 [11]: https://github.com/feross/standard
-[morphdom]: https://github.com/patrick-steele-idem/morphdom
-[yo-yo]: https://github.com/maxogden/yo-yo
+
 [mt]: https://en.wikipedia.org/wiki/Merkle_tree
+[own-vdom-1]: https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060
+[own-vdom-2]: https://medium.com/@deathmood/write-your-virtual-dom-2-props-events-a957608f5c76
