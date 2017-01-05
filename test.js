@@ -2,15 +2,15 @@ var test = require('tape')
 var html = require('bel')
 var nanomorph = require('./')
 
-test('nanomorph', (t) => {
-  t.test('should assert input types', (t) => {
+test('nanomorph', function (t) {
+  t.test('should assert input types', function (t) {
     t.plan(2)
     t.throws(nanomorph, /newTree/)
     t.throws(nanomorph.bind(null, {}), /oldTree/)
   })
 
-  t.test('root level', (t) => {
-    t.test('should replace a node', (t) => {
+  t.test('root level', function (t) {
+    t.test('should replace a node', function (t) {
       t.plan(1)
 
       var oldTree = html`<p>hello world</p>`
@@ -21,7 +21,7 @@ test('nanomorph', (t) => {
       t.equal(String(res), expected, 'result was expected')
     })
 
-    t.test('should morph a node', (t) => {
+    t.test('should morph a node', function (t) {
       t.plan(1)
 
       var oldTree = html`<p>hello world</p>`
@@ -32,7 +32,7 @@ test('nanomorph', (t) => {
       t.equal(String(res), expected, 'result was expected')
     })
 
-    t.test('should morph a node with namespaced attribute', (t) => {
+    t.test('should morph a node with namespaced attribute', function (t) {
       t.plan(1)
 
       var oldTree = html`<svg><use xlink:href="#heybooboo"></use></svg>`
@@ -43,7 +43,7 @@ test('nanomorph', (t) => {
       t.equal(String(res), expected, 'result was expected')
     })
 
-    t.test('should ignore if node is same', (t) => {
+    t.test('should ignore if node is same', function (t) {
       t.plan(1)
 
       var oldTree = html`<p>hello world</p>`
@@ -54,8 +54,8 @@ test('nanomorph', (t) => {
     })
   })
 
-  t.test('nested', (t) => {
-    t.test('should replace a node', (t) => {
+  t.test('nested', function (t) {
+    t.test('should replace a node', function (t) {
       t.plan(1)
 
       var oldTree = html`
@@ -70,7 +70,7 @@ test('nanomorph', (t) => {
       t.equal(String(res), expected, 'result was expected')
     })
 
-    t.test('should replace a node', (t) => {
+    t.test('should replace a node', function (t) {
       t.plan(1)
 
       var oldTree = html`
@@ -85,7 +85,7 @@ test('nanomorph', (t) => {
       t.equal(String(res), expected, 'result was expected')
     })
 
-    t.test('should replace a node', (t) => {
+    t.test('should replace a node', function (t) {
       t.plan(1)
 
       var oldTree = html`
@@ -97,7 +97,7 @@ test('nanomorph', (t) => {
       t.equal(res, expected, 'result was expected')
     })
 
-    t.test('should append a node', (t) => {
+    t.test('should append a node', function (t) {
       t.plan(1)
 
       var oldTree = html`
@@ -112,7 +112,7 @@ test('nanomorph', (t) => {
       t.equal(String(res), expected, 'result was expected')
     })
 
-    t.test('should remove a node', (t) => {
+    t.test('should remove a node', function (t) {
       t.plan(1)
 
       var oldTree = html`
@@ -129,34 +129,34 @@ test('nanomorph', (t) => {
     })
   })
 
-  t.test('events', (t) => {
-    t.test('should copy onclick events', (t) => {
+  t.test('events', function (t) {
+    t.test('should copy onclick events', function (t) {
       t.plan(2)
-      const oldTree = html`
+      var oldTree = html`
         <button
-          onclick=${() => {
+          onclick=${function () {
             t.ok(true)
           }}
         >
           TEST
         </button>`
-      const newTree = html`<button>UPDATED</button>`
-      const res = nanomorph(newTree, oldTree)
+      var newTree = html`<button>UPDATED</button>`
+      var res = nanomorph(newTree, oldTree)
       t.ok(typeof res.onclick === 'function')
       res.onclick()
     })
 
-    t.test('should copy onsubmit events', (t) => {
-      const oldTree = html`
+    t.test('should copy onsubmit events', function (t) {
+      var oldTree = html`
         <form
-          onsubmit=${() => { t.ok(false) }}
+          onsubmit=${function () { t.ok(false) }}
         >
           <button>Sup</button>
         </form>`
-      const newTree = html`<form>
+      var newTree = html`<form>
           <button>Sup</button>
       </form>`
-      const res = nanomorph(newTree, oldTree)
+      var res = nanomorph(newTree, oldTree)
       t.ok(typeof res.onsubmit === 'function')
       t.end()
     })
