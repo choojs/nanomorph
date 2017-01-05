@@ -161,4 +161,17 @@ test('nanomorph', function (t) {
       t.end()
     })
   })
+
+  t.test('isSameNode', function (t) {
+    t.test('should check isSameNode', function (t) {
+      t.plan(2)
+      var oldTree = html`<div>iSameNode</div>`
+      var newTree = html`<div>iSameNode</div>`
+      newTree.isSameNode = function (el) {
+        t.ok(true)
+      }
+      var res = nanomorph(newTree, oldTree)
+      t.equal(res, oldTree)
+    })
+  })
 })
