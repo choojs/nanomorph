@@ -1,5 +1,5 @@
-const xtend = require('xtend')
-const empty = {}
+var xtend = require('xtend')
+var empty = {}
 
 module.exports = morph
 
@@ -15,18 +15,18 @@ function morph (newNode, oldNode) {
 }
 
 function copyAttrs (newNode, oldNode) {
-  const newAttrs = newNode.attributes
-  const oldAttrs = oldNode.attributes
-  const props = xtend(newAttrs, oldAttrs)
+  var newAttrs = newNode.attributes
+  var oldAttrs = oldNode.attributes
+  var props = xtend(newAttrs, oldAttrs)
 
   Object.keys(props).forEach(function (attrName) {
-    const newKv = newAttrs[attrName] || empty
-    const newName = newKv.name
-    const newVal = newKv.value
+    var newKv = newAttrs[attrName] || empty
+    var newName = newKv.name
+    var newVal = newKv.value
 
-    const oldKv = oldAttrs[attrName] || empty
-    const oldName = oldKv.name
-    const oldVal = oldKv.value
+    var oldKv = oldAttrs[attrName] || empty
+    var oldName = oldKv.name
+    var oldVal = oldKv.value
 
     if (newVal === undefined) {
       removeAttribute(oldNode, oldName, oldVal)
@@ -37,20 +37,20 @@ function copyAttrs (newNode, oldNode) {
 }
 
 function copyAttrsNS (newNode, oldNode) {
-  const newAttrs = newNode._attributes
-  const oldAttrs = oldNode._attributes
-  const props = xtend(newAttrs, oldAttrs)
+  var newAttrs = newNode._attributes
+  var oldAttrs = oldNode._attributes
+  var props = xtend(newAttrs, oldAttrs)
 
   Object.keys(props).forEach(function (namespace) {
-    const vo = props[namespace]
+    var vo = props[namespace]
 
     Object.keys(vo).forEach(function (attrName) {
-      const newKv = newAttrs[namespace][attrName] || empty
-      const newName = `${newKv.prefix}:${attrName}`
-      const newVal = newKv.value
-      const oldKv = oldAttrs[namespace][attrName] || empty
-      const oldName = `${oldKv.prefix}:${attrName}`
-      const oldVal = oldKv.value
+      var newKv = newAttrs[namespace][attrName] || empty
+      var newName = newKv.prefix + ':' + attrName
+      var newVal = newKv.value
+      var oldKv = oldAttrs[namespace][attrName] || empty
+      var oldName = oldKv.prefix + ':' + attrName
+      var oldVal = oldKv.value
 
       if (newVal === undefined) {
         removeAttributeNS(oldNode, oldName, oldVal, namespace)
