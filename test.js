@@ -128,4 +128,37 @@ test('nanomorph', (t) => {
       t.equal(String(res), expected, 'result was expected')
     })
   })
+
+  t.test('events', (t) => {
+    t.test('should copy onclick events', (t) => {
+      t.plan(2)
+      const oldTree = html`
+        <button
+          onclick=${() => {
+            t.ok(true)
+          }}
+        >
+          TEST
+        </button>`
+      const newTree = html`<button>UPDATED</button>`
+      const res = nanomorph(newTree, oldTree)
+      t.ok(typeof res.onclick === 'function')
+      res.onclick()
+    })
+
+    t.test('should copy onsubmit events', (t) => {
+      const oldTree = html`
+        <form
+          onsubmit=${() => { t.ok(false) }}
+        >
+          <button>Sup</button>
+        </form>`
+      const newTree = html`<form>
+          <button>Sup</button>
+      </form>`
+      const res = nanomorph(newTree, oldTree)
+      t.ok(typeof res.onsubmit === 'function')
+      t.end()
+    })
+  })
 })

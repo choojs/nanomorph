@@ -10,6 +10,7 @@ module.exports = morph
 function morph (newNode, oldNode) {
   copyAttrs(newNode, oldNode)
   copyAttrsNS(newNode, oldNode)
+  copyEvents(newNode, oldNode)
 
   if (newNode.nodeValue) oldNode.nodeValue = newNode.nodeValue
   if (newNode.data) oldNode.data = newNode.data
@@ -18,9 +19,9 @@ function morph (newNode, oldNode) {
 function copyAttrs (newNode, oldNode) {
   var newAttrs = newNode.attributes
   var oldAttrs = oldNode.attributes
-  var props = xtend(newAttrs, oldAttrs)
+  var mergedAttrs = xtend(newAttrs, oldAttrs)
 
-  Object.keys(props).forEach(function (attrName) {
+  Object.keys(mergedAttrs).forEach(function (attrName) {
     var newKv = newAttrs[attrName] || empty
     var newName = newKv.name
     var newVal = newKv.value
@@ -40,10 +41,10 @@ function copyAttrs (newNode, oldNode) {
 function copyAttrsNS (newNode, oldNode) {
   var newAttrs = newNode._attributes
   var oldAttrs = oldNode._attributes
-  var props = xtend(newAttrs, oldAttrs)
+  var mergedAttrs = xtend(newAttrs, oldAttrs)
 
-  Object.keys(props).forEach(function (namespace) {
-    var vo = props[namespace]
+  Object.keys(mergedAttrs).forEach(function (namespace) {
+    var vo = mergedAttrs[namespace]
 
     Object.keys(vo).forEach(function (attrName) {
       var newKv = newAttrs[namespace][attrName] || empty
@@ -60,6 +61,23 @@ function copyAttrsNS (newNode, oldNode) {
       }
     })
   })
+}
+
+function copyEvents (newNode, oldNode) {
+  var keys = xtend(newNode, oldNode)
+  var kl = Object.keys(keys).length
+  var i = 0
+  var prop
+  for (i; i < kl; i++) {
+    prop = keys[i]
+    if (/^on/.test(prop)) {
+      if (oldNode[prop]) {
+        newNode[prop] = keys[prop]
+      } else if (!newNode[prop]) {
+        oldNode[prop] = undefined
+      }
+    }
+  }
 }
 
 function setAttribute (target, name, value) {
