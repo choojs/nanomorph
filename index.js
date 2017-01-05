@@ -1,5 +1,5 @@
-const assert = require('assert')
-const morph = require('./morph')
+var assert = require('assert')
+var morph = require('./morph')
 
 module.exports = nanomorph
 
@@ -19,7 +19,7 @@ module.exports = nanomorph
 function nanomorph (newTree, oldTree) {
   assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object')
   assert.equal(typeof oldTree, 'object', 'nanomorph: oldTree should be an object')
-  const tree = walk(newTree, oldTree)
+  var tree = walk(newTree, oldTree)
   return tree
 }
 
@@ -49,14 +49,14 @@ function walk (newNode, oldNode) {
 function updateChildren (newNode, oldNode) {
   if (!newNode.childNodes || !oldNode.childNodes) return
 
-  const newLength = newNode.childNodes.length
-  const oldLength = oldNode.childNodes.length
-  const length = Math.max(oldLength, newLength)
+  var newLength = newNode.childNodes.length
+  var oldLength = oldNode.childNodes.length
+  var length = Math.max(oldLength, newLength)
 
   for (var i = 0; i < length; i++) {
-    const newChildNode = newNode.childNodes[i]
-    const oldChildNode = oldNode.childNodes[i]
-    const retChildNode = walk(newChildNode, oldChildNode)
+    var newChildNode = newNode.childNodes[i]
+    var oldChildNode = oldNode.childNodes[i]
+    var retChildNode = walk(newChildNode, oldChildNode)
     if (!retChildNode) {
       if (oldChildNode) oldNode.removeChild(oldChildNode)
     } else if (!oldChildNode) {
