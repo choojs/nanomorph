@@ -163,15 +163,26 @@ test('nanomorph', function (t) {
   })
 
   t.test('isSameNode', function (t) {
-    t.test('should check isSameNode', function (t) {
-      t.plan(2)
-      var oldTree = html`<div>iSameNode</div>`
-      var newTree = html`<div>iSameNode</div>`
+    t.test('should return oldTree if true', function (t) {
+      t.plan(1)
+      var oldTree = html`<div>YOLO</div>`
+      var newTree = html`<div>FOMO</div>`
       newTree.isSameNode = function (el) {
-        t.ok(true)
+        return true
       }
       var res = nanomorph(newTree, oldTree)
-      t.equal(res, oldTree)
+      t.equal(res.childNodes[0].data, 'YOLO')
+    })
+
+    t.test('should return newTree if false', function (t) {
+      t.plan(1)
+      var oldTree = html`<div>YOLO</div>`
+      var newTree = html`<div>FOMO</div>`
+      newTree.isSameNode = function (el) {
+        return false
+      }
+      var res = nanomorph(newTree, oldTree)
+      t.equal(res.childNodes[0].data, 'FOMO')
     })
   })
 })

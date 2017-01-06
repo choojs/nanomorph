@@ -8,10 +8,6 @@ module.exports = morph
 // todo (yw): investigate what else to copy over
 // (obj, obj) -> null
 function morph (newNode, oldNode) {
-  if (newNode.isSameNode && newNode.isSameNode(oldNode)) {
-    return oldNode
-  }
-
   copyAttrs(newNode, oldNode)
   copyAttrsNS(newNode, oldNode)
   copyEvents(newNode, oldNode)
