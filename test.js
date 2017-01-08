@@ -162,6 +162,17 @@ test('nanomorph', function (t) {
     })
   })
 
+  t.test('values', function (t) {
+    t.test('should copy over', function (t) {
+      t.plan(1)
+      var oldTree = html`<input type="text" />`
+      oldTree.value = 'howdy'
+      var newTree = html`<input type="text" />`
+      var res = nanomorph(newTree, oldTree)
+      t.equal(res.value, 'howdy')
+    })
+  })
+
   t.test('isSameNode', function (t) {
     t.test('should return oldTree if true', function (t) {
       t.plan(1)
