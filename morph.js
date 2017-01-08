@@ -11,6 +11,7 @@ function morph (newNode, oldNode) {
   copyAttrs(newNode, oldNode)
   copyAttrsNS(newNode, oldNode)
   copyEvents(newNode, oldNode)
+  copyValues(newNode, oldNode)
 
   if (newNode.nodeValue) oldNode.nodeValue = newNode.nodeValue
   if (newNode.data) oldNode.data = newNode.data
@@ -76,6 +77,20 @@ function copyEvents (newNode, oldNode) {
       } else if (!newNode[prop]) {
         oldNode[prop] = undefined
       }
+    }
+  }
+}
+
+function copyValues (newNode, oldNode) {
+  if ((oldNode.nodeName === 'INPUT' &&
+       oldNode.type !== 'file') ||
+       oldNode.nodeName === 'SELECT') {
+    if (newNode.getAttribute('value') === null) {
+      newNode.value = oldNode.value
+    }
+  } else if (oldNode.nodeName === 'TEXTAREA') {
+    if (newNode.getAttribute('value') === null) {
+      oldNode.value = newNode.value
     }
   }
 }
