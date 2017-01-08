@@ -15,12 +15,12 @@ tree = nanomorph(html`<div>teeny, tiny, tin bottle</div>`, tree)
 
 ## Appending to the DOM
 ```js
-var updateDom = require('nanomorph/update-dom')
+var update = require('nanomorph/update')
 var html = require('bel')
 
 // create the initial tree, save it and append to DOM
 var tree = html`<div>hello people</div>`
-var update = updateDom(tree)
+var update = update(tree)
 document.body.appendChild(tree)
 
 // now each consecutive update will be rendered on the DOM
