@@ -3,14 +3,15 @@
 [![downloads][8]][9] [![js-standard-style][10]][11]
 
 Hyper fast diffing algorithm for real DOM nodes :zap:
+
 ## Usage
 ```js
-var nanomorph = require('nanomorph')
+var morph = require('nanomorph')
 var html = require('bel')
 
 var tree = html`<div>hello people</div>`
-tree = nanomorph(html`<div>nanananana-na-no</div>`, tree)
-tree = nanomorph(html`<div>teeny, tiny, tin bottle</div>`, tree)
+tree = morph(html`<div>nanananana-na-no</div>`, tree)
+tree = morph(html`<div>teeny, tiny, tin bottle</div>`, tree)
 ```
 
 ## Appending to the DOM
@@ -20,12 +21,14 @@ var html = require('bel')
 
 // create the initial tree, save it and append to DOM
 var tree = html`<div>hello people</div>`
-var update = update(tree)
+var morph = update(tree)
 document.body.appendChild(tree)
 
 // now each consecutive update will be rendered on the DOM
-update(html`<div>hello people</div>`, tree)
-update(html`<div>nanananana-na-no</div>`, tree)
+morph(html`<div>hello people</div>`, tree)
+
+// even if the type of the root node changes
+morph(html`<p>nanananana-na-no</p>`, tree)
 ```
 
 ## API
@@ -33,16 +36,13 @@ update(html`<div>nanananana-na-no</div>`, tree)
 Diff a tree of HTML elements against another tree of HTML elements and create
 a patched result that can be applied on the DOM.
 
-## FAQ
-### Why are you building this?
-Experimentin' is fun - all this is is a take on seeing how small we can get
-with real DOM node diffing. And if we can make some good heuristics happen for
-efficient tree updates ([Merkle trees][mt], anyone?) that'd be nice.
+### morph = update(newTree)
+Create a diffing function that morphs one tree into another, even if the type
+of the root node changes
 
-### Should I use this right now?
-No, probably not but if you do it'll probably be the fastest thing ever.
-Seriously, I doubt this could be made a lot faster than it is right now, unless
-we're talking edge cases. But yeah, alright go ahead if you like.
+### tree = morph(newTree)
+Diff the previous tree with a new tree using the function returned from
+`update()`
 
 ## Installation
 ```sh
@@ -64,6 +64,10 @@ $ npm install nanomorph
 ## Further Reading
 - [how to write your own virtual dom 1][own-vdom-1]
 - [how to write your own virtual dom 2][own-vdom-2]
+
+## Authors
+- [Kristofer Joseph](https://github.com/kristoferjoseph)
+- [Yoshua Wuyts](https://github.com/yoshuawuyts)
 
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
