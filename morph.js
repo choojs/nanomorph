@@ -82,15 +82,19 @@ function copyEvents (newNode, oldNode) {
 }
 
 function copyValues (newNode, oldNode) {
+  var oldValue = oldNode.value
+  var newValue = newNode.value
   if ((oldNode.nodeName === 'INPUT' &&
        oldNode.type !== 'file') ||
        oldNode.nodeName === 'SELECT') {
-    if (newNode.getAttribute('value') === null) {
+    if (!newValue) {
       newNode.value = oldNode.value
+    } else if (newValue !== oldValue) {
+      oldNode.value = newValue
     }
   } else if (oldNode.nodeName === 'TEXTAREA') {
-    if (newNode.getAttribute('value') === null) {
-      oldNode.value = newNode.value
+    if (newValue === null) {
+      oldNode.value = newValue
     }
   }
 }
