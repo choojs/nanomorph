@@ -222,8 +222,8 @@ test('nanomorph', function (t) {
     t.test('should remove nodes', function (t) {
       t.plan(1)
 
-      var newTree = html`<ul></ul>`
       var oldTree = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>`
+      var newTree = html`<ul></ul>`
 
       var res = nanomorph(newTree, oldTree)
       var expected = '<ul></ul>'
