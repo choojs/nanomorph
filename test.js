@@ -208,7 +208,7 @@ test('nanomorph', function (t) {
   })
 
   t.test('lists', function (t) {
-    t.test('should replace a node', function (t) {
+    t.test('should append nodes', function (t) {
       t.plan(1)
 
       var oldTree = html`<ul></ul>`
@@ -218,5 +218,27 @@ test('nanomorph', function (t) {
       var expected = '<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>'
       t.equal(String(res), expected, 'result was expected')
     })
-  });
+
+    t.test('should remove nodes', function (t) {
+      t.plan(1)
+
+      var newTree = html`<ul></ul>`
+      var oldTree = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>`
+
+      var res = nanomorph(newTree, oldTree)
+      var expected = '<ul></ul>'
+      t.equal(String(res), expected, 'result was expected')
+    })
+
+    t.test('should remove nodes', function (t) {
+      t.plan(1)
+
+      var newTree = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li></ul>`
+      var oldTree = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>`
+
+      var res = nanomorph(newTree, oldTree)
+      var expected = '<ul><li>1</li><li>2</li><li>3</li><li>4</li></ul>'
+      t.equal(String(res), expected, 'result was expected')
+    })
+  })
 })
