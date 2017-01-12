@@ -55,14 +55,22 @@ function updateChildren (newNode, oldNode) {
   var oldLength = oldNode.childNodes.length
   var length = Math.max(oldLength, newLength)
 
-  for (var i = 0; i < length; i++) {
-    var newChildNode = newNode.childNodes[i]
-    var oldChildNode = oldNode.childNodes[i]
+  var iNew = 0
+  var iOld = 0
+  for (var i = 0; i < length; i++, iNew++, iOld++) {
+    var newChildNode = newNode.childNodes[iNew]
+    var oldChildNode = oldNode.childNodes[iOld]
     var retChildNode = walk(newChildNode, oldChildNode)
     if (!retChildNode) {
-      if (oldChildNode) oldNode.removeChild(oldChildNode)
+      if (oldChildNode) {
+        oldNode.removeChild(oldChildNode)
+        iOld--
+      }
     } else if (!oldChildNode) {
-      if (retChildNode) oldNode.appendChild(retChildNode)
+      if (retChildNode) {
+        oldNode.appendChild(retChildNode)
+        iNew--
+      }
     } else if (retChildNode !== oldChildNode) {
       oldNode.replaceChild(retChildNode, oldChildNode)
     }
