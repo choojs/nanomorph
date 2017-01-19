@@ -44,6 +44,8 @@ of the root node changes
 Diff the previous tree with a new tree using the function returned from
 `update()`
 
+:warning: nanomorph will modify the newTree and it should be discarded after use
+
 ## Installation
 ```sh
 $ npm install nanomorph
