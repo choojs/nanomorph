@@ -240,5 +240,22 @@ test('nanomorph', function (t) {
       tree = nanomorph(newTree, tree)
       t.equal(String(tree), expected, 'result was expected')
     })
+
+    t.test('should replace nodes after multiple iterations', function (t) {
+      t.plan(2)
+
+      var tree = html`<ul></ul>`
+      var newTree = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>`
+      var expected = '<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>'
+
+      tree = nanomorph(newTree, tree)
+      t.equal(String(tree), expected, 'result was expected')
+
+      newTree = html`<ul><div>1</div><li>2</li><p>3</p><li>4</li><li>5</li></ul>`
+      expected = '<ul><div>1</div><li>2</li><p>3</p><li>4</li><li>5</li></ul>'
+
+      tree = nanomorph(newTree, tree)
+      t.equal(String(tree), expected, 'result was expected')
+    })
   })
 })

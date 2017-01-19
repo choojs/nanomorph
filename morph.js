@@ -150,4 +150,3 @@ function removeAttributeNS (target, name, value, namespace) {
     target.removeAttributeNS(namespace, name)
   }
 }
-
