@@ -73,6 +73,7 @@ function updateChildren (newNode, oldNode) {
       }
     } else if (retChildNode !== oldChildNode) {
       oldNode.replaceChild(retChildNode, oldChildNode)
+      iNew--
     }
   }
 }
