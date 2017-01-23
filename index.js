@@ -55,25 +55,36 @@ function updateChildren (newNode, oldNode) {
   var oldLength = oldNode.childNodes.length
   var length = Math.max(oldLength, newLength)
 
-  var iNew = 0
-  var iOld = 0
-  for (var i = 0; i < length; i++, iNew++, iOld++) {
+  for (var i = 0, iNew = 0, iOld = 0; i < length; i++, iNew++, iOld++) {
     var newChildNode = newNode.childNodes[iNew]
     var oldChildNode = oldNode.childNodes[iOld]
-    var retChildNode = walk(newChildNode, oldChildNode)
-    if (!retChildNode) {
-      if (oldChildNode) {
-        oldNode.removeChild(oldChildNode)
-        iOld--
-      }
-    } else if (!oldChildNode) {
-      if (retChildNode) {
-        oldNode.appendChild(retChildNode)
+
+    if (newChildNode) {
+      var newKey = newChildNode.getAttribute('data-key')
+    }
+
+    if (oldChildNode) {
+      var oldKey = oldChildNode.getAttribute('data-key')
+    }
+
+    if (newKey || oldKey) {
+      console.log(newKey, oldKey)
+    } else {
+      var morphedNode = walk(newChildNode, oldChildNode)
+      if (!morphedNode) {
+        if (oldChildNode) {
+          oldNode.removeChild(oldChildNode)
+          iOld--
+        }
+      } else if (!oldChildNode) {
+        if (morphedNode) {
+          oldNode.appendChild(morphedNode)
+          iNew--
+        }
+      } else if (morphedNode !== oldChildNode) {
+        oldNode.replaceChild(morphedNode, oldChildNode)
         iNew--
       }
-    } else if (retChildNode !== oldChildNode) {
-      oldNode.replaceChild(retChildNode, oldChildNode)
-      iNew--
     }
   }
 }
