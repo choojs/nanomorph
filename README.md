@@ -31,10 +31,26 @@ morph(html`<div>hello people</div>`, tree)
 morph(html`<p>nanananana-na-no</p>`, tree)
 ```
 
+## Caching DOM elements
+Sometimes we want to tell the algorithm to not evaluate certain nodes (and its
+children). This can be because we're sure they haven't changed, or perhaps
+because another piece of code is managing that part of the DOM tree. To achieve
+this `nanomorph` evaluates the `.isSameNode()` method on nodes to determine if
+they should be updated or not.
+
+```js
+var el = html`<div>node</div>`
+
+// tell nanomorph to not compare the DOM tree if they're both divs
+el.isSameNode = function (target) {
+  return (target && target.nodeName && target.nodeName === 'DIV')
+}
+```
+
 ## Building your own
-Nanomorph was designed to optimizes for simplicity, but different situations
-might require different tradeoffs. So in order to allow folks to build their
-own implementation we expose our test suite as a function you can call. So
+Nanomorph was optimized for simplicity, but different situations might require
+different tradeoffs. So in order to allow folks to build their own
+implementation we expose our test suite as a function you can call. So
 regardless if you're doing it to solve a problem, or just for fun: you can use
 the same tests we use for your own implementation. Yay! :sparkles:
 ```js
