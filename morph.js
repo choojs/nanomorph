@@ -1,4 +1,7 @@
+var events = require('./update-events')
 var xtend = require('xtend')
+
+var eventsLength = events.length
 var empty = {}
 
 module.exports = morph
@@ -65,18 +68,12 @@ function copyAttrsNS (newNode, oldNode) {
 }
 
 function copyEvents (newNode, oldNode) {
-  var keys = xtend(newNode, oldNode)
-  var kl = Object.keys(keys).length
-  var i = 0
-  var prop
-  for (i; i < kl; i++) {
-    prop = keys[i]
-    if (/^on/.test(prop)) {
-      if (oldNode[prop]) {
-        newNode[prop] = keys[prop]
-      } else if (!newNode[prop]) {
-        oldNode[prop] = undefined
-      }
+  for (var i = 0; i < eventsLength; i++) {
+    var ev = events[i]
+    if (newNode[ev]) { // if new element has a whitelisted attribute
+      oldNode[ev] = newNode[ev] // update existing element
+    } else if (oldNode[ev]) { // if existing element has it and new one doesnt
+      oldNode[ev] = undefined // remove it from existing element
     }
   }
 }
