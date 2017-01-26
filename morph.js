@@ -67,9 +67,7 @@ function copyAttrsNS (newNode, oldNode) {
 function copyEvents (newNode, oldNode) {
   var keys = xtend(newNode, oldNode)
   var kl = Object.keys(keys).length
-  var i = 0
-  var prop
-  for (i; i < kl; i++) {
+  for (var i = 0, prop; i < kl; i++) {
     prop = keys[i]
     if (/^on/.test(prop)) {
       if (oldNode[prop]) {
