@@ -16,9 +16,9 @@ module.exports = nanomorph
 //   -> diff nodes and apply patch to old node
 // nodes are the same
 //   -> walk all child nodes and append to old node
-function nanomorph (newTree, oldTree) {
-  assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object')
+function nanomorph (oldTree, newTree) {
   assert.equal(typeof oldTree, 'object', 'nanomorph: oldTree should be an object')
+  assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object')
   var tree = walk(newTree, oldTree)
   return tree
 }
