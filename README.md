@@ -14,23 +14,6 @@ tree = morph(tree, html`<div>nanananana-na-no</div>`)
 tree = morph(tree, html`<div>teeny, tiny, tin bottle</div>`)
 ```
 
-## Appending to the DOM
-```js
-var update = require('nanomorph/update')
-var html = require('bel')
-
-// create the initial tree, save it and append to DOM
-var tree = html`<div>hello people</div>`
-var morph = update(tree)
-document.body.appendChild(tree)
-
-// now each consecutive update will be rendered on the DOM
-morph(html`<div>hello people</div>`, tree)
-
-// even if the type of the root node changes
-morph(html`<p>nanananana-na-no</p>`, tree)
-```
-
 ## Caching DOM elements
 Sometimes we want to tell the algorithm to not evaluate certain nodes (and its
 children). This can be because we're sure they haven't changed, or perhaps
@@ -62,14 +45,6 @@ test(require('./my-morph-implementation'))
 ### tree = nanomorph(oldTree, newTree)
 Diff a tree of HTML elements against another tree of HTML elements and create
 a patched result that can be applied on the DOM.
-
-### morph = update(newTree)
-Create a diffing function that morphs one tree into another, even if the type
-of the root node changes
-
-### tree = morph(newTree)
-Diff the previous tree with a new tree using the function returned from
-`update()`
 
 :warning: nanomorph will modify the newTree and it should be discarded after use
 
