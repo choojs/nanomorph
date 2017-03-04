@@ -10,8 +10,8 @@ var morph = require('nanomorph')
 var html = require('bel')
 
 var tree = html`<div>hello people</div>`
-tree = morph(html`<div>nanananana-na-no</div>`, tree)
-tree = morph(html`<div>teeny, tiny, tin bottle</div>`, tree)
+tree = morph(tree, html`<div>nanananana-na-no</div>`)
+tree = morph(tree, html`<div>teeny, tiny, tin bottle</div>`)
 ```
 
 ## Appending to the DOM
@@ -59,7 +59,7 @@ test(require('./my-morph-implementation'))
 ```
 
 ## API
-### tree = nanomorph(newTree, oldTree)
+### tree = nanomorph(oldTree, newTree)
 Diff a tree of HTML elements against another tree of HTML elements and create
 a patched result that can be applied on the DOM.
 
