@@ -36,10 +36,6 @@ different tradeoffs. So in order to allow folks to build their own
 implementation we expose our test suite as a function you can call. So
 regardless if you're doing it to solve a problem, or just for fun: you can use
 the same tests we use for your own implementation. Yay! :sparkles:
-```js
-var test = require('nanomorph/test')
-test(require('./my-morph-implementation'))
-```
 
 ## API
 ### tree = nanomorph(oldTree, newTree)
