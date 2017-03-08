@@ -7,7 +7,7 @@ function create (initialTree) {
 
   return function update (newTree) {
     var oldTree = tree
-    tree = nanomorph(newTree, tree)
+    tree = nanomorph(tree, newTree)
     if (newTree === oldTree) {
       return tree
     } else {
