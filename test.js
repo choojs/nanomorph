@@ -30,7 +30,7 @@ function abstractMorph (morph) {
 
         var res = morph(oldTree, newTree)
         var expected = '<div>hello world</div>'
-        t.equal(String(res), expected, 'result was expected')
+        t.equal(res.outerHTML, expected, 'result was expected')
       })
 
       t.test('should morph a node', function (t) {
@@ -41,7 +41,7 @@ function abstractMorph (morph) {
 
         var res = morph(oldTree, newTree)
         var expected = '<p>hello you</p>'
-        t.equal(String(res), expected, 'result was expected')
+        t.equal(res.outerHTML, expected, 'result was expected')
       })
 
       t.test('should morph a node with namespaced attribute', function (t) {
@@ -51,8 +51,8 @@ function abstractMorph (morph) {
         var newTree = html`<svg><use xlink:href="#boobear"></use></svg>`
 
         var res = morph(oldTree, newTree)
-        var expected = '<svg><use xlink:href="#boobear"></use></svg>'
-        t.equal(String(res), expected, 'result was expected')
+        var expected = '<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#boobear"></use></svg>'
+        t.equal(res.outerHTML, expected, 'result was expected')
       })
 
       t.test('should ignore if node is same', function (t) {
@@ -79,7 +79,7 @@ function abstractMorph (morph) {
 
         var res = morph(oldTree, newTree)
         var expected = '<main><div>hello world</div></main>'
-        t.equal(String(res), expected, 'result was expected')
+        t.equal(res.outerHTML, expected, 'result was expected')
       })
 
       t.test('should replace a node', function (t) {
@@ -94,7 +94,7 @@ function abstractMorph (morph) {
 
         var res = morph(oldTree, newTree)
         var expected = '<main><p>hello you</p></main>'
-        t.equal(String(res), expected, 'result was expected')
+        t.equal(res.outerHTML, expected, 'result was expected')
       })
 
       t.test('should replace a node', function (t) {
@@ -121,7 +121,7 @@ function abstractMorph (morph) {
 
         var res = morph(oldTree, newTree)
         var expected = '<main><p>hello you</p></main>'
-        t.equal(String(res), expected, 'result was expected')
+        t.equal(res.outerHTML, expected, 'result was expected')
       })
 
       t.test('should remove a node', function (t) {
@@ -137,45 +137,39 @@ function abstractMorph (morph) {
 
         var res = morph(oldTree, newTree)
         var expected = '<main></main>'
-        t.equal(String(res), expected, 'result was expected')
+        t.equal(res.outerHTML, expected, 'result was expected')
       })
     })
 
     t.test('events', function (t) {
       t.test('should copy onclick events', function (t) {
-        t.plan(2)
-        var oldTree = html`
-          <button
-            onclick=${function () {
-              t.ok(true)
-            }}
-          >
-            TEST
-          </button>`
-        var newTree = html`<button>UPDATED</button>`
-        var res = morph(oldTree, newTree)
-        t.ok(typeof res.onclick === 'function')
-        res.onclick()
-      })
+        t.plan(1)
+        var ioldTree = html`<button onclick=${fail}>OLD</button>`
+        var inewTree = html`<button>NEW</button>`
+        var ires = morph(ioldTree, inewTree)
 
-      t.test('should copy onsubmit events', function (t) {
-        var oldTree = html`
-          <form
-            onsubmit=${function () { t.ok(false) }}
-          >
-            <button>Sup</button>
-          </form>`
-        var newTree = html`<form>
-            <button>Sup</button>
-        </form>`
-        var res = morph(oldTree, newTree)
-        t.ok(typeof res.onsubmit === 'function')
-        t.end()
+        ires.click()
+
+        var joldTree = html`<button>OLD</button>`
+        var jnewTree = html`<button onclick=${pass}>NEW</button>`
+        var jres = morph(joldTree, jnewTree)
+
+        jres.click()
+
+        function fail (e) {
+          e.preventDefault()
+          t.fail('should not be called')
+        }
+
+        function pass (e) {
+          e.preventDefault()
+          t.ok('called')
+        }
       })
     })
 
     t.test('values', function (t) {
-      t.test('should be copied to new tree when it has no value', function (t) {
+      t.test('if new tree has no value and old tree does, set value from old tree', function (t) {
         t.plan(1)
         var oldTree = html`<input type="text" />`
         oldTree.value = 'howdy'
@@ -184,7 +178,7 @@ function abstractMorph (morph) {
         t.equal(res.value, 'howdy')
       })
 
-      t.test('should be copied to old tree when new tree has a value', function (t) {
+      t.test('if new tree has value and old tree does too, set value from new tree', function (t) {
         t.plan(1)
         var oldTree = html`<input type="text" />`
         oldTree.value = 'howdy'
@@ -228,7 +222,7 @@ function abstractMorph (morph) {
 
         var res = morph(oldTree, newTree)
         var expected = '<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>'
-        t.equal(String(res), expected, 'result was expected')
+        t.equal(res.outerHTML, expected, 'result was expected')
       })
 
       t.test('should remove nodes', function (t) {
@@ -239,7 +233,7 @@ function abstractMorph (morph) {
 
         var res = morph(oldTree, newTree)
         var expected = '<ul></ul>'
-        t.equal(String(res), expected, 'result was expected')
+        t.equal(res.outerHTML, expected, 'result was expected')
       })
     })
 

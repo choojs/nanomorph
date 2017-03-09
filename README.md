@@ -14,6 +14,12 @@ tree = morph(tree, html`<div>nanananana-na-no</div>`)
 tree = morph(tree, html`<div>teeny, tiny, tin bottle</div>`)
 ```
 
+## Clearing Input Values
+[tbi]
+
+## Reordering Lists
+[tbi]
+
 ## Caching DOM elements
 Sometimes we want to tell the algorithm to not evaluate certain nodes (and its
 children). This can be because we're sure they haven't changed, or perhaps
