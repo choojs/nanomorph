@@ -144,17 +144,17 @@ function abstractMorph (morph) {
     t.test('events', function (t) {
       t.test('should copy onclick events', function (t) {
         t.plan(1)
-        var ioldTree = html`<button onclick=${fail}>OLD</button>`
-        var inewTree = html`<button>NEW</button>`
-        var ires = morph(ioldTree, inewTree)
+        var oldTree = html`<button onclick=${fail}>OLD</button>`
+        var newTree = html`<button>NEW</button>`
+        var res = morph(oldTree, newTree)
 
-        ires.click()
+        res.click()
 
-        var joldTree = html`<button>OLD</button>`
-        var jnewTree = html`<button onclick=${pass}>NEW</button>`
-        var jres = morph(joldTree, jnewTree)
+        oldTree = html`<button>OLD</button>`
+        newTree = html`<button onclick=${pass}>NEW</button>`
+        res = morph(oldTree, newTree)
 
-        jres.click()
+        res.click()
 
         function fail (e) {
           e.preventDefault()
@@ -169,13 +169,17 @@ function abstractMorph (morph) {
     })
 
     t.test('values', function (t) {
-      t.test('if new tree has no value and old tree does, set value from old tree', function (t) {
-        t.plan(1)
-        var oldTree = html`<input type="text" />`
-        oldTree.value = 'howdy'
+      t.test('if new tree has no value and old tree does, set value from new tree', function (t) {
+        t.plan(2)
+        var oldTree = html`<input type="text" value="howdy" />`
         var newTree = html`<input type="text" />`
         var res = morph(oldTree, newTree)
-        t.equal(res.value, 'howdy')
+        t.equal(res.value, '')
+
+        oldTree = html`<input type="text" value="howdy" />`
+        newTree = html`<input type="text" value=${null} />`
+        res = morph(oldTree, newTree)
+        t.equal(res.value, '')
       })
 
       t.test('if new tree has value and old tree does too, set value from new tree', function (t) {
@@ -245,7 +249,7 @@ function abstractMorph (morph) {
       var expected = '<ul><div>1</div><li>2</li><p>3</p><li>4</li><li>5</li></ul>'
 
       oldTree = nanomorph(oldTree, newTree)
-      t.equal(String(oldTree), expected, 'result was expected')
+      t.equal(oldTree.outerHTML, expected, 'result was expected')
     })
 
     t.test('should replace nodes after multiple iterations', function (t) {
@@ -256,13 +260,13 @@ function abstractMorph (morph) {
       var expected = '<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>'
 
       oldTree = nanomorph(oldTree, newTree)
-      t.equal(String(oldTree), expected, 'result was expected')
+      t.equal(oldTree.outerHTML, expected, 'result was expected')
 
       newTree = html`<ul><div>1</div><li>2</li><p>3</p><li>4</li><li>5</li></ul>`
       expected = '<ul><div>1</div><li>2</li><p>3</p><li>4</li><li>5</li></ul>'
 
       oldTree = nanomorph(oldTree, newTree)
-      t.equal(String(oldTree), expected, 'result was expected')
+      t.equal(oldTree.outerHTML, expected, 'result was expected')
     })
   })
 }
