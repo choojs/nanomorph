@@ -1,4 +1,4 @@
-// var seed = require('math-random-seed')
+var seed = require('math-random-seed')
 var tape = require('tape')
 var html = require('bel')
 var nanomorph = require('./')
@@ -241,43 +241,43 @@ tape('chaos monkey #1', function (t) {
 
 // modeled after
 // https://github.com/mafintosh/hypercore/blob/master/test/tree-index.js
-// var random = seed('choo choo')
-// tape('fuzz tests', function (t) {
-//   var a, b
-//   for (var i = 0; i < 3; i++) {
-//     for (var j = 0; j < 3; j++) {
-//       a = create(i, j, 1)
-//       for (var k = 0; k < 3; k++) {
-//         b = create(i, k, 1)
-//         compare(a, b, t)
-//       }
-//     }
-//   }
-//   t.end()
-// })
+var random = seed('choo choo')
+tape('fuzz tests', function (t) {
+  var a, b
+  for (var i = 0; i < 3; i++) {
+    for (var j = 0; j < 3; j++) {
+      a = create(i, j, 1)
+      for (var k = 0; k < 3; k++) {
+        b = create(i, k, 1)
+        compare(a, b, t)
+      }
+    }
+  }
+  t.end()
+})
 
-// function create (depth, propCount, offset) {
-//   var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-//   var root = document.createElement('div')
-//   var el = root
-//   var _el = null
-//   var str = ''
-//   offset += 100
-//   for (var i = 0; i < depth; i++) {
-//     _el = document.createElement('div')
-//     el.appendChild(_el)
-//     for (var j = 0; j < propCount; j++) {
-//       str = ''
-//       for (var k = propCount; k > 0; --k) {
-//         str += chars[Math.floor(random() * 100) % chars.length]
-//       }
-//       el.setAttribute(str, str)
-//       offset++
-//     }
-//     el = _el
-//   }
-//   return root
-// }
+function create (depth, propCount, offset) {
+  var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  var root = document.createElement('div')
+  var el = root
+  var _el = null
+  var str = ''
+  offset += 100
+  for (var i = 0; i < depth; i++) {
+    _el = document.createElement('div')
+    el.appendChild(_el)
+    for (var j = 0; j < propCount; j++) {
+      str = ''
+      for (var k = propCount; k > 0; --k) {
+        str += chars[Math.floor(random() * 100) % chars.length]
+      }
+      el.setAttribute(str, str)
+      offset++
+    }
+    el = _el
+  }
+  return root
+}
 
 function compare (a, b, t) {
   var source = a.outerHTML
