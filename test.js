@@ -1,9 +1,9 @@
-var seed = require('math-random-seed')
+// var seed = require('math-random-seed')
 var tape = require('tape')
 var html = require('bel')
 var nanomorph = require('./')
 
-var random = seed('choo choo')
+var output = true
 
 if (!module.parent) {
   specificTests(nanomorph)
@@ -29,8 +29,8 @@ function abstractMorph (morph) {
         t.plan(1)
         var a = html`<p>hello world</p>`
         var b = html`<div>hello world</div>`
+        var expected = b.outerHTML
         var res = morph(a, b)
-        var expected = '<div>hello world</div>'
         t.equal(res.outerHTML, expected, 'result was expected')
       })
 
@@ -38,8 +38,8 @@ function abstractMorph (morph) {
         t.plan(1)
         var a = html`<p>hello world</p>`
         var b = html`<p>hello you</p>`
+        var expected = b.outerHTML
         var res = morph(a, b)
-        var expected = '<p>hello you</p>'
         t.equal(res.outerHTML, expected, 'result was expected')
       })
 
@@ -47,17 +47,17 @@ function abstractMorph (morph) {
         t.plan(1)
         var a = html`<svg><use xlink:href="#heybooboo"></use></svg>`
         var b = html`<svg><use xlink:href="#boobear"></use></svg>`
-        var res = morph(a, b)
         var expected = '<svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#boobear"></use></svg>'
+        var res = morph(a, b)
         t.equal(res.outerHTML, expected, 'result was expected')
       })
 
       t.test('should ignore if node is same', function (t) {
         t.plan(1)
         var a = html`<p>hello world</p>`
+        var expected = a.outerHTML
         var res = morph(a, a)
-        var expected = a
-        t.equal(res, expected, 'result was expected')
+        t.equal(res.outerHTML, expected, 'result was expected')
       })
     })
 
@@ -66,8 +66,8 @@ function abstractMorph (morph) {
         t.plan(1)
         var a = html`<main><p>hello world</p></main>`
         var b = html`<main><div>hello world</div></main>`
+        var expected = b.outerHTML
         var res = morph(a, b)
-        var expected = '<main><div>hello world</div></main>'
         t.equal(res.outerHTML, expected, 'result was expected')
       })
 
@@ -76,7 +76,7 @@ function abstractMorph (morph) {
         var a = html`<main><p>hello world</p></main>`
         var b = html`<main><p>hello you</p></main>`
         var res = morph(a, b)
-        var expected = '<main><p>hello you</p></main>'
+        var expected = b.outerHTML
         t.equal(res.outerHTML, expected, 'result was expected')
       })
 
@@ -84,16 +84,16 @@ function abstractMorph (morph) {
         t.plan(1)
         var a = html`<main><p>hello world</p></main>`
         var res = morph(a, a)
-        var expected = a
-        t.equal(res, expected, 'result was expected')
+        var expected = a.outerHTML
+        t.equal(res.outerHTML, expected, 'result was expected')
       })
 
       t.test('should append a node', function (t) {
         t.plan(1)
         var a = html`<main></main>`
         var b = html`<main><p>hello you</p></main>`
+        var expected = b.outerHTML
         var res = morph(a, b)
-        var expected = '<main><p>hello you</p></main>'
         t.equal(res.outerHTML, expected, 'result was expected')
       })
 
@@ -101,8 +101,8 @@ function abstractMorph (morph) {
         t.plan(1)
         var a = html`<main><p>hello you</p></main>`
         var b = html`<main></main>`
+        var expected = b.outerHTML
         var res = morph(a, b)
-        var expected = '<main></main>'
         t.equal(res.outerHTML, expected, 'result was expected')
       })
     })
@@ -188,8 +188,8 @@ function abstractMorph (morph) {
         t.plan(1)
         var a = html`<ul></ul>`
         var b = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>`
+        var expected = b.outerHTML
         var res = morph(a, b)
-        var expected = '<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>'
         t.equal(res.outerHTML, expected, 'result was expected')
       })
 
@@ -198,7 +198,7 @@ function abstractMorph (morph) {
         var a = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>`
         var b = html`<ul></ul>`
         var res = morph(a, b)
-        var expected = '<ul></ul>'
+        var expected = b.outerHTML
         t.equal(res.outerHTML, expected, 'result was expected')
       })
     })
@@ -207,7 +207,7 @@ function abstractMorph (morph) {
       t.plan(1)
       var a = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>`
       var b = html`<ul><div>1</div><li>2</li><p>3</p><li>4</li><li>5</li></ul>`
-      var expected = '<ul><div>1</div><li>2</li><p>3</p><li>4</li><li>5</li></ul>'
+      var expected = b.outerHTML
       a = nanomorph(a, b)
       t.equal(a.outerHTML, expected, 'result was expected')
     })
@@ -217,13 +217,13 @@ function abstractMorph (morph) {
 
       var a = html`<ul></ul>`
       var b = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>`
-      var expected = '<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>'
+      var expected = b.outerHTML
 
       a = nanomorph(a, b)
       t.equal(a.outerHTML, expected, 'result was expected')
 
       b = html`<ul><div>1</div><li>2</li><p>3</p><li>4</li><li>5</li></ul>`
-      expected = '<ul><div>1</div><li>2</li><p>3</p><li>4</li><li>5</li></ul>'
+      expected = b.outerHTML
 
       a = nanomorph(a, b)
       t.equal(a.outerHTML, expected, 'result was expected')
@@ -231,47 +231,72 @@ function abstractMorph (morph) {
   })
 }
 
-// modeled after
-// https://github.com/mafintosh/hypercore/blob/master/test/tree-index.js
-tape('fuzz tests', function (t) {
+tape('chaos monkey #1', function (t) {
   var a, b
-  for (var i = 0; i < 3; i++) {
-    for (var j = 0; j < 3; j++) {
-      a = create(i, j, 1)
-      for (var k = 0; k < 3; k++) {
-        b = create(i, k, 1)
-        compare(a, b, t)
-      }
-    }
-  }
+  a = html`<div r="r"><div></div></div>`
+  b = html`<div io="iO" vq="Vq"><div></div></div>`
+  compare(a, b, t)
   t.end()
 })
 
-function create (depth, propCount, offset) {
-  var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  var root = document.createElement('div')
-  var el = root
-  var _el = null
-  var str = ''
-  offset += 100
-  for (var i = 0; i < depth; i++) {
-    _el = document.createElement('div')
-    el.appendChild(_el)
-    for (var j = 0; j < propCount; j++) {
-      str = ''
-      for (var k = propCount; k > 0; --k) {
-        str += chars[Math.floor(random() * str.length)]
-      }
-      el.setAttribute(str, str)
-      offset++
-    }
-    el = _el
-  }
-  return root
-}
+// modeled after
+// https://github.com/mafintosh/hypercore/blob/master/test/tree-index.js
+// var random = seed('choo choo')
+// tape('fuzz tests', function (t) {
+//   var a, b
+//   for (var i = 0; i < 3; i++) {
+//     for (var j = 0; j < 3; j++) {
+//       a = create(i, j, 1)
+//       for (var k = 0; k < 3; k++) {
+//         b = create(i, k, 1)
+//         compare(a, b, t)
+//       }
+//     }
+//   }
+//   t.end()
+// })
+
+// function create (depth, propCount, offset) {
+//   var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+//   var root = document.createElement('div')
+//   var el = root
+//   var _el = null
+//   var str = ''
+//   offset += 100
+//   for (var i = 0; i < depth; i++) {
+//     _el = document.createElement('div')
+//     el.appendChild(_el)
+//     for (var j = 0; j < propCount; j++) {
+//       str = ''
+//       for (var k = propCount; k > 0; --k) {
+//         str += chars[Math.floor(random() * 100) % chars.length]
+//       }
+//       el.setAttribute(str, str)
+//       offset++
+//     }
+//     el = _el
+//   }
+//   return root
+// }
 
 function compare (a, b, t) {
+  var source = a.outerHTML
   var expected = b.outerHTML
   var res = nanomorph(a, b)
-  t.equal(res.outerHTML, expected)
+  var html = res.outerHTML
+  if (output) {
+    t.equal(html, expected)
+    if (html !== expected) {
+      var str = `
+        var a, b
+        a = html\`${source}\`
+        b = html\`${expected}\`
+        compare(a, b, t)
+        t.end()
+      `.replace(/ {8}/g, '')
+      console.error(str)
+    }
+  } else {
+    t.equal(html, expected)
+  }
 }
