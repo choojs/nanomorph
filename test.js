@@ -3,8 +3,6 @@ var tape = require('tape')
 var html = require('bel')
 var nanomorph = require('./')
 
-var output = true
-
 if (!module.parent) {
   specificTests(nanomorph)
   abstractMorph(nanomorph)
@@ -135,25 +133,25 @@ function abstractMorph (morph) {
     })
 
     t.test('values', function (t) {
-      t.test('if new tree has no value and old tree does, set value from new tree', function (t) {
-        t.plan(2)
+      t.test('if new tree has no value and old tree does, remove value', function (t) {
+        t.plan(4)
         var a = html`<input type="text" value="howdy" />`
         var b = html`<input type="text" />`
         var res = morph(a, b)
+        t.equal(res.getAttribute('value'), null)
         t.equal(res.value, '')
 
         a = html`<input type="text" value="howdy" />`
         b = html`<input type="text" value=${null} />`
         res = morph(a, b)
+        t.equal(res.getAttribute('value'), null)
         t.equal(res.value, '')
       })
 
       t.test('if new tree has value and old tree does too, set value from new tree', function (t) {
         t.plan(1)
-        var a = html`<input type="text" />`
-        a.value = 'howdy'
-        var b = html`<input type="text" />`
-        b.value = 'hi'
+        var a = html`<input type="text" value="howdy" />`
+        var b = html`<input type="text" value="hi" />`
         var res = morph(a, b)
         t.equal(res.value, 'hi')
       })
@@ -242,6 +240,7 @@ tape('chaos monkey #1', function (t) {
 // modeled after
 // https://github.com/mafintosh/hypercore/blob/master/test/tree-index.js
 var random = seed('choo choo')
+var props = null
 tape('fuzz tests', function (t) {
   var a, b
   for (var i = 0; i < 3; i++) {
@@ -249,7 +248,8 @@ tape('fuzz tests', function (t) {
       a = create(i, j, 1)
       for (var k = 0; k < 3; k++) {
         b = create(i, k, 1)
-        compare(a, b, t)
+        props = { depth: i, propCount: j, offset: k }
+        compare(a, b, t, props)
       }
     }
   }
@@ -279,24 +279,9 @@ function create (depth, propCount, offset) {
   return root
 }
 
-function compare (a, b, t) {
-  var source = a.outerHTML
-  var expected = b.outerHTML
+function compare (a, b, t, props) {
+  props = props ? JSON.stringify(props) : undefined
+  var expected = b.cloneNode(true)
   var res = nanomorph(a, b)
-  var html = res.outerHTML
-  if (output) {
-    t.equal(html, expected)
-    if (html !== expected) {
-      var str = `
-        var a, b
-        a = html\`${source}\`
-        b = html\`${expected}\`
-        compare(a, b, t)
-        t.end()
-      `.replace(/ {8}/g, '')
-      console.error(str)
-    }
-  } else {
-    t.equal(html, expected)
-  }
+  t.ok(res.isEqualNode(expected), props)
 }

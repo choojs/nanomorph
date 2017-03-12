@@ -36,7 +36,16 @@ el.isSameNode = function (target) {
 }
 ```
 
-## Building your own
+## FAQ
+### How is this different from morphdom?
+It's quite similar actually; the API of this library is completely compatible
+with `morphdom` and we've borrowed a fair few bits. The main difference is that
+we copy event handlers like `onclick`, don't support browsers that are over a
+decade old, and don't provide custom behavior by removing all hooks. This way
+we can guarantee a consistent, out-of-the box experience for all your diffing
+needs.
+
+### This library seems cool, I'd like to build my own!
 Nanomorph was optimized for simplicity, but different situations might require
 different tradeoffs. So in order to allow folks to build their own
 implementation we expose our test suite as a function you can call. So
