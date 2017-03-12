@@ -15,7 +15,11 @@ tree = morph(tree, html`<div>teeny, tiny, tin bottle</div>`)
 ```
 
 ## Clearing Input Values
-[tbi]
+To remove values from inputs, there's a few options:
+```js
+html`<input class="beep" value=${null}>` // set the value to null
+html`<input class="beep">`               // omit property all together
+```
 
 ## Reordering Lists
 [tbi]
