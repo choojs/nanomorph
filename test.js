@@ -283,5 +283,12 @@ function compare (a, b, t, props) {
   props = props ? JSON.stringify(props) : undefined
   var expected = b.cloneNode(true)
   var res = nanomorph(a, b)
-  t.ok(res.isEqualNode(expected), props)
+  deepEqualNode(res, expected, t, props)
+}
+
+function deepEqualNode (a, b, t, props) {
+  t.ok(a.isEqualNode(b), props)
+  for (var i = a.childNodes.length - 1; i >= 0; --i) {
+    deepEqualNode(a.childNodes[i], a.childNodes[i], t, props)
+  }
 }
