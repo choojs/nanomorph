@@ -243,9 +243,9 @@ var random = seed('choo choo')
 var props = null
 tape('fuzz tests', function (t) {
   var a, b
-  for (var i = 0; i < 3; i++) {
-    for (var j = 0; j < 3; j++) {
-      a = create(i, j, 1)
+  for (var i = 0; i < 7; i++) {
+    for (var j = 0; j < 5; j++) {
+      a = create(i, j, 0)
       for (var k = 0; k < 3; k++) {
         b = create(i, k, 1)
         props = { depth: i, propCount: j, offset: k }
