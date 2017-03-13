@@ -1,5 +1,5 @@
 var assert = require('assert')
-var morph = require('./morph')
+var morph = require('./lib/morph')
 
 module.exports = nanomorph
 

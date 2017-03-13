@@ -1,5 +1,5 @@
 # nanomorph [![stability][0]][1]
-[![npm version][2]][3] [![build status][4]][5] [![test coverage][6]][7]
+[![npm version][2]][3] [![build status][4]][5]
 [![downloads][8]][9] [![js-standard-style][10]][11]
 
 Hyper fast diffing algorithm for real DOM nodes :zap:
@@ -14,22 +14,15 @@ tree = morph(tree, html`<div>nanananana-na-no</div>`)
 tree = morph(tree, html`<div>teeny, tiny, tin bottle</div>`)
 ```
 
-## Appending to the DOM
+## Clearing Input Values
+To remove values from inputs, there's a few options:
 ```js
-var update = require('nanomorph/update')
-var html = require('bel')
-
-// create the initial tree, save it and append to DOM
-var tree = html`<div>hello people</div>`
-var morph = update(tree)
-document.body.appendChild(tree)
-
-// now each consecutive update will be rendered on the DOM
-morph(html`<div>hello people</div>`, tree)
-
-// even if the type of the root node changes
-morph(html`<p>nanananana-na-no</p>`, tree)
+html`<input class="beep" value=${null}>` // set the value to null
+html`<input class="beep">`               // omit property all together
 ```
+
+## Reordering Lists
+[tbi]
 
 ## Caching DOM elements
 Sometimes we want to tell the algorithm to not evaluate certain nodes (and its
@@ -47,29 +40,26 @@ el.isSameNode = function (target) {
 }
 ```
 
-## Building your own
+## FAQ
+### How is this different from morphdom?
+It's quite similar actually; the API of this library is completely compatible
+with `morphdom` and we've borrowed a fair few bits. The main difference is that
+we copy event handlers like `onclick`, don't support browsers that are over a
+decade old, and don't provide custom behavior by removing all hooks. This way
+we can guarantee a consistent, out-of-the box experience for all your diffing
+needs.
+
+### This library seems cool, I'd like to build my own!
 Nanomorph was optimized for simplicity, but different situations might require
 different tradeoffs. So in order to allow folks to build their own
 implementation we expose our test suite as a function you can call. So
 regardless if you're doing it to solve a problem, or just for fun: you can use
 the same tests we use for your own implementation. Yay! :sparkles:
-```js
-var test = require('nanomorph/test')
-test(require('./my-morph-implementation'))
-```
 
 ## API
 ### tree = nanomorph(oldTree, newTree)
 Diff a tree of HTML elements against another tree of HTML elements and create
 a patched result that can be applied on the DOM.
-
-### morph = update(newTree)
-Create a diffing function that morphs one tree into another, even if the type
-of the root node changes
-
-### tree = morph(newTree)
-Diff the previous tree with a new tree using the function returned from
-`update()`
 
 :warning: nanomorph will modify the newTree and it should be discarded after use
 
