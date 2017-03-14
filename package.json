@@ -1,6 +1,6 @@
 {
   "name": "nanomorph",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "Hyper fast diffing algorithm for real DOM nodes",
   "main": "index.js",
   "scripts": {
@@ -18,8 +18,7 @@
     "yo-yo"
   ],
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "bel": "^4.4.3",
     "browserify": "^14.1.0",
