@@ -206,7 +206,7 @@ function abstractMorph (morph) {
       var a = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>`
       var b = html`<ul><div>1</div><li>2</li><p>3</p><li>4</li><li>5</li></ul>`
       var expected = b.outerHTML
-      a = nanomorph(a, b)
+      a = morph(a, b)
       t.equal(a.outerHTML, expected, 'result was expected')
     })
 
@@ -217,13 +217,13 @@ function abstractMorph (morph) {
       var b = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>`
       var expected = b.outerHTML
 
-      a = nanomorph(a, b)
+      a = morph(a, b)
       t.equal(a.outerHTML, expected, 'result was expected')
 
       b = html`<ul><div>1</div><li>2</li><p>3</p><li>4</li><li>5</li></ul>`
       expected = b.outerHTML
 
-      a = nanomorph(a, b)
+      a = morph(a, b)
       t.equal(a.outerHTML, expected, 'result was expected')
     })
   })
