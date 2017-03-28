@@ -226,6 +226,28 @@ function abstractMorph (morph) {
       a = morph(a, b)
       t.equal(a.outerHTML, expected, 'result was expected')
     })
+
+    t.test('if new <select> tree has the correct selected option', function (t) {
+      t.plan(3)
+      var values = ['foo', 'bar']
+      var a = html`<select>${values.map(function (e) { return html`<option value="${e}" selected="${e === 'bar' ? 'selected' : false}">${e}</option>` })}</select>`
+      var b = html`<select>${values.map(function (e) { return html`<option value="${e}" selected="${e === 'foo' ? 'selected' : false}">${e}</option>` })}</select>`
+
+      var res = nanomorph(a, b)
+      t.equal(res.value, 'foo')
+
+      var c = html`<select>${values.map(function (e) { return html`<option value="${e}" selected="${e === 'bar' ? 'selected' : false}">${e}</option>` })}</select>`
+
+      res = nanomorph(res, c)
+      t.equal(res.value, 'bar')
+
+      values[2] = 'foobar'
+      var d = html`<select>${values.map(function (e) { return html`<option value="${e}" selected="${e === 'foobar' ? 'selected' : false}">${e}</option>` })}</select>`
+
+      res = nanomorph(res, d)
+
+      t.equal(res.value, 'foobar')
+    })
   })
 }
 
