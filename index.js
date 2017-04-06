@@ -1,5 +1,8 @@
 var assert = require('assert')
 var morph = require('./lib/morph')
+var rootLabelRegex = /^data-onloadid/
+
+var ELEMENT_NODE = 1
 
 module.exports = nanomorph
 
@@ -19,6 +22,8 @@ module.exports = nanomorph
 function nanomorph (oldTree, newTree) {
   assert.equal(typeof oldTree, 'object', 'nanomorph: oldTree should be an object')
   assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object')
+
+  persistStatefulRoot(newTree, oldTree)
   var tree = walk(newTree, oldTree)
   return tree
 }
@@ -69,6 +74,20 @@ function updateChildren (newNode, oldNode) {
     } else if (retChildNode !== oldChildNode) {
       oldNode.replaceChild(retChildNode, oldChildNode)
       iNew--
+    }
+  }
+}
+
+function persistStatefulRoot (newNode, oldNode) {
+  if (!newNode || !oldNode || oldNode.nodeType !== ELEMENT_NODE || newNode.nodeType !== ELEMENT_NODE) return
+  var oldAttrs = oldNode.attributes
+  var attr, name
+  for (var i = 0, len = oldAttrs.length; i < len; i++) {
+    attr = oldAttrs[i]
+    name = attr.name
+    if (rootLabelRegex.test(name)) {
+      newNode.setAttribute(name, attr.value)
+      break
     }
   }
 }

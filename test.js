@@ -229,6 +229,29 @@ function abstractMorph (morph) {
   })
 }
 
+tape('should skip over data-onload attributes at root', function (t) {
+  var a = html`
+    <section data-onloadidzina="o0">
+      <input data-onloadidzina="o1">
+    </section>
+  `
+  var b = html`
+    <section>
+      <input autofocus="autofocus" value="" class="f6 normal">
+      <button class="bg-light-gray white ttu">save</button>
+    </section>
+  `
+  var c = html`
+    <section data-onloadidzina="o0">
+      <input autofocus="autofocus" value="" class="f6 normal">
+      <button class="bg-light-gray white ttu">save</button>
+    </section>
+  `
+  var d = nanomorph(a, b)
+  t.ok(c.isEqualNode(d), 'is equal')
+  t.end()
+})
+
 tape('chaos monkey #1', function (t) {
   var a, b
   a = html`<div r="r"><div></div></div>`
