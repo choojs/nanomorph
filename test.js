@@ -227,25 +227,117 @@ function abstractMorph (morph) {
       t.equal(a.outerHTML, expected, 'result was expected')
     })
 
-    t.test('if new <select> tree has the correct selected option', function (t) {
+    t.test('select should toggle right value', function (t) {
       t.plan(3)
-      var values = ['foo', 'bar']
-      var a = html`<select>${values.map(function (e) { return html`<option value="${e}" selected="${e === 'bar' ? 'selected' : null}">${e}</option>` })}</select>`
-      var b = html`<select>${values.map(function (e) { return html`<option value="${e}" selected="${e === 'foo' ? 'selected' : null}">${e}</option>` })}</select>`
-
+      var a = html`
+        <select>
+          <option>foo</option>
+          <option selected>bar</option>
+        </select>
+      `
+      var b = html`
+        <select>
+          <option selected>foo</option>
+          <option>bar</option>
+        </select>
+      `
       var res = nanomorph(a, b)
       t.equal(res.value, 'foo')
 
-      var c = html`<select>${values.map(function (e) { return html`<option value="${e}" selected="${e === 'bar' ? 'selected' : null}">${e}</option>` })}</select>`
-
+      var c = html`
+        <select>
+          <option>foo</option>
+          <option selected>bar</option>
+        </select>
+      `
       res = nanomorph(res, c)
       t.equal(res.value, 'bar')
 
-      values[2] = 'foobar'
-      var d = html`<select>${values.map(function (e) { return html`<option value="${e}" selected="${e === 'foobar' ? 'selected' : null}">${e}</option>` })}</select>`
-
+      var d = html`
+        <select>
+          <option>foo</option>
+          <option>bar</option>
+          <option selected>foobar</option>
+        </select>
+      `
       res = nanomorph(res, d)
+      t.equal(res.value, 'foobar')
+    })
 
+    t.test('select should allow "null" to be passed as value', function (t) {
+      t.plan(3)
+      var a = html`
+        <select>
+          <option selected=${null}>foo</option>
+          <option selected>bar</option>
+        </select>
+      `
+      var b = html`
+        <select>
+          <option selected>foo</option>
+          <option selected=${null}>bar</option>
+        </select>
+      `
+      var res = nanomorph(a, b)
+      t.equal(res.value, 'foo')
+      console.log('index', res.selectedIndex)
+      console.log(res.outerHTML)
+      console.log(b.outerHTML)
+
+      var c = html`
+        <select>
+          <option selected=${null}>foo</option>
+          <option selected>bar</option>
+        </select>
+      `
+      res = nanomorph(res, c)
+      t.equal(res.value, 'bar')
+
+      var d = html`
+        <select>
+          <option selected=${null}>foo</option>
+          <option selected=${null}>bar</option>
+          <option selected>foobar</option>
+        </select>
+      `
+      res = nanomorph(res, d)
+      t.equal(res.value, 'foobar')
+    })
+
+    t.test('select should allow "false" to be passed as value', function (t) {
+      t.plan(3)
+      var a = html`
+        <select>
+          <option selected=${false}>foo</option>
+          <option selected>bar</option>
+        </select>
+      `
+      var b = html`
+        <select>
+          <option selected>foo</option>
+          <option selected=${false}>bar</option>
+        </select>
+      `
+      var res = nanomorph(a, b)
+      t.equal(res.value, 'foo')
+
+      var c = html`
+        <select>
+          <option selected=${false}>foo</option>
+          <option selected>bar</option>
+        </select>
+      `
+      res = nanomorph(res, c)
+      t.equal(res.value, 'bar')
+
+      var d = html`
+        <select>
+          <option selected=${false}>foo</option>
+          <option selected=${false}>bar</option>
+          <option selected>foobar</option>
+        </select>
+      `
+      res = nanomorph(res, d)
       t.equal(res.value, 'foobar')
     })
   })
@@ -264,11 +356,13 @@ tape('chaos monkey #1', function (t) {
 var random = seed('choo choo')
 var props = null
 tape('fuzz tests', function (t) {
+  var q = 1; var w = 1; var e = 1
+  // var q = 7; var w = 5; var e = 3
   var a, b
-  for (var i = 0; i < 7; i++) {
-    for (var j = 0; j < 5; j++) {
+  for (var i = 0; i < q; i++) {
+    for (var j = 0; j < w; j++) {
       a = create(i, j, 0)
-      for (var k = 0; k < 3; k++) {
+      for (var k = 0; k < e; k++) {
         b = create(i, k, 1)
         props = { depth: i, propCount: j, offset: k }
         compare(a, b, t, props)
