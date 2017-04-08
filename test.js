@@ -248,6 +248,17 @@ function abstractMorph (morph) {
 
       t.equal(res.value, 'foobar')
     })
+
+    t.test('adding options to <select> should update selected correctly', function (t) {
+      t.plan(1)
+      var values = ['foo', 'bar']
+      var a = html`<select>${values.map(function (e) { return html`<option value="${e}" selected="${e === 'bar' ? 'selected' : false}">${e}</option>` })}</select>`
+      values.push('baz')
+      var b = html`<select>${values.map(function (e) { return html`<option value="${e}" selected="${e === 'baz' ? 'selected' : false}">${e}</option>` })}</select>`
+
+      var res = nanomorph(a, b)
+      t.equal(res.value, 'baz')
+    })
   })
 }
 
