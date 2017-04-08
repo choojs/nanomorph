@@ -195,7 +195,7 @@ function abstractMorph (morph) {
           </select>
         `
         var res = morph(a, b)
-        t.ok(res.children[1].hasAttributeNS(null, 'selected'))
+        t.equal(res.value, 'b', 'result was expected')
       })
     })
 
