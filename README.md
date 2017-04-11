@@ -69,7 +69,7 @@ $ npm install nanomorph
 ```
 
 ## See Also
-- [yoshuawuyts/nanoraf](https://github.com/yoshawuyts/nanoraf)
+- [yoshuawuyts/nanoraf](https://github.com/yoshuawuyts/nanoraf)
 - [yoshuawuyts/nanocomponent](https://github.com/yoshuawuyts/nanocomponent)
 - [yoshuawuyts/nanotick](https://github.com/yoshuawuyts/nanotick)
 - [bendrucker/document-ready](https://github.com/bendrucker/document-ready)
