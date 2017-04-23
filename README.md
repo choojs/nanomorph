@@ -49,6 +49,11 @@ decade old, and don't provide custom behavior by removing all hooks. This way
 we can guarantee a consistent, out-of-the box experience for all your diffing
 needs.
 
+### Why doesn't this work in Node?
+Node has no concept of a DOM - server side rendering is basically fancy string
+concatenation. If you want to combine HTML strings in Node, check out
+[hyperstream][hyperstream].
+
 ### This library seems cool, I'd like to build my own!
 Nanomorph was optimized for simplicity, but different situations might require
 different tradeoffs. So in order to allow folks to build their own
@@ -107,3 +112,4 @@ $ npm install nanomorph
 [mt]: https://en.wikipedia.org/wiki/Merkle_tree
 [own-vdom-1]: https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060
 [own-vdom-2]: https://medium.com/@deathmood/write-your-virtual-dom-2-props-events-a957608f5c76
+[hyperstream]: https://github.com/substack/hyperstream
