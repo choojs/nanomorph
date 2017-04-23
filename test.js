@@ -252,6 +252,46 @@ tape('should skip over data-onload attributes at root', function (t) {
   t.end()
 })
 
+tape('use id as a key hint', function (t) {
+  t.test('append an element', function (t) {
+    var a = html`<ul>
+      <li id="a"></li>
+      <li id="b"></li>
+      <li id="c"></li>
+    </ul>`
+    var b = html`<ul>
+      <li id="a"></li>
+      <li id="new"></li>
+      <li id="b"></li>
+      <li id="c"></li>
+    </ul>`
+
+    var oldFirst = a.children[0]
+    var oldSecond = a.children[1]
+    var oldThird = a.children[2]
+
+    var c = nanomorph(a, b)
+    t.equal(oldFirst, c.children[0], 'first is equal')
+    t.equal(oldSecond, c.children[2], 'moved second is equal')
+    t.equal(oldThird, c.children[3], 'moved third is equal')
+    t.end()
+  })
+
+  t.test('remove an element', function (t) {
+    var a = html`<ul><li id="a"></li><li id="b"></li><li id="c"></li></ul>`
+    var b = html`<ul><li id="a"></li><li id="c"></li></ul>`
+
+    var oldFirst = a.children[0]
+    var oldThird = a.children[2]
+
+    var c = nanomorph(a, b)
+
+    t.equal(c.children[0], oldFirst, 'first is equal')
+    t.equal(c.children[1], oldThird, 'second untouched')
+    t.end()
+  })
+})
+
 tape('chaos monkey #1', function (t) {
   var a, b
   a = html`<div r="r"><div></div></div>`
