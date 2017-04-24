@@ -49,17 +49,26 @@ function walk (newNode, oldNode) {
 // update the children of elements
 // (obj, obj) -> null
 function updateChildren (newNode, oldNode) {
-  if (!newNode.childNodes || !oldNode.childNodes) return
+  var newChildNodes = newNode.childNodes
+  var oldChildNodes = oldNode.childNodes
 
-  var newLength = newNode.childNodes.length
-  var oldLength = oldNode.childNodes.length
-  var length = Math.max(oldLength, newLength)
+  if (!newChildNodes || !oldChildNodes) return
+
+  var newLength = newChildNodes.length
+  var oldLength = oldChildNodes.length
+
+  if (newLength === 0) {
+    if (oldLength !== 0) oldNode.textContent = ''
+    return
+  }
+
+  var length = newLength > oldLength ? newLength : oldLength
 
   var iNew = 0
   var iOld = 0
   for (var i = 0; i < length; i++, iNew++, iOld++) {
-    var newChildNode = newNode.childNodes[iNew]
-    var oldChildNode = oldNode.childNodes[iOld]
+    var newChildNode = newChildNodes[iNew]
+    var oldChildNode = oldChildNodes[iOld]
     var retChildNode = walk(newChildNode, oldChildNode)
     if (!retChildNode) {
       if (oldChildNode) {
