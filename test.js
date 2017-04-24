@@ -226,6 +226,32 @@ function abstractMorph (morph) {
       a = morph(a, b)
       t.equal(a.outerHTML, expected, 'result was expected')
     })
+
+    t.test('should reorder child nodes with a key', function (t) {
+      t.plan(1)
+
+      var el = html`<li data-key=2></li>`
+
+      var tree = html`
+        <ul>
+          <li data-key=1></li>
+          ${el}
+          <li data-key=3></li>
+        </ul>
+      `
+
+      var newTree = html`
+        <ul>
+          <li data-key=2></li>
+          <li data-key=3></li>
+          <li data-key=4></li>
+        </ul>
+      `
+
+      tree = nanomorph(newTree, tree)
+      var child = tree.childNodes[1]
+      t.equal(el, child, 'childNode was preserved')
+    })
   })
 }
 
