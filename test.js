@@ -254,17 +254,22 @@ tape('should skip over data-onload attributes at root', function (t) {
 
 tape('use id as a key hint', function (t) {
   t.test('append an element', function (t) {
-    var a = html`<ul>
-      <li id="a"></li>
-      <li id="b"></li>
-      <li id="c"></li>
-    </ul>`
-    var b = html`<ul>
-      <li id="a"></li>
-      <li id="new"></li>
-      <li id="b"></li>
-      <li id="c"></li>
-    </ul>`
+    var a = html`
+      <ul>
+        <li id="a"></li>
+        <li id="b"></li>
+        <li id="c"></li>
+      </ul>
+    `
+
+    var b = html`
+      <ul>
+        <li id="a"></li>
+        <li id="new"></li>
+        <li id="b"></li>
+        <li id="c"></li>
+      </ul>
+    `
 
     var oldFirst = a.children[0]
     var oldSecond = a.children[1]
@@ -278,8 +283,20 @@ tape('use id as a key hint', function (t) {
   })
 
   t.test('remove an element', function (t) {
-    var a = html`<ul><li id="a"></li><li id="b"></li><li id="c"></li></ul>`
-    var b = html`<ul><li id="a"></li><li id="c"></li></ul>`
+    var a = html`
+      <ul>
+        <li id="a"></li>
+        <li id="b"></li>
+        <li id="c"></li>
+      </ul>
+    `
+
+    var b = html`
+      <ul>
+        <li id="a"></li>
+        <li id="c"></li>
+      </ul>
+    `
 
     var oldFirst = a.children[0]
     var oldThird = a.children[2]

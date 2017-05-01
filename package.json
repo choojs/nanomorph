@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "deps": "dependency-check . && dependency-check . --extra --no-dev",
-    "test": "standard && npm run deps && browserify test.js | tape-run"
+    "test": "standard && npm run deps && browserify test.js | tape-run",
+    "test:fast": "browserify test.js | tape-run"
   },
   "repository": "yoshuawuyts/nanomorph",
   "keywords": [
