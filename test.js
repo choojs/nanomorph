@@ -179,6 +179,24 @@ function abstractMorph (morph) {
         var res = morph(a, b)
         t.equal(res.childNodes[0].data, 'FOMO')
       })
+
+      t.test('should update selected option', function (t) {
+        t.plan(1)
+        var a = html`
+          <select>
+            <option value="a" selected>a</option>
+            <option value="b">b</option>
+          </select>
+        `
+        var b = html`
+          <select>
+            <option value="a">a</option>
+            <option value="b" selected>b</option>
+          </select>
+        `
+        var res = morph(a, b)
+        t.equal(res.value, 'b', 'result was expected')
+      })
     })
 
     t.test('lists', function (t) {
