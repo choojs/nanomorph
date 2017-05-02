@@ -157,6 +157,23 @@ function abstractMorph (morph) {
       })
     })
 
+    t.test('strict equality', function (t) {
+      t.test('should return a if true', function (t) {
+        t.plan(1)
+        var a = html`<div>YOLO</div>`
+        var res = morph(a, a)
+        t.equal(res.childNodes[0].data, 'YOLO')
+      })
+
+      t.test('should return b if false', function (t) {
+        t.plan(1)
+        var a = html`<div>YOLO</div>`
+        var b = html`<div>FOMO</div>`
+        var res = morph(a, b)
+        t.equal(res.childNodes[0].data, 'FOMO')
+      })
+    })
+
     t.test('isSameNode', function (t) {
       t.test('should return a if true', function (t) {
         t.plan(1)
