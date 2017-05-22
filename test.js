@@ -201,6 +201,71 @@ function abstractMorph (morph) {
       })
     })
 
+    t.test('selectables', function (t) {
+      t.test('should append nodes', function (t) {
+        t.plan(1)
+        var a = html`<select></select>`
+        var b = html`<select><option>1</option><option>2</option><option>3</option><option>4</option></select>`
+        var expected = b.outerHTML
+        var res = morph(a, b)
+        t.equal(res.outerHTML, expected, 'result was expected')
+      })
+
+      t.test('should append nodes (including optgroups)', function (t) {
+        t.plan(1)
+        var a = html`<select></select>`
+        var b = html`<select><optgroup><option>1</option><option>2</option></optgroup><option>3</option><option>4</option></select>`
+        var expected = b.outerHTML
+        var res = morph(a, b)
+        t.equal(res.outerHTML, expected, 'result was expected')
+      })
+
+      t.test('should remove nodes', function (t) {
+        t.plan(1)
+        var a = html`<select><option>1</option><option>2</option><option>3</option><option>4</option></select>`
+        var b = html`<select></select>`
+        var expected = b.outerHTML
+        var res = morph(a, b)
+        t.equal(res.outerHTML, expected, 'result was expected')
+      })
+
+      t.test('should remove nodes (including optgroups)', function (t) {
+        t.plan(1)
+        var a = html`<select><optgroup><option>1</option><option>2</option></optgroup><option>3</option><option>4</option></select>`
+        var b = html`<select></select>`
+        var expected = b.outerHTML
+        var res = morph(a, b)
+        t.equal(res.outerHTML, expected, 'result was expected')
+      })
+
+      t.test('should add selected', function (t) {
+        t.plan(1)
+        var a = html`<select><option>1</option><option>2</option></select>`
+        var b = html`<select><option>1</option><option selected>2</option></select>`
+        var expected = b.outerHTML
+        var res = morph(a, b)
+        t.equal(res.outerHTML, expected, 'result was expected')
+      })
+
+      t.test('should add selected (xhtml)', function (t) {
+        t.plan(1)
+        var a = html`<select><option>1</option><option>2</option></select>`
+        var b = html`<select><option>1</option><option selected="selected">2</option></select>`
+        var expected = b.outerHTML
+        var res = morph(a, b)
+        t.equal(res.outerHTML, expected, 'result was expected')
+      })
+
+      t.test('should switch selected', function (t) {
+        t.plan(1)
+        var a = html`<select><option selected="selected">1</option><option>2</option></select>`
+        var b = html`<select><option>1</option><option selected="selected">2</option></select>`
+        var expected = b.outerHTML
+        var res = morph(a, b)
+        t.equal(res.outerHTML, expected, 'result was expected')
+      })
+    })
+
     t.test('should replace nodes', function (t) {
       t.plan(1)
       var a = html`<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>`
