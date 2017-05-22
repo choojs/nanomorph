@@ -1,6 +1,6 @@
 {
   "name": "nanomorph",
-  "version": "4.0.5",
+  "version": "5.0.0",
   "description": "Hyper fast diffing algorithm for real DOM nodes",
   "main": "index.js",
   "scripts": {
