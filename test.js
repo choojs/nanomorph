@@ -149,10 +149,29 @@ function abstractMorph (morph) {
       })
 
       t.test('if new tree has value and old tree does too, set value from new tree', function (t) {
-        t.plan(1)
+        t.plan(4)
         var a = html`<input type="text" value="howdy" />`
         var b = html`<input type="text" value="hi" />`
         var res = morph(a, b)
+        t.equal(res.value, 'hi')
+
+        a = html`<input type="text"/>`
+        a.value = 'howdy'
+        b = html`<input type="text"/>`
+        b.value = 'hi'
+        res = morph(a, b)
+        t.equal(res.value, 'hi')
+
+        a = html`<input type="text" value="howdy"/>`
+        b = html`<input type="text"/>`
+        b.value = 'hi'
+        res = morph(a, b)
+        t.equal(res.value, 'hi')
+
+        a = html`<input type="text"/>`
+        a.value = 'howdy'
+        b = html`<input type="text" value="hi"/>`
+        res = morph(a, b)
         t.equal(res.value, 'hi')
       })
     })
