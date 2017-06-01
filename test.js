@@ -11,6 +11,18 @@ if (!module.parent) {
 }
 
 function specificTests (morph) {
+  tape('integration', function (t) {
+    var a = html`<ul>
+</ul>`
+    var b = html`<ul><li></li><li></li>
+</ul>`
+    console.log('a', a.outerHTML)
+    console.log('b', b.outerHTML)
+    compare(a, b, t)
+    console.log('morphed', a.outerHTML)
+    t.end()
+  })
+
   tape('nanomorph', function (t) {
     t.test('should assert input types', function (t) {
       t.plan(2)
