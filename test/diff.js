@@ -2,22 +2,7 @@ var tape = require('tape')
 var html = require('bel')
 var nanomorph = require('../')
 
-if (!module.parent) {
-  specificTests(nanomorph)
-  abstractMorph(nanomorph)
-} else {
-  module.exports = abstractMorph
-}
-
-function specificTests (morph) {
-  tape('nanomorph', function (t) {
-    t.test('should assert input types', function (t) {
-      t.plan(2)
-      t.throws(morph, /a/)
-      t.throws(morph.bind(null, {}), /b/)
-    })
-  })
-}
+module.exports = abstractMorph
 
 function abstractMorph (morph) {
   tape('abstract morph', function (t) {
@@ -352,23 +337,24 @@ tape('use id as a key hint', function (t) {
   })
 
   t.test('swap proxy elements', function (t) {
-    var childA = html`<li id="a"></li>`
-    var childB = html`<li id="b"></li>`
+    var nodeA = html`<li id="a"></li>`
     var placeholderA = html`<div id="a"></div>`
-    var placeholderB = html`<div id="b"></div>`
     placeholderA.isSameNode = function (el) {
-      return el === childA
-    }
-    placeholderB.isSameNode = function (el) {
-      return el === childB
+      return el === nodeA
     }
 
-    var a = html`<ul>${childA}${childB}</ul>`
+    var nodeB = html`<li id="b"></li>`
+    var placeholderB = html`<div id="b"></div>`
+    placeholderB.isSameNode = function (el) {
+      return el === nodeB
+    }
+
+    var a = html`<ul>${nodeA}${nodeB}</ul>`
     var b = html`<ul>${placeholderB}${placeholderA}</ul>`
     var c = nanomorph(a, b)
 
-    t.equal(c.children[0], childB)
-    t.equal(c.children[1], childA)
+    t.equal(c.children[0], nodeB, 'c.children[0] === childB')
+    t.equal(c.children[1], nodeA, 'c.children[1] === childA')
     t.end()
   })
 })
