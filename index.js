@@ -3,8 +3,8 @@ var morph = require('./lib/morph')
 
 module.exports = nanomorph
 
-// morph one tree into another tree
-// (obj, obj) -> obj
+// Morph one tree into another tree
+//
 // no parent
 //   -> same: diff and walk children
 //   -> not same: replace and return
@@ -23,8 +23,7 @@ function nanomorph (oldTree, newTree) {
   return tree
 }
 
-// walk and morph a dom tree
-// (obj, obj) -> obj
+// Walk and morph a dom tree
 function walk (newNode, oldNode) {
   if (!oldNode) {
     return newNode
@@ -41,42 +40,53 @@ function walk (newNode, oldNode) {
   }
 }
 
-// update the children of elements
+// Update the children of elements
 // (obj, obj) -> null
 function updateChildren (newNode, oldNode) {
   var oldChildren = oldNode.childNodes
   var newChildren = newNode.childNodes
+
   if (!newChildren || !oldChildren) return
 
-  var newIndex = 0
-  for (var oldIndex = 0; oldIndex < oldChildren.length; oldIndex++) {
-    var oldChildNode = oldChildren[oldIndex]
-    var oldId = oldChildNode.id
-    var newStartIndex = newIndex
+  var oldIndex = 0    // keep track of the array of old nodes
+  var newIndex = 0    // keep track of the array of new nodes
+  var newStartIndex
+  var oldChildNode
+  var oldId
+
+  // Iterate over all old child nodes, and make sure they
+  for (; oldIndex < oldChildren.length; oldIndex++) {
+    oldChildNode = oldChildren[oldIndex]
+    oldId = oldChildNode.id
+    newStartIndex = newIndex
     findNewChild()
   }
-  while (newChildren[newIndex]) oldNode.appendChild(newChildren[newIndex])
+
+  // Append all remaining nodes from the new array onto the old array
+  while (newChildren[newIndex]) {
+    oldNode.appendChild(newChildren[newIndex])
+  }
 
   function findNewChild () {
     for (; newIndex < newChildren.length; newIndex++) {
       var currentChild = newChildren[newIndex]
 
       if (oldId === currentChild.id) {
-        // found child in new list, add the missing ones
-        var retChildNode = walk(currentChild, oldChildNode)
-        if (retChildNode !== oldChildNode) {
-          oldNode.replaceChild(retChildNode, oldChildNode)
+        // Found child in new list, add the missing ones
+        var newChildNode = walk(currentChild, oldChildNode)
+
+        // The old node couldn't be morphed,
+        // replace the old node with the new node
+        if (newChildNode !== oldChildNode) {
+          oldNode.replaceChild(newChildNode, oldChildNode)
           newIndex--
         }
-        for (; newStartIndex < newIndex; newStartIndex++) {
-          oldNode.insertBefore(newChildren[newStartIndex], oldChildNode)
-          newIndex--
-          oldIndex++
-        }
+
         newIndex++
         return
       }
     }
+
     oldNode.removeChild(oldChildNode)
     oldIndex--
     newIndex = newStartIndex

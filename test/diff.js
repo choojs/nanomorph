@@ -322,6 +322,16 @@ tape('use id as a key hint', function (t) {
     t.end()
   })
 
+  t.test('copy over children', function (t) {
+    var a = html`<section>'hello'<section>`
+    var b = html`<section><div></div><section>`
+    var expected = b.outerHTML
+
+    var c = nanomorph(a, b)
+    t.equal(c.outerHTML, expected, expected)
+    t.end()
+  })
+
   t.test('remove an element', function (t) {
     var a = html`<ul><li id="a"></li><li id="b"></li><li id="c"></li></ul>`
     var b = html`<ul><li id="a"></li><li id="c"></li></ul>`
@@ -338,13 +348,13 @@ tape('use id as a key hint', function (t) {
 
   t.test('swap proxy elements', function (t) {
     var nodeA = html`<li id="a"></li>`
-    var placeholderA = html`<div id="a"></div>`
+    var placeholderA = html`<div id="a" data-placeholder=true></div>`
     placeholderA.isSameNode = function (el) {
       return el === nodeA
     }
 
     var nodeB = html`<li id="b"></li>`
-    var placeholderB = html`<div id="b"></div>`
+    var placeholderB = html`<div id="b" data-placeholder=true></div>`
     placeholderB.isSameNode = function (el) {
       return el === nodeB
     }
@@ -353,8 +363,8 @@ tape('use id as a key hint', function (t) {
     var b = html`<ul>${placeholderB}${placeholderA}</ul>`
     var c = nanomorph(a, b)
 
-    t.equal(c.children[0], nodeB, 'c.children[0] === childB')
-    t.equal(c.children[1], nodeA, 'c.children[1] === childA')
+    t.equal(c.children[0], nodeB, 'c.children[0] === nodeB')
+    t.equal(c.children[1], nodeA, 'c.children[1] === nodeA')
     t.end()
   })
 })
