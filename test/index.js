@@ -1,0 +1,2 @@
+require('./fuzz')
+require('./diff')
