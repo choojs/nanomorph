@@ -351,6 +351,27 @@ tape('use id as a key hint', function (t) {
     t.equal(c.children[1], oldThird, 'second untouched')
     t.end()
   })
+
+  t.test('swap proxy elements', function (t) {
+    var childA = html`<li id="a"></li>`
+    var childB = html`<li id="b"></li>`
+    var placeholderA = html`<div id="a"></div>`
+    var placeholderB = html`<div id="b"></div>`
+    placeholderA.isSameNode = function (el) {
+      return el === childA
+    }
+    placeholderB.isSameNode = function (el) {
+      return el === childB
+    }
+
+    var a = html`<ul>${childA}${childB}</ul>`
+    var b = html`<ul>${placeholderB}${placeholderA}</ul>`
+    var c = nanomorph(a, b)
+
+    t.equal(c.children[0], childB)
+    t.equal(c.children[1], childA)
+    t.end()
+  })
 })
 
 tape('chaos monkey #1', function (t) {
