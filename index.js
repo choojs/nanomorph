@@ -57,16 +57,21 @@ function updateChildren (newNode, oldNode) {
     var oldChild = null
 
     // 2.1) find matching old child
-    for (var j = 0; j < oldChildren.length; j++) {
-      var _oldChild = oldChildren[j]
-      if (
-        // 2.1.1) by id
-        (_oldChild.id && _oldChild.id === newChild.id) ||
-        // 2.1.2) by .isSameNode check
-        (_oldChild.isSameNode && _oldChild.isSameNode(newChild))
-      ) {
-        oldChild = _oldChild
-        break
+    if (newChild.id && document.body.contains(newChild)) {
+      // 2.1.1) by id if mounted
+      oldChild = document.getElementById(newChild.id)
+    } else {
+      for (var j = 0; j < oldChildren.length; j++) {
+        var _oldChild = oldChildren[j]
+        if (
+          // 2.1.1) by id
+          (_oldChild.id && _oldChild.id === newChild.id) ||
+          // 2.1.2) by .isSameNode check
+          (_oldChild.isSameNode && _oldChild.isSameNode(newChild))
+        ) {
+          oldChild = _oldChild
+          break
+        }
       }
     }
 
