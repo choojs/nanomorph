@@ -43,33 +43,28 @@ function walk (newNode, oldNode) {
 // Update the children of elements
 // (obj, obj) -> null
 function updateChildren (newNode, oldNode) {
-  var oldChildren = oldNode.childNodes
-  var newChildren = newNode.childNodes
-
-  if (!newChildren || !oldChildren) return
+  if (!newNode.childNodes || !oldNode.childNodes) return
 
   var oldIndex = 0    // keep track of the array of old nodes
-  var newIndex = 0    // keep track of the array of new nodes
   var newStartIndex
   var oldChildNode
   var oldId
 
   // Iterate over all old child nodes, and make sure they
-  for (; oldIndex < oldChildren.length; oldIndex++) {
-    oldChildNode = oldChildren[oldIndex]
+  for (; oldIndex < oldNode.childNodes.length; oldIndex++) {
+    oldChildNode = oldNode.childNodes[oldIndex]
     oldId = oldChildNode.id
-    newStartIndex = newIndex
     findNewChild()
   }
 
-  // Append all remaining nodes from the new array onto the old array
-  while (newChildren[newIndex]) {
-    oldNode.appendChild(newChildren[newIndex])
+  // Append all remaining nodes from the new node onto the old node
+  while (newNode.childNodes.length) {
+    oldNode.appendChild(newNode.childNodes[0])
   }
 
   function findNewChild () {
-    for (; newIndex < newChildren.length; newIndex++) {
-      var currentChild = newChildren[newIndex]
+    for (var newIndex = 0; newIndex < newNode.childNodes.length; newIndex++) {
+      var currentChild = newNode.childNodes[newIndex]
 
       if (oldId === currentChild.id) {
         // Found child in new list, add the missing ones
@@ -79,16 +74,13 @@ function updateChildren (newNode, oldNode) {
         // replace the old node with the new node
         if (newChildNode !== oldChildNode) {
           oldNode.replaceChild(newChildNode, oldChildNode)
-          newIndex--
         }
 
-        newIndex++
         return
       }
     }
 
     oldNode.removeChild(oldChildNode)
     oldIndex--
-    newIndex = newStartIndex
   }
 }
