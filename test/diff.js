@@ -57,8 +57,8 @@ function abstractMorph (morph) {
         t.plan(1)
         var a = html`<main><p>hello world</p></main>`
         var b = html`<main><p>hello you</p></main>`
-        var res = morph(a, b)
         var expected = b.outerHTML
+        var res = morph(a, b)
         t.equal(res.outerHTML, expected, 'result was expected')
       })
 

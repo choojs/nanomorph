@@ -43,44 +43,44 @@ function walk (newNode, oldNode) {
 // Update the children of elements
 // (obj, obj) -> null
 function updateChildren (newNode, oldNode) {
-  if (!newNode.childNodes || !oldNode.childNodes) return
-
-  var oldIndex = 0    // keep track of the array of old nodes
-  var newStartIndex
-  var oldChildNode
-  var oldId
-
-  // Iterate over all old child nodes, and make sure they
-  for (; oldIndex < oldNode.childNodes.length; oldIndex++) {
-    oldChildNode = oldNode.childNodes[oldIndex]
-    oldId = oldChildNode.id
-    findNewChild()
+  // 1) remove all old children
+  var oldChildren = []
+  while (oldNode.firstChild) {
+    oldChildren.push(oldNode.firstChild)
+    oldNode.removeChild(oldNode.firstChild)
   }
 
-  // Append all remaining nodes from the new node onto the old node
-  while (newNode.childNodes.length) {
-    oldNode.appendChild(newNode.childNodes[0])
-  }
+  // 2) insert new or updated children
+  // reverse iteration because we remove elements
+  for (var i = newNode.childNodes.length - 1; i >= 0; i--) {
+    var newChild = newNode.childNodes[i]
+    var oldChild = null
 
-  function findNewChild () {
-    for (var newIndex = 0; newIndex < newNode.childNodes.length; newIndex++) {
-      var currentChild = newNode.childNodes[newIndex]
-
-      if (oldId === currentChild.id) {
-        // Found child in new list, add the missing ones
-        var newChildNode = walk(currentChild, oldChildNode)
-
-        // The old node couldn't be morphed,
-        // replace the old node with the new node
-        if (newChildNode !== oldChildNode) {
-          oldNode.replaceChild(newChildNode, oldChildNode)
-        }
-
-        return
+    // 2.1) find matching old child
+    for (var j = 0; j < oldChildren.length; j++) {
+      var _oldChild = oldChildren[j]
+      if (
+        // 2.1.1) by id
+        (_oldChild.id && _oldChild.id === newChild.id) ||
+        // 2.1.2) by .isSameNode check
+        (_oldChild.isSameNode && _oldChild.isSameNode(newChild))
+      ) {
+        oldChild = _oldChild
+        break
       }
     }
 
-    oldNode.removeChild(oldChildNode)
-    oldIndex--
+    // 2.2) update
+    var insert = oldChild
+      // 2.2.1) morph
+      ? walk(newChild, oldChild)
+      // 2.2.2) new
+      : newChild
+    // insertBefore because of reverse iteration
+    if (oldNode.firstChild) {
+      oldNode.insertBefore(insert, oldNode.firstChild)
+    } else {
+      oldNode.appendChild(insert)
+    }
   }
 }
