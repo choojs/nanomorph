@@ -1,6 +1,8 @@
 var assert = require('assert')
 var morph = require('./lib/morph')
 
+var TEXT_NODE = 3
+
 module.exports = nanomorph
 
 // Morph one tree into another tree
@@ -43,17 +45,20 @@ function walk (newNode, oldNode) {
 // Update the children of elements
 // (obj, obj) -> null
 function updateChildren (newNode, oldNode) {
-  // 1) remove all old children
   var oldChildren = []
-  while (oldNode.firstChild) {
-    oldChildren.push(oldNode.firstChild)
-    oldNode.removeChild(oldNode.firstChild)
+  var oldChildrenToDelete = []
+  for (var i = 0; i < oldNode.childNodes.length; i++) {
+    oldChildren.push(oldNode.childNodes[i])
+    oldChildrenToDelete.push(oldNode.childNodes[i])
+  }
+  var newChildren = []
+  for (i = 0; i < newNode.childNodes.length; i++) {
+    newChildren.push(newNode.childNodes[i])
   }
 
   // 2) insert new or updated children
-  // reverse iteration because we remove elements
-  for (var i = newNode.childNodes.length - 1; i >= 0; i--) {
-    var newChild = newNode.childNodes[i]
+  for (i = 0; i < newChildren.length; i++) {
+    var newChild = newChildren[i]
     var oldChild = null
 
     // 2.1) find matching old child
@@ -67,7 +72,9 @@ function updateChildren (newNode, oldNode) {
           // 2.1.1) by id
           (_oldChild.id && _oldChild.id === newChild.id) ||
           // 2.1.2) by .isSameNode check
-          (_oldChild.isSameNode && _oldChild.isSameNode(newChild))
+          (_oldChild.isSameNode && _oldChild.isSameNode(newChild)) ||
+          // 2.1.3) same text node
+          (_oldChild.nodeType === TEXT_NODE && _oldChild.nodeValue === newChild.nodeValue)
         ) {
           oldChild = _oldChild
           break
@@ -75,17 +82,44 @@ function updateChildren (newNode, oldNode) {
       }
     }
 
-    // 2.2) update
-    var insert = oldChild
-      // 2.2.1) morph
-      ? walk(newChild, oldChild)
-      // 2.2.2) new
-      : newChild
-    // insertBefore because of reverse iteration
-    if (oldNode.firstChild) {
-      oldNode.insertBefore(insert, oldNode.firstChild)
+    var newIndex = i
+    if (oldChild) {
+      // mark as touched
+      oldChildrenToDelete.splice(oldChildrenToDelete.indexOf(oldChild), 1)
+
+      // 1) morph
+      var morphed = walk(newChild, oldChild)
+      if (morphed !== oldChild) {
+        oldNode.replaceChild(morphed, oldChild)
+      }
+
+      // 2) reorder
+      if (oldChildren.indexOf(oldChild) !== newIndex) {
+        insertAt(oldNode, morphed, newIndex)
+      }
     } else {
-      oldNode.appendChild(insert)
+      insertAt(oldNode, newChild, newIndex)
+    }
+  }
+
+  // remove children
+  for (i = 0; i < oldChildrenToDelete.length; i++) {
+    oldNode.removeChild(oldChildrenToDelete[i])
+  }
+}
+
+function insertAt (container, el, idx) {
+  if (idx === 0) {
+    if (container.childNodes.length) {
+      container.insertBefore(el, container.firstChild)
+    } else {
+      container.appendChild(el)
+    }
+  } else {
+    if (idx === container.childNodes.length) {
+      container.appendChild(el)
+    } else {
+      container.insertBefore(el, container.childNodes[idx])
     }
   }
 }
