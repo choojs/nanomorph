@@ -48,10 +48,8 @@ function updateChildren (newNode, oldNode) {
   var oldChild, newChild, morphed
   var offset = 0
   for (var i = 0; ; i++) {
-    console.log('i', i, 'old', oldNode.outerHTML, 'new', newNode.outerHTML)
     oldChild = oldNode.childNodes[i]
     newChild = newNode.childNodes[i - offset]
-    console.log('oldChild', oldChild && oldChild.outerHTML, 'newChild', newChild && newChild.outerHTML)
     if (!oldChild && !newChild) {
       break
     } else if (!newChild) {
