@@ -322,6 +322,34 @@ tape('use id as a key hint', function (t) {
     t.end()
   })
 
+  t.test('handle non-id elements', function (t) {
+    var a = html`<ul>
+      <li></li>
+      <li id="a"></li>
+      <li id="b"></li>
+      <li id="c"></li>
+      <li></li>
+    </ul>`
+    var b = html`<ul>
+      <li></li>
+      <li id="a"></li>
+      <li id="new"></li>
+      <li id="b"></li>
+      <li id="c"></li>
+      <li></li>
+    </ul>`
+
+    var oldSecond = a.children[1]
+    var oldThird = a.children[2]
+    var oldForth = a.children[3]
+
+    var c = nanomorph(a, b)
+    t.equal(oldSecond, c.children[1], 'second is equal')
+    t.equal(oldThird, c.children[3], 'moved third is equal')
+    t.equal(oldForth, c.children[4], 'moved forth is equal')
+    t.end()
+  })
+
   t.test('copy over children', function (t) {
     var a = html`<section>'hello'<section>`
     var b = html`<section><div></div><section>`

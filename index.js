@@ -45,66 +45,73 @@ function walk (newNode, oldNode) {
 // Update the children of elements
 // (obj, obj) -> null
 function updateChildren (newNode, oldNode) {
+  // 1) save nodes
   var oldChildren = []
-  var oldChildrenToDelete = []
   for (var i = 0; i < oldNode.childNodes.length; i++) {
-    oldChildren.push(oldNode.childNodes[i])
-    oldChildrenToDelete.push(oldNode.childNodes[i])
+    oldChildren.push({ node: oldNode.childNodes[i], new: null })
   }
   var newChildren = []
   for (i = 0; i < newNode.childNodes.length; i++) {
-    newChildren.push(newNode.childNodes[i])
+    newChildren.push({ node: newNode.childNodes[i], old: null })
   }
 
-  // 2) insert new or updated children
+  // 2) map new to old children
   for (i = 0; i < newChildren.length; i++) {
     var newChild = newChildren[i]
-    var oldChild = null
 
     // 2.1) find matching old child
-    if (newChild.id && document.body.contains(newChild)) {
+    if (newChild.node.id && document.body.contains(newChild.node)) {
       // 2.1.1) by id if mounted
-      oldChild = document.getElementById(newChild.id)
+      newChild.old = document.getElementById(newChild.node.id)
     } else {
       for (var j = 0; j < oldChildren.length; j++) {
-        var _oldChild = oldChildren[j]
+        var oldChild = oldChildren[j]
         if (
           // 2.1.1) by id
-          (_oldChild.id && _oldChild.id === newChild.id) ||
+          (oldChild.node.id && oldChild.node.id === newChild.node.id) ||
           // 2.1.2) by .isSameNode check
-          (_oldChild.isSameNode && _oldChild.isSameNode(newChild)) ||
+          (oldChild.node.isSameNode && oldChild.node.isSameNode(newChild.node)) ||
           // 2.1.3) same text node
-          (_oldChild.nodeType === TEXT_NODE && _oldChild.nodeValue === newChild.nodeValue)
+          (oldChild.node.nodeType === TEXT_NODE && oldChild.node.nodeValue === newChild.node.nodeValue)
         ) {
-          oldChild = _oldChild
+          newChild.old = oldChild
+          oldChild.new = newChild
           break
         }
       }
     }
+  }
 
-    var newIndex = i
-    if (oldChild) {
-      // mark as touched
-      oldChildrenToDelete.splice(oldChildrenToDelete.indexOf(oldChild), 1)
+  // 3) insert new children
+  for (i = 0; i < newChildren.length; i++) {
+    newChild = newChildren[i]
+    if (newChild.old) continue
+    newChild.old = oldChildren[i]
+    insertAt(oldNode, newChild.node, i)
+  }
 
-      // 1) morph
-      var morphed = walk(newChild, oldChild)
-      if (morphed !== oldChild) {
-        oldNode.replaceChild(morphed, oldChild)
-      }
-
-      // 2) reorder
-      if (oldChildren.indexOf(oldChild) !== newIndex) {
-        insertAt(oldNode, morphed, newIndex)
-      }
-    } else {
-      insertAt(oldNode, newChild, newIndex)
+  // 4) morph
+  for (i = 0; i < newChildren.length; i++) {
+    newChild = newChildren[i]
+    oldChild = newChild.old
+    if (!oldChild) continue
+    var morphed = walk(newChild.node, oldChild.node)
+    if (morphed !== oldChild.node) {
+      oldNode.replaceChild(morphed, oldChild.node)
     }
   }
 
-  // remove children
-  for (i = 0; i < oldChildrenToDelete.length; i++) {
-    oldNode.removeChild(oldChildrenToDelete[i])
+  // 5) remove old children
+  for (i = 0; i < oldChildren.length; i++) {
+    if (!oldChildren[i].new) oldNode.removeChild(oldChildren[i].node)
+  }
+
+  // 6) reorder
+  for (i = 0; i < newChildren.length; i++) {
+    newChild = newChildren[i]
+    oldChild = newChild.old
+    if (!oldChild || oldChildren.indexOf(oldChild) === i) continue
+    insertAt(oldNode, newChild.node, i)
   }
 }
 
