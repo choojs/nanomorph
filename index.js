@@ -31,7 +31,7 @@ function walk (newNode, oldNode) {
     return newNode
   } else if (!newNode) {
     return null
-  } else if (newNode.isSameNode && newNode.isSameNode(oldNode)) {
+  } else if (same(newNode, oldNode)) {
     return oldNode
   } else if (newNode.tagName !== oldNode.tagName) {
     return newNode
@@ -45,88 +45,52 @@ function walk (newNode, oldNode) {
 // Update the children of elements
 // (obj, obj) -> null
 function updateChildren (newNode, oldNode) {
-  // 1) save nodes
-  var oldChildren = []
-  for (var i = 0; i < oldNode.childNodes.length; i++) {
-    oldChildren.push({ node: oldNode.childNodes[i], new: null })
-  }
-  var newChildren = []
-  for (i = 0; i < newNode.childNodes.length; i++) {
-    newChildren.push({ node: newNode.childNodes[i], old: null })
-  }
-
-  // 2) map new to old children
-  for (i = 0; i < newChildren.length; i++) {
-    var newChild = newChildren[i]
-
-    // 2.1) find matching old child
-    if (newChild.node.id && document.body.contains(newChild.node)) {
-      // 2.1.1) by id if mounted
-      newChild.old = document.getElementById(newChild.node.id)
+  var oldChild, newChild, morphed
+  var offset = 0
+  for (var i = 0; ; i++) {
+    console.log('i', i, 'old', oldNode.outerHTML, 'new', newNode.outerHTML)
+    oldChild = oldNode.childNodes[i]
+    newChild = newNode.childNodes[i - offset]
+    console.log('oldChild', oldChild && oldChild.outerHTML, 'newChild', newChild && newChild.outerHTML)
+    if (!oldChild && !newChild) {
+      break
+    } else if (!newChild) {
+      oldNode.removeChild(oldChild)
+      i--
+    } else if (!oldChild) {
+      oldNode.appendChild(newChild)
+      offset++
+    } else if (same(newChild, oldChild)) {
+      morphed = walk(newChild, oldChild)
+      if (morphed !== oldChild) {
+        oldNode.replaceChild(morphed, oldChild)
+        offset++
+      }
     } else {
-      for (var j = 0; j < oldChildren.length; j++) {
-        var oldChild = oldChildren[j]
-        if (
-          // 2.1.1) by id
-          (oldChild.node.id && oldChild.node.id === newChild.node.id) ||
-          // 2.1.2) by .isSameNode check
-          (oldChild.node.isSameNode && oldChild.node.isSameNode(newChild.node)) ||
-          // 2.1.3) same text node
-          (oldChild.node.nodeType === TEXT_NODE && oldChild.node.nodeValue === newChild.node.nodeValue)
-        ) {
-          newChild.old = oldChild
-          oldChild.new = newChild
+      var oldMatch
+      for (var j = i; j < oldNode.childNodes.length; j++) {
+        if (same(oldNode.childNodes[j], newChild)) {
+          oldMatch = oldNode.childNodes[j]
           break
         }
       }
+      if (oldMatch) {
+        morphed = walk(newChild, oldMatch)
+        if (morphed !== oldMatch) offset++
+        oldNode.insertBefore(morphed, oldChild)
+      } else {
+        oldNode.insertBefore(newChild, oldChild)
+        if (!oldChild.id) oldNode.removeChild(oldChild)
+        offset++
+      }
     }
-  }
-
-  // 3) insert new children
-  for (i = 0; i < newChildren.length; i++) {
-    newChild = newChildren[i]
-    if (newChild.old) continue
-    newChild.old = oldChildren[i]
-    insertAt(oldNode, newChild.node, i)
-  }
-
-  // 4) morph
-  for (i = 0; i < newChildren.length; i++) {
-    newChild = newChildren[i]
-    oldChild = newChild.old
-    if (!oldChild) continue
-    var morphed = walk(newChild.node, oldChild.node)
-    if (morphed !== oldChild.node) {
-      oldNode.replaceChild(morphed, oldChild.node)
-    }
-  }
-
-  // 5) remove old children
-  for (i = 0; i < oldChildren.length; i++) {
-    if (!oldChildren[i].new) oldNode.removeChild(oldChildren[i].node)
-  }
-
-  // 6) reorder
-  for (i = 0; i < newChildren.length; i++) {
-    newChild = newChildren[i]
-    oldChild = newChild.old
-    if (!oldChild || oldChildren.indexOf(oldChild) === i) continue
-    insertAt(oldNode, newChild.node, i)
   }
 }
 
-function insertAt (container, el, idx) {
-  if (idx === 0) {
-    if (container.childNodes.length) {
-      container.insertBefore(el, container.firstChild)
-    } else {
-      container.appendChild(el)
-    }
-  } else {
-    if (idx === container.childNodes.length) {
-      container.appendChild(el)
-    } else {
-      container.insertBefore(el, container.childNodes[idx])
-    }
-  }
+function same (a, b) {
+  if (a.id) return a.id === b.id
+  if (a.isSameNode) return a.isSameNode(b)
+  if (a.tagName !== b.tagName) return false
+  if (a.type === TEXT_NODE) return a.nodeValue === b.nodeValue
+  return false
 }
