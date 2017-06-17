@@ -31,7 +31,7 @@ function walk (newNode, oldNode) {
     return newNode
   } else if (!newNode) {
     return null
-  } else if (same(newNode, oldNode)) {
+  } else if (newNode.isSameNode && newNode.isSameNode(oldNode)) {
     return oldNode
   } else if (newNode.tagName !== oldNode.tagName) {
     return newNode

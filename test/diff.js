@@ -397,4 +397,13 @@ tape('use id as a key hint', function (t) {
     t.equal(c.children[1], nodeA, 'c.children[1] === nodeA')
     t.end()
   })
+
+  t.test('id match still morphs', function (t) {
+    var a = html`<li id="12">FOO</li>`
+    var b = html`<li id="12">BAR</li>`
+    var target = b.outerHTML
+    var c = nanomorph(a, b)
+    t.equal(c.outerHTML, target)
+    t.end()
+  })
 })
