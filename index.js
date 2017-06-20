@@ -45,7 +45,7 @@ function walk (newNode, oldNode) {
 // Update the children of elements
 // (obj, obj) -> null
 function updateChildren (newNode, oldNode) {
-  var oldChild, newChild, morphed
+  var oldChild, newChild, morphed, oldMatch
   var offset = 0
   for (var i = 0; ; i++) {
     oldChild = oldNode.childNodes[i]
@@ -65,7 +65,7 @@ function updateChildren (newNode, oldNode) {
         offset++
       }
     } else {
-      var oldMatch
+      oldMatch = null
       for (var j = i; j < oldNode.childNodes.length; j++) {
         if (same(oldNode.childNodes[j], newChild)) {
           oldMatch = oldNode.childNodes[j]
@@ -78,7 +78,6 @@ function updateChildren (newNode, oldNode) {
         oldNode.insertBefore(morphed, oldChild)
       } else {
         oldNode.insertBefore(newChild, oldChild)
-        if (!oldChild.id) oldNode.removeChild(oldChild)
         offset++
       }
     }
