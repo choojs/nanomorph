@@ -310,6 +310,7 @@ tape('use id as a key hint', function (t) {
       <li id="b"></li>
       <li id="c"></li>
     </ul>`
+    var target = b.outerHTML
 
     var oldFirst = a.children[0]
     var oldSecond = a.children[1]
@@ -320,6 +321,7 @@ tape('use id as a key hint', function (t) {
     t.equal(oldFirst, c.children[0], 'first is equal')
     t.equal(oldSecond, c.children[2], 'moved second is equal')
     t.equal(oldThird, c.children[3], 'moved third is equal')
+    t.equal(c.outerHTML, target)
     t.end()
   })
 
@@ -339,6 +341,7 @@ tape('use id as a key hint', function (t) {
       <li id="c"></li>
       <li></li>
     </ul>`
+    var target = b.outerHTML
 
     var oldSecond = a.children[1]
     var oldThird = a.children[2]
@@ -349,6 +352,7 @@ tape('use id as a key hint', function (t) {
     t.equal(oldSecond, c.children[1], 'second is equal')
     t.equal(oldThird, c.children[3], 'moved third is equal')
     t.equal(oldForth, c.children[4], 'moved forth is equal')
+    t.equal(c.outerHTML, target)
     t.end()
   })
 
@@ -368,11 +372,13 @@ tape('use id as a key hint', function (t) {
 
     var oldFirst = a.children[0]
     var oldThird = a.children[2]
+    var expected = b.outerHTML
 
     var c = nanomorph(a, b)
 
     t.equal(c.children[0], oldFirst, 'first is equal')
     t.equal(c.children[1], oldThird, 'second untouched')
+    t.equal(c.outerHTML, expected)
     t.end()
   })
 
