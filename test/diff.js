@@ -412,4 +412,23 @@ tape('use id as a key hint', function (t) {
     t.equal(c.outerHTML, target)
     t.end()
   })
+
+  t.test('remove orphaned keyed nodes', function (t) {
+    var a = html`
+      <div>
+        <div>1</div>
+        <li id="a">a</li>
+      </div>
+    `
+    var b = html`
+      <div>
+        <div>2</div>
+        <li id="b">b</li>
+      </div>
+    `
+    var expected = b.outerHTML
+    var c = nanomorph(a, b)
+    t.equal(c.outerHTML, expected)
+    t.end()
+  })
 })
