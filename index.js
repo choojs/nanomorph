@@ -2,7 +2,7 @@ var assert = require('assert')
 var morph = require('./lib/morph')
 
 var TEXT_NODE = 3
-var debug = false
+var DEBUG = false
 
 module.exports = nanomorph
 
@@ -20,7 +20,7 @@ module.exports = nanomorph
 // nodes are the same
 //   -> walk all child nodes and append to old node
 function nanomorph (oldTree, newTree) {
-  if (debug) {
+  if (DEBUG) {
     console.log(
     'nanomorph\nold\n  %s\nnew\n  %s',
     oldTree && oldTree.outerHTML,
@@ -30,13 +30,13 @@ function nanomorph (oldTree, newTree) {
   assert.equal(typeof oldTree, 'object', 'nanomorph: oldTree should be an object')
   assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object')
   var tree = walk(newTree, oldTree)
-  if (debug) console.log('=> morphed\n  %s', tree.outerHTML)
+  if (DEBUG) console.log('=> morphed\n  %s', tree.outerHTML)
   return tree
 }
 
 // Walk and morph a dom tree
 function walk (newNode, oldNode) {
-  if (debug) {
+  if (DEBUG) {
     console.log(
     'walk\nold\n  %s\nnew\n  %s',
     oldNode && oldNode.outerHTML,
@@ -61,7 +61,7 @@ function walk (newNode, oldNode) {
 // Update the children of elements
 // (obj, obj) -> null
 function updateChildren (newNode, oldNode) {
-  if (debug) {
+  if (DEBUG) {
     console.log(
     'updateChildren\nold\n  %s\nnew\n  %s',
     oldNode && oldNode.outerHTML,
@@ -76,7 +76,7 @@ function updateChildren (newNode, oldNode) {
   for (var i = 0; ; i++) {
     oldChild = oldNode.childNodes[i]
     newChild = newNode.childNodes[i - offset]
-    if (debug) {
+    if (DEBUG) {
       console.log(
       '===\n- old\n  %s\n- new\n  %s',
       oldChild && oldChild.outerHTML,
