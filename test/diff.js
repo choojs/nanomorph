@@ -1,24 +1,8 @@
-var seed = require('math-random-seed')
 var tape = require('tape')
 var html = require('bel')
-var nanomorph = require('./')
+var nanomorph = require('../')
 
-if (!module.parent) {
-  specificTests(nanomorph)
-  abstractMorph(nanomorph)
-} else {
-  module.exports = abstractMorph
-}
-
-function specificTests (morph) {
-  tape('nanomorph', function (t) {
-    t.test('should assert input types', function (t) {
-      t.plan(2)
-      t.throws(morph, /a/)
-      t.throws(morph.bind(null, {}), /b/)
-    })
-  })
-}
+module.exports = abstractMorph
 
 function abstractMorph (morph) {
   tape('abstract morph', function (t) {
@@ -73,8 +57,8 @@ function abstractMorph (morph) {
         t.plan(1)
         var a = html`<main><p>hello world</p></main>`
         var b = html`<main><p>hello you</p></main>`
-        var res = morph(a, b)
         var expected = b.outerHTML
+        var res = morph(a, b)
         t.equal(res.outerHTML, expected, 'result was expected')
       })
 
@@ -326,6 +310,7 @@ tape('use id as a key hint', function (t) {
       <li id="b"></li>
       <li id="c"></li>
     </ul>`
+    var target = b.outerHTML
 
     var oldFirst = a.children[0]
     var oldSecond = a.children[1]
@@ -335,6 +320,47 @@ tape('use id as a key hint', function (t) {
     t.equal(oldFirst, c.children[0], 'first is equal')
     t.equal(oldSecond, c.children[2], 'moved second is equal')
     t.equal(oldThird, c.children[3], 'moved third is equal')
+    t.equal(c.outerHTML, target)
+    t.end()
+  })
+
+  t.test('handle non-id elements', function (t) {
+    var a = html`<ul>
+      <li></li>
+      <li id="a"></li>
+      <li id="b"></li>
+      <li id="c"></li>
+      <li></li>
+    </ul>`
+    var b = html`<ul>
+      <li></li>
+      <li id="a"></li>
+      <li id="new"></li>
+      <li id="b"></li>
+      <li id="c"></li>
+      <li></li>
+    </ul>`
+    var target = b.outerHTML
+
+    var oldSecond = a.children[1]
+    var oldThird = a.children[2]
+    var oldForth = a.children[3]
+
+    var c = nanomorph(a, b)
+    t.equal(oldSecond, c.children[1], 'second is equal')
+    t.equal(oldThird, c.children[3], 'moved third is equal')
+    t.equal(oldForth, c.children[4], 'moved forth is equal')
+    t.equal(c.outerHTML, target)
+    t.end()
+  })
+
+  t.test('copy over children', function (t) {
+    var a = html`<section>'hello'<section>`
+    var b = html`<section><div></div><section>`
+    var expected = b.outerHTML
+
+    var c = nanomorph(a, b)
+    t.equal(c.outerHTML, expected, expected)
     t.end()
   })
 
@@ -344,75 +370,100 @@ tape('use id as a key hint', function (t) {
 
     var oldFirst = a.children[0]
     var oldThird = a.children[2]
+    var expected = b.outerHTML
 
     var c = nanomorph(a, b)
 
     t.equal(c.children[0], oldFirst, 'first is equal')
     t.equal(c.children[1], oldThird, 'second untouched')
+    t.equal(c.outerHTML, expected)
+    t.end()
+  })
+
+  t.test('swap proxy elements', function (t) {
+    var nodeA = html`<li id="a"></li>`
+    var placeholderA = html`<div id="a" data-placeholder=true></div>`
+    placeholderA.isSameNode = function (el) {
+      return el === nodeA
+    }
+
+    var nodeB = html`<li id="b"></li>`
+    var placeholderB = html`<div id="b" data-placeholder=true></div>`
+    placeholderB.isSameNode = function (el) {
+      return el === nodeB
+    }
+
+    var a = html`<ul>${nodeA}${nodeB}</ul>`
+    var b = html`<ul>${placeholderB}${placeholderA}</ul>`
+    var c = nanomorph(a, b)
+
+    t.equal(c.children[0], nodeB, 'c.children[0] === nodeB')
+    t.equal(c.children[1], nodeA, 'c.children[1] === nodeA')
+    t.end()
+  })
+
+  t.test('id match still morphs', function (t) {
+    var a = html`<li id="12">FOO</li>`
+    var b = html`<li id="12">BAR</li>`
+    var target = b.outerHTML
+    var c = nanomorph(a, b)
+    t.equal(c.outerHTML, target)
+    t.end()
+  })
+
+  t.test('remove orphaned keyed nodes', function (t) {
+    var a = html`
+      <div>
+        <div>1</div>
+        <li id="a">a</li>
+      </div>
+    `
+    var b = html`
+      <div>
+        <div>2</div>
+        <li id="b">b</li>
+      </div>
+    `
+    var expected = b.outerHTML
+    var c = nanomorph(a, b)
+    t.equal(c.outerHTML, expected)
+    t.end()
+  })
+
+  t.test('whitespace', function (t) {
+    var a = html`<ul>
+</ul>`
+    var b = html`<ul><li></li><li></li>
+</ul>`
+    var expected = b.outerHTML
+    var c = nanomorph(a, b)
+    t.equal(c.outerHTML, expected)
+    t.end()
+  })
+
+  t.test('nested with id', function (t) {
+    var child = html`<div id="child"></div>`
+    var placeholder = html`<div id="child"></div>`
+    placeholder.isSameNode = function (el) { return el === child }
+
+    var a = html`<div><div id="parent">${child}</div></div>`
+    var b = html`<div><div id="parent">${placeholder}</div></div>`
+
+    var c = nanomorph(a, b)
+    t.equal(c.children[0].children[0], child, 'is the same node')
+    t.end()
+  })
+
+  t.test('nested without id', function (t) {
+    var child = html`<div id="child">child</div>`
+    var placeholder = html`<div id="child">placeholder</div>`
+    placeholder.isSameNode = function (el) { return el === child }
+
+    var a = html`<div><div>${child}</div></div>`
+    var b = html`<div><div>${placeholder}</div></div>`
+
+    var c = nanomorph(a, b)
+    t.equal(c.children[0].children[0], child, 'is the same node')
     t.end()
   })
 })
-
-tape('chaos monkey #1', function (t) {
-  var a, b
-  a = html`<div r="r"><div></div></div>`
-  b = html`<div io="iO" vq="Vq"><div></div></div>`
-  compare(a, b, t)
-  t.end()
-})
-
-// modeled after
-// https://github.com/mafintosh/hypercore/blob/master/test/tree-index.js
-var random = seed('choo choo')
-var props = null
-tape('fuzz tests', function (t) {
-  var a, b
-  for (var i = 0; i < 7; i++) {
-    for (var j = 0; j < 5; j++) {
-      a = create(i, j, 0)
-      for (var k = 0; k < 3; k++) {
-        b = create(i, k, 1)
-        props = { depth: i, propCount: j, offset: k }
-        compare(a, b, t, props)
-      }
-    }
-  }
-  t.end()
-})
-
-function create (depth, propCount, offset) {
-  var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  var root = document.createElement('div')
-  var el = root
-  var _el = null
-  var str = ''
-  offset += 100
-  for (var i = 0; i < depth; i++) {
-    _el = document.createElement('div')
-    el.appendChild(_el)
-    for (var j = 0; j < propCount; j++) {
-      str = ''
-      for (var k = propCount; k > 0; --k) {
-        str += chars[Math.floor(random() * 100) % chars.length]
-      }
-      el.setAttribute(str, str)
-      offset++
-    }
-    el = _el
-  }
-  return root
-}
-
-function compare (a, b, t, props) {
-  props = props ? JSON.stringify(props) : undefined
-  var expected = b.cloneNode(true)
-  var res = nanomorph(a, b)
-  deepEqualNode(res, expected, t, props)
-}
-
-function deepEqualNode (a, b, t, props) {
-  t.ok(a.isEqualNode(b), props)
-  for (var i = a.childNodes.length - 1; i >= 0; --i) {
-    deepEqualNode(a.childNodes[i], a.childNodes[i], t, props)
-  }
-}

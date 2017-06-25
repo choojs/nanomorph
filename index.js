@@ -1,10 +1,13 @@
 var assert = require('assert')
 var morph = require('./lib/morph')
 
+var TEXT_NODE = 3
+var DEBUG = false
+
 module.exports = nanomorph
 
-// morph one tree into another tree
-// (obj, obj) -> obj
+// Morph one tree into another tree
+//
 // no parent
 //   -> same: diff and walk children
 //   -> not same: replace and return
@@ -17,15 +20,29 @@ module.exports = nanomorph
 // nodes are the same
 //   -> walk all child nodes and append to old node
 function nanomorph (oldTree, newTree) {
+  if (DEBUG) {
+    console.log(
+    'nanomorph\nold\n  %s\nnew\n  %s',
+    oldTree && oldTree.outerHTML,
+    newTree && newTree.outerHTML
+  )
+  }
   assert.equal(typeof oldTree, 'object', 'nanomorph: oldTree should be an object')
   assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object')
   var tree = walk(newTree, oldTree)
+  if (DEBUG) console.log('=> morphed\n  %s', tree.outerHTML)
   return tree
 }
 
-// walk and morph a dom tree
-// (obj, obj) -> obj
+// Walk and morph a dom tree
 function walk (newNode, oldNode) {
+  if (DEBUG) {
+    console.log(
+    'walk\nold\n  %s\nnew\n  %s',
+    oldNode && oldNode.outerHTML,
+    newNode && newNode.outerHTML
+  )
+  }
   if (!oldNode) {
     return newNode
   } else if (!newNode) {
@@ -41,44 +58,92 @@ function walk (newNode, oldNode) {
   }
 }
 
-// update the children of elements
+// Update the children of elements
 // (obj, obj) -> null
 function updateChildren (newNode, oldNode) {
-  var oldChildren = oldNode.childNodes
-  var newChildren = newNode.childNodes
-  if (!newChildren || !oldChildren) return
-
-  var newIndex = 0
-  for (var oldIndex = 0; oldIndex < oldChildren.length; oldIndex++) {
-    var oldChildNode = oldChildren[oldIndex]
-    var oldId = oldChildNode.id
-    var newStartIndex = newIndex
-    findNewChild()
+  if (DEBUG) {
+    console.log(
+    'updateChildren\nold\n  %s\nnew\n  %s',
+    oldNode && oldNode.outerHTML,
+    newNode && newNode.outerHTML
+  )
   }
-  while (newChildren[newIndex]) oldNode.appendChild(newChildren[newIndex])
+  var oldChild, newChild, morphed, oldMatch
 
-  function findNewChild () {
-    for (; newIndex < newChildren.length; newIndex++) {
-      var currentChild = newChildren[newIndex]
+  // The offset is only ever increased, and used for [i - offset] in the loop
+  var offset = 0
 
-      if (oldId === currentChild.id) {
-        // found child in new list, add the missing ones
-        var retChildNode = walk(currentChild, oldChildNode)
-        if (retChildNode !== oldChildNode) {
-          oldNode.replaceChild(retChildNode, oldChildNode)
-          newIndex--
+  for (var i = 0; ; i++) {
+    oldChild = oldNode.childNodes[i]
+    newChild = newNode.childNodes[i - offset]
+    if (DEBUG) {
+      console.log(
+      '===\n- old\n  %s\n- new\n  %s',
+      oldChild && oldChild.outerHTML,
+      newChild && newChild.outerHTML
+    )
+    }
+    // Both nodes are empty, do nothing
+    if (!oldChild && !newChild) {
+      break
+
+    // There is no new child, remove old
+    } else if (!newChild) {
+      oldNode.removeChild(oldChild)
+      i--
+
+    // There is no old child, add new
+    } else if (!oldChild) {
+      oldNode.appendChild(newChild)
+      offset++
+
+    // Both nodes are the same, morph
+    } else if (same(newChild, oldChild)) {
+      morphed = walk(newChild, oldChild)
+      if (morphed !== oldChild) {
+        oldNode.replaceChild(morphed, oldChild)
+        offset++
+      }
+
+    // Both nodes do not share an ID or a placeholder, try reorder
+    } else {
+      oldMatch = null
+
+      // Try and find a similar node somewhere in the tree
+      for (var j = i; j < oldNode.childNodes.length; j++) {
+        if (same(oldNode.childNodes[j], newChild)) {
+          oldMatch = oldNode.childNodes[j]
+          break
         }
-        for (; newStartIndex < newIndex; newStartIndex++) {
-          oldNode.insertBefore(newChildren[newStartIndex], oldChildNode)
-          newIndex--
-          oldIndex++
+      }
+
+      // If there was a node with the same ID or placeholder in the old list
+      if (oldMatch) {
+        morphed = walk(newChild, oldMatch)
+        if (morphed !== oldMatch) offset++
+        oldNode.insertBefore(morphed, oldChild)
+
+      // It's safe to morph two nodes in-place if neither has an ID
+      } else if (!newChild.id && !oldChild.id) {
+        morphed = walk(newChild, oldChild)
+        if (morphed !== oldChild) {
+          oldNode.replaceChild(morphed, oldChild)
+          offset++
         }
-        newIndex++
-        return
+
+      // Insert the node at the index if we couldn't morph or find a matching node
+      } else {
+        oldNode.insertBefore(newChild, oldChild)
+        offset++
       }
     }
-    oldNode.removeChild(oldChildNode)
-    oldIndex--
-    newIndex = newStartIndex
   }
+}
+
+function same (a, b) {
+  if (a.id) return a.id === b.id
+  if (a.isSameNode) return a.isSameNode(b)
+  if (a.tagName !== b.tagName) return false
+  if (a.type === TEXT_NODE) return a.nodeValue === b.nodeValue
+  return false
 }
