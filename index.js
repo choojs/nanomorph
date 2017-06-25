@@ -109,8 +109,6 @@ function updateChildren (newNode, oldNode) {
     } else {
       oldMatch = null
 
-      console.log('hitting reorder')
-
       // Try and find a similar node somewhere in the tree
       for (var j = i; j < oldNode.childNodes.length; j++) {
         if (same(oldNode.childNodes[j], newChild)) {
@@ -124,12 +122,16 @@ function updateChildren (newNode, oldNode) {
         morphed = walk(newChild, oldMatch)
         if (morphed !== oldMatch) offset++
         oldNode.insertBefore(morphed, oldChild)
+
+      // It's safe to morph two nodes in-place if neither has an ID
       } else if (!newChild.id && !oldChild.id) {
         morphed = walk(newChild, oldChild)
         if (morphed !== oldChild) {
           oldNode.replaceChild(morphed, oldChild)
           offset++
         }
+
+      // Insert the node at the index if we couldn't morph or find a matching node
       } else {
         oldNode.insertBefore(newChild, oldChild)
         offset++
