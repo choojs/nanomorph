@@ -431,4 +431,56 @@ tape('use id as a key hint', function (t) {
     t.equal(c.outerHTML, expected)
     t.end()
   })
+
+  t.test('whitespace', function (t) {
+    var a = html`<ul>
+</ul>`
+    var b = html`<ul><li></li><li></li>
+</ul>`
+    var expected = b.outerHTML
+    var c = nanomorph(a, b)
+    t.equal(c.outerHTML, expected)
+    t.end()
+  })
+
+  t.test('nested with id', function (t) {
+    var child = html`<div id="child"></div>`
+    var placeholder = html`<div id="child"></div>`
+    placeholder.isSameNode = function (el) { return el === child }
+
+    var a = html`<div><div id="parent">${child}</div></div>`
+    var b = html`<div><div id="parent">${placeholder}</div></div>`
+
+    var expected = b.outerHTML
+    var c = nanomorph(a, b)
+    t.equal(c.children[0].children[0], child)
+    t.end()
+  })
+
+  t.test('nested without id', function (t) {
+    var child = html`<div id="child">child</div>`
+    var placeholder = html`<div id="child">placeholder</div>`
+    placeholder.isSameNode = function (el) { return el === child }
+
+    var a = html`<div><div>${child}</div></div>`
+    var b = html`<div><div>${placeholder}</div></div>`
+
+    var expected = b.outerHTML
+    var c = nanomorph(a, b)
+    t.equal(c.children[0].children[0], child)
+    t.end()
+  })
+
+  /* t.test('integration', function (t) {
+    var a = html`
+
+    `
+    var b = html`
+
+    `
+    var expected = b.outerHTML
+    var c = nanomorph(a, b)
+    t.equal(c.outerHTML, expected)
+    t.end()
+  }) */
 })
