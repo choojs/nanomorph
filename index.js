@@ -2,7 +2,7 @@ var assert = require('assert')
 var morph = require('./lib/morph')
 
 var TEXT_NODE = 3
-var DEBUG = false
+// var DEBUG = false
 
 module.exports = nanomorph
 
@@ -20,29 +20,29 @@ module.exports = nanomorph
 // nodes are the same
 //   -> walk all child nodes and append to old node
 function nanomorph (oldTree, newTree) {
-  if (DEBUG) {
-    console.log(
-    'nanomorph\nold\n  %s\nnew\n  %s',
-    oldTree && oldTree.outerHTML,
-    newTree && newTree.outerHTML
-  )
-  }
+  // if (DEBUG) {
+  //   console.log(
+  //   'nanomorph\nold\n  %s\nnew\n  %s',
+  //   oldTree && oldTree.outerHTML,
+  //   newTree && newTree.outerHTML
+  // )
+  // }
   assert.equal(typeof oldTree, 'object', 'nanomorph: oldTree should be an object')
   assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object')
   var tree = walk(newTree, oldTree)
-  if (DEBUG) console.log('=> morphed\n  %s', tree.outerHTML)
+  // if (DEBUG) console.log('=> morphed\n  %s', tree.outerHTML)
   return tree
 }
 
 // Walk and morph a dom tree
 function walk (newNode, oldNode) {
-  if (DEBUG) {
-    console.log(
-    'walk\nold\n  %s\nnew\n  %s',
-    oldNode && oldNode.outerHTML,
-    newNode && newNode.outerHTML
-  )
-  }
+  // if (DEBUG) {
+  //   console.log(
+  //   'walk\nold\n  %s\nnew\n  %s',
+  //   oldNode && oldNode.outerHTML,
+  //   newNode && newNode.outerHTML
+  // )
+  // }
   if (!oldNode) {
     return newNode
   } else if (!newNode) {
@@ -61,13 +61,13 @@ function walk (newNode, oldNode) {
 // Update the children of elements
 // (obj, obj) -> null
 function updateChildren (newNode, oldNode) {
-  if (DEBUG) {
-    console.log(
-    'updateChildren\nold\n  %s\nnew\n  %s',
-    oldNode && oldNode.outerHTML,
-    newNode && newNode.outerHTML
-  )
-  }
+  // if (DEBUG) {
+  //   console.log(
+  //   'updateChildren\nold\n  %s\nnew\n  %s',
+  //   oldNode && oldNode.outerHTML,
+  //   newNode && newNode.outerHTML
+  // )
+  // }
   var oldChild, newChild, morphed, oldMatch
 
   // The offset is only ever increased, and used for [i - offset] in the loop
@@ -76,13 +76,13 @@ function updateChildren (newNode, oldNode) {
   for (var i = 0; ; i++) {
     oldChild = oldNode.childNodes[i]
     newChild = newNode.childNodes[i - offset]
-    if (DEBUG) {
-      console.log(
-      '===\n- old\n  %s\n- new\n  %s',
-      oldChild && oldChild.outerHTML,
-      newChild && newChild.outerHTML
-    )
-    }
+    // if (DEBUG) {
+    //   console.log(
+    //   '===\n- old\n  %s\n- new\n  %s',
+    //   oldChild && oldChild.outerHTML,
+    //   newChild && newChild.outerHTML
+    // )
+    // }
     // Both nodes are empty, do nothing
     if (!oldChild && !newChild) {
       break
