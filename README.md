@@ -10,8 +10,14 @@ var morph = require('nanomorph')
 var html = require('bel')
 
 var tree = html`<div>hello people</div>`
+document.body.appendChild(tree)
+// document.body === <body><div>hello people</div></body>
+
 morph(tree, html`<div>nanananana-na-no</div>`)
+// document.body === <body><div>nanananana-na-no</div></body>
+
 morph(tree, html`<div>teeny, tiny, tin bottle</div>`)
+// document.body === <body><div>teeny, tiny, tin bottle</div></body>
 ```
 
 ## Clearing Input Values
