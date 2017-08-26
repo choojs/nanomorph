@@ -22,7 +22,20 @@ html`<input class="beep">`               // omit property all together
 ```
 
 ## Reordering Lists
-[tbi]
+It's common to work with lists of elements on the DOM. Adding, removing or
+reordering elements in a list can be rather expensive. To optimize this you can
+add an `id` attribute to a DOM node. When reordering nodes it will compare
+nodes with the same ID against each other, resulting in far fewer re-renders.
+This is especially potent when coupled with DOM node caching.
+
+```js
+var el = html`
+  <section>
+    <div id="first">hello</div>
+    <div id="second">world</div>
+  </section>
+`
+```
 
 ## Caching DOM elements
 Sometimes we want to tell the algorithm to not evaluate certain nodes (and its
