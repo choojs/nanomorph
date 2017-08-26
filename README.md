@@ -113,10 +113,10 @@ $ npm install nanomorph
 [1]: https://nodejs.org/api/documentation.html#documentation_stability_index
 [2]: https://img.shields.io/npm/v/nanomorph.svg?style=flat-square
 [3]: https://npmjs.org/package/nanomorph
-[4]: https://img.shields.io/travis/yoshuawuyts/nanomorph/master.svg?style=flat-square
-[5]: https://travis-ci.org/yoshuawuyts/nanomorph
-[6]: https://img.shields.io/codecov/c/github/yoshuawuyts/nanomorph/master.svg?style=flat-square
-[7]: https://codecov.io/github/yoshuawuyts/nanomorph
+[4]: https://img.shields.io/travis/choojs/nanomorph/master.svg?style=flat-square
+[5]: https://travis-ci.org/choojs/nanomorph
+[6]: https://img.shields.io/codecov/c/github/choojs/nanomorph/master.svg?style=flat-square
+[7]: https://codecov.io/github/choojs/nanomorph
 [8]: http://img.shields.io/npm/dm/nanomorph.svg?style=flat-square
 [9]: https://npmjs.org/package/nanomorph
 [10]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
