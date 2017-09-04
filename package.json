@@ -20,7 +20,12 @@
     "yo-yo"
   ],
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "nanoassert": "^1.1.0",
+  },
+  "browser": {
+    "assert": "nanoassert"
+  },
   "devDependencies": {
     "bankai": "^7.6.2",
     "bel": "^4.4.3",
