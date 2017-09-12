@@ -21,7 +21,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "nanoassert": "^1.1.0",
+    "nanoassert": "^1.1.0"
   },
   "browser": {
     "assert": "nanoassert"
