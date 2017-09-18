@@ -294,6 +294,74 @@ function abstractMorph (morph) {
       a = morph(a, b)
       t.equal(a.outerHTML, expected, 'result was expected')
     })
+
+    t.test('lifecycle callbacks', function (t) {
+      t.test('should call oncreate when element is appended', function (t) {
+        t.plan(5)
+        var calledParent = 0
+        var calledChild = 0
+        // eslint-disable-next-line no-unused-vars
+        var a = html`
+          <body></body>
+        `
+        var b = html`
+          <body>
+            <div oncreate=${oncreateParent}></div>
+          </body>
+        `
+
+        a = morph(a, b)
+        t.equal(calledParent, 1, 'should have called oncreate on new element')
+
+        b = html`
+          <body>
+            <div oncreate=${oncreateParent}>
+              <div oncreate=${oncreateChild} />
+            </div>
+          </body>
+        `
+        a = morph(a, b)
+        t.equal(calledParent, 1, 'should not have called oncreate on existing element')
+        t.equal(calledChild, 1, 'should have called oncreate on new child')
+        a = morph(a, b)
+        t.equal(calledParent, 1, 'should not have called oncreate on existing element')
+        t.equal(calledChild, 1, 'should not have called oncreate on existing child')
+        function oncreateParent () {
+          calledParent++
+        }
+        function oncreateChild () {
+          calledChild++
+        }
+      })
+
+      t.test('should call onremove when element is removed', function (t) {
+        t.plan(5)
+        var parentRemoved = false
+        var childRemoved = false
+        function onremoveParent () {
+          t.pass('should call onremove on removed nodes')
+          t.equal(childRemoved, true, 'should call onremove on parent nodes after calling it on child nodes')
+          parentRemoved = true
+        }
+        function onremoveChild () {
+          t.pass('should call onremove on removed nodes')
+          t.equal(parentRemoved, false, 'should call onremove on child nodes before calling it on parent nodes')
+          childRemoved = true
+        }
+
+        var a = html`
+          <div>
+            <h1 onremove=${onremoveParent}>
+              <span onremove=${onremoveChild}></span>
+            </h1>
+          </div>
+        `
+
+        morph(a, html`<div></div>`)
+
+        t.equal(parentRemoved, true, 'should have called onremove on everything')
+      })
+    })
   })
 }
 
