@@ -89,19 +89,23 @@ function updateChildren (newNode, oldNode) {
 
     // There is no new child, remove old
     } else if (!newChild) {
+      unmount(oldChild)
       oldNode.removeChild(oldChild)
       i--
 
     // There is no old child, add new
     } else if (!oldChild) {
       oldNode.appendChild(newChild)
+      mount(newChild)
       offset++
 
     // Both nodes are the same, morph
     } else if (same(newChild, oldChild)) {
       morphed = walk(newChild, oldChild)
       if (morphed !== oldChild) {
+        unmount(oldChild)
         oldNode.replaceChild(morphed, oldChild)
+        mount(morphed)
         offset++
       }
 
@@ -127,13 +131,16 @@ function updateChildren (newNode, oldNode) {
       } else if (!newChild.id && !oldChild.id) {
         morphed = walk(newChild, oldChild)
         if (morphed !== oldChild) {
+          unmount(oldChild)
           oldNode.replaceChild(morphed, oldChild)
+          mount(morphed)
           offset++
         }
 
       // Insert the node at the index if we couldn't morph or find a matching node
       } else {
         oldNode.insertBefore(newChild, oldChild)
+        mount(newChild)
         offset++
       }
     }
@@ -146,4 +153,19 @@ function same (a, b) {
   if (a.tagName !== b.tagName) return false
   if (a.type === TEXT_NODE) return a.nodeValue === b.nodeValue
   return false
+}
+
+function mount (node) {
+  var children = node.childNodes
+  for (var i = 0; i < children.length; i++) {
+    mount(children[i])
+  }
+  if (node.oncreate) node.oncreate(node)
+}
+function unmount (node) {
+  var children = node.childNodes
+  for (var i = 0; i < children.length; i++) {
+    unmount(children[i])
+  }
+  if (node.onremove) node.onremove(node)
 }
