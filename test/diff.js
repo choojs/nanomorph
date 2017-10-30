@@ -89,6 +89,12 @@ function abstractMorph (morph) {
       })
     })
 
+    function raiseEvent (element, eventName) {
+      var event = document.createEvent('Event')
+      event.initEvent(eventName, true, true)
+      element.dispatchEvent(event)
+    }
+
     t.test('events', function (t) {
       t.test('should copy onclick events', function (t) {
         t.plan(1)
@@ -113,6 +119,40 @@ function abstractMorph (morph) {
           e.preventDefault()
           t.ok('called')
         }
+      })
+
+      t.test('should not copy onchange events', function (t) {
+        t.plan(1)
+        var expectationMet = true
+        var a = html`<select onchange=${fail}><option>1</option><option>2</option></select>`
+        var b = html`<select><option>1</option><option>2</option></select>`
+        var res = morph(a, b)
+
+        raiseEvent(res, 'change')
+
+        function fail (e) {
+          e.preventDefault()
+          expectationMet = false
+        }
+
+        t.equal(expectationMet, true, 'result was expected')
+      })
+
+      t.test('should copy onchange events', function (t) {
+        t.plan(1)
+        var expectationMet = false
+        var a = html`<select><option>1</option><option>2</option></select>`
+        var b = html`<select onchange=${pass}><option>1</option><option>2</option></select>`
+        var res = morph(a, b)
+
+        raiseEvent(res, 'change')
+
+        function pass (e) {
+          e.preventDefault()
+          expectationMet = true
+        }
+
+        t.equal(expectationMet, true, 'result was expected')
       })
     })
 
