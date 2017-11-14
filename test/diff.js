@@ -157,6 +157,32 @@ function abstractMorph (morph) {
       })
     })
 
+    t.test('data-same-node', function (t) {
+      t.test('should return a if true', function (t) {
+        t.plan(1)
+        var a = html`<div>YOLO</div>`
+        var b = html`<div data-same-node="true">FOMO</div>`
+        var res = morph(a, b)
+        t.equal(res.childNodes[0].data, 'YOLO')
+      })
+
+      t.test('should return a if TRUE', function (t) {
+        t.plan(1)
+        var a = html`<div>YOLO</div>`
+        var b = html`<div data-same-node="TRUE">FOMO</div>`
+        var res = morph(a, b)
+        t.equal(res.childNodes[0].data, 'YOLO')
+      })
+
+      t.test('should return b if false', function (t) {
+        t.plan(1)
+        var a = html`<div>YOLO</div>`
+        var b = html`<div data-same-node="false">FOMO</div>`
+        var res = morph(a, b)
+        t.equal(res.childNodes[0].data, 'FOMO')
+      })
+    })
+
     t.test('lists', function (t) {
       t.test('should append nodes', function (t) {
         t.plan(1)

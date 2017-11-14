@@ -49,6 +49,8 @@ function walk (newNode, oldNode) {
     return null
   } else if (newNode.isSameNode && newNode.isSameNode(oldNode)) {
     return oldNode
+  } else if (newNode.dataset && newNode.dataset.sameNode && newNode.dataset.sameNode.toLowerCase() === 'true') {
+    return oldNode
   } else if (newNode.tagName !== oldNode.tagName) {
     return newNode
   } else {
