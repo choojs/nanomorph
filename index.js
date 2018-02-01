@@ -32,11 +32,10 @@ function nanomorph (oldTree, newTree, options) {
 
   if (options && options.childrenOnly) {
     updateChildren(newTree, oldTree)
-  } else {
-    walk(newTree, oldTree)
+    return oldTree
   }
-  // if (DEBUG) console.log('=> morphed\n  %s', tree.outerHTML)
-  return oldTree
+
+  return walk(newTree, oldTree)
 }
 
 // Walk and morph a dom tree
