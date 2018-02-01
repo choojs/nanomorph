@@ -5,7 +5,6 @@ var TEXT_NODE = 3
 // var DEBUG = false
 
 module.exports = nanomorph
-module.exports.updateChildren = updateChildren;
 
 // Morph one tree into another tree
 //
@@ -20,7 +19,7 @@ module.exports.updateChildren = updateChildren;
 //   -> diff nodes and apply patch to old node
 // nodes are the same
 //   -> walk all child nodes and append to old node
-function nanomorph (oldTree, newTree) {
+function nanomorph (oldTree, newTree, options) {
   // if (DEBUG) {
   //   console.log(
   //   'nanomorph\nold\n  %s\nnew\n  %s',
@@ -30,9 +29,14 @@ function nanomorph (oldTree, newTree) {
   // }
   assert.equal(typeof oldTree, 'object', 'nanomorph: oldTree should be an object')
   assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object')
-  var tree = walk(newTree, oldTree)
+
+  if (options && options.childrenOnly) {
+    updateChildren(newTree, oldTree)
+  } else {
+    walk(newTree, oldTree)
+  }
   // if (DEBUG) console.log('=> morphed\n  %s', tree.outerHTML)
-  return tree
+  return oldTree
 }
 
 // Walk and morph a dom tree
