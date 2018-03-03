@@ -4,6 +4,10 @@ var morph = require('./lib/morph')
 var TEXT_NODE = 3
 // var DEBUG = false
 
+function isProxy (node) {
+  return node && node.dataset && node.dataset.proxy !== undefined
+}
+
 module.exports = nanomorph
 
 // Morph one tree into another tree
@@ -133,7 +137,11 @@ function updateChildren (newNode, oldNode) {
 
       // Insert the node at the index if we couldn't morph or find a matching node
       } else {
-        oldNode.insertBefore(newChild, oldChild)
+        if (isProxy(newChild) && !newChild.isSameNode(oldChild) && newChild.realNode) {
+          oldNode.insertBefore(newChild.realNode, oldChild)
+        } else {
+          oldNode.insertBefore(newChild, oldChild)
+        }
         offset++
       }
     }

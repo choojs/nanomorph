@@ -7,6 +7,7 @@
     "deps": "dependency-check . && dependency-check . --extra --no-dev -i nanoassert",
     "test": "standard && npm run deps && browserify test/index.js | tape-run",
     "test:fast": "browserify test/diff.js | tape-run",
+    "test:proxy": "browserify test/proxy.js | tape-run",
     "start": "bankai start --debug test/diff.js"
   },
   "repository": "yoshuawuyts/nanomorph",
@@ -27,13 +28,13 @@
     "assert": "nanoassert"
   },
   "devDependencies": {
-    "bankai": "^7.6.2",
-    "bel": "^5.1.1",
-    "browserify": "^14.1.0",
+    "bankai": "^9.8.0",
+    "bel": "^5.1.7",
+    "browserify": "^16.1.0",
     "dependency-check": "^2.5.1",
     "math-random-seed": "^1.0.0",
     "standard": "^10.0.3",
-    "tape": "^4.6.0",
-    "tape-run": "^3.0.0"
+    "tape": "^4.9.0",
+    "tape-run": "^3.0.4"
   }
 }
