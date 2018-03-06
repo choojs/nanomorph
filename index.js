@@ -99,7 +99,7 @@ function updateChildren (newNode, oldNode) {
     // There is no old child, add new
     } else if (!oldChild) {
       if (isProxy(newChild) && newChild.realNode) {
-        oldNode.appendChild(newChild.realNode)
+        break
       } else {
         oldNode.appendChild(newChild)
       }
@@ -142,7 +142,7 @@ function updateChildren (newNode, oldNode) {
       // Insert the node at the index if we couldn't morph or find a matching node
       } else {
         if (isProxy(newChild) && !newChild.isSameNode(oldChild) && newChild.realNode) {
-          oldNode.insertBefore(newChild.realNode, oldChild)
+          break
         } else {
           oldNode.insertBefore(newChild, oldChild)
         }
