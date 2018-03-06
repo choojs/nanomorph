@@ -98,7 +98,11 @@ function updateChildren (newNode, oldNode) {
 
     // There is no old child, add new
     } else if (!oldChild) {
-      oldNode.appendChild(newChild)
+      if (isProxy(newChild) && newChild.realNode) {
+        oldNode.appendChild(newChild.realNode)
+      } else {
+        oldNode.appendChild(newChild)
+      }
       offset++
 
     // Both nodes are the same, morph
