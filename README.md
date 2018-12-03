@@ -7,7 +7,7 @@ Hyper fast diffing algorithm for real DOM nodes :zap:
 ## Usage
 ```js
 var morph = require('nanomorph')
-var html = require('bel')
+var html = require('nanohtml')
 
 var tree = html`<div>hello people</div>`
 document.body.appendChild(tree)
@@ -98,7 +98,7 @@ $ npm install nanomorph
 - [yoshuawuyts/nanotick](https://github.com/yoshuawuyts/nanotick)
 - [bendrucker/document-ready](https://github.com/bendrucker/document-ready)
 - [shama/on-load](https://github.com/shama/on-load)
-- [shama/bel](https://github.com/shama/bel)
+- [choojs/nanohtml](https://github.com/choojs/nanohtml)
 
 ## Similar Packages
 - [patrick-steele-idem/morphdom](https://github.com/patrick-steele-idem/morphdom)

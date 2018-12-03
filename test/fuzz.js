@@ -1,6 +1,6 @@
 var seed = require('math-random-seed')
 var tape = require('tape')
-var html = require('bel')
+var html = require('nanohtml')
 
 var nanomorph = require('../')
 

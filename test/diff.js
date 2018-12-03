@@ -1,5 +1,5 @@
 var tape = require('tape')
-var html = require('bel')
+var html = require('nanohtml')
 var nanomorph = require('../')
 
 module.exports = abstractMorph

@@ -1,5 +1,5 @@
 let tape = require('tape')
-let html = require('bel')
+let html = require('nanohtml')
 
 module.exports = abstractMorphEvents
 
