@@ -4,7 +4,7 @@ var morph = require('./lib/morph')
 var TEXT_NODE = 3
 // var DEBUG = false
 
-module.exports = nanomorph
+(module.exports = nanomorph).default = nanomorph;
 
 // Morph one tree into another tree
 //
