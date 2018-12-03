@@ -1,7 +1,7 @@
-var assert = require('assert')
-var morph = require('./lib/morph')
+var assert = require('assert').strict;
+var morph = require('./lib/morph');
 
-var TEXT_NODE = 3
+var TEXT_NODE = 3;
 // var DEBUG = false
 
 (module.exports = nanomorph).default = nanomorph;
@@ -27,11 +27,11 @@ function nanomorph (oldTree, newTree) {
   //   newTree && newTree.outerHTML
   // )
   // }
-  assert.equal(typeof oldTree, 'object', 'nanomorph: oldTree should be an object')
-  assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object')
-  var tree = walk(newTree, oldTree)
+  assert.equal(typeof oldTree, 'object', 'nanomorph: oldTree should be an object');
+  assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object');
+  var tree = walk(newTree, oldTree);
   // if (DEBUG) console.log('=> morphed\n  %s', tree.outerHTML)
-  return tree
+  return tree;
 }
 
 // Walk and morph a dom tree
@@ -44,17 +44,17 @@ function walk (newNode, oldNode) {
   // )
   // }
   if (!oldNode) {
-    return newNode
+    return newNode;
   } else if (!newNode) {
-    return null
+    return null;
   } else if (newNode.isSameNode && newNode.isSameNode(oldNode)) {
-    return oldNode
+    return oldNode;
   } else if (newNode.tagName !== oldNode.tagName) {
-    return newNode
+    return newNode;
   } else {
-    morph(newNode, oldNode)
-    updateChildren(newNode, oldNode)
-    return oldNode
+    morph(newNode, oldNode);
+    updateChildren(newNode, oldNode);
+    return oldNode;
   }
 }
 
@@ -68,14 +68,14 @@ function updateChildren (newNode, oldNode) {
   //   newNode && newNode.outerHTML
   // )
   // }
-  var oldChild, newChild, morphed, oldMatch
+  var oldChild, newChild, morphed, oldMatch;
 
   // The offset is only ever increased, and used for [i - offset] in the loop
-  var offset = 0
+  var offset = 0;
 
   for (var i = 0; ; i++) {
-    oldChild = oldNode.childNodes[i]
-    newChild = newNode.childNodes[i - offset]
+    oldChild = oldNode.childNodes[i];
+    newChild = newNode.childNodes[i - offset];
     // if (DEBUG) {
     //   console.log(
     //   '===\n- old\n  %s\n- new\n  %s',
@@ -85,65 +85,65 @@ function updateChildren (newNode, oldNode) {
     // }
     // Both nodes are empty, do nothing
     if (!oldChild && !newChild) {
-      break
+      break;
 
     // There is no new child, remove old
     } else if (!newChild) {
-      oldNode.removeChild(oldChild)
-      i--
+      oldNode.removeChild(oldChild);
+      i--;
 
     // There is no old child, add new
     } else if (!oldChild) {
-      oldNode.appendChild(newChild)
-      offset++
+      oldNode.appendChild(newChild);
+      offset++;
 
     // Both nodes are the same, morph
     } else if (same(newChild, oldChild)) {
-      morphed = walk(newChild, oldChild)
+      morphed = walk(newChild, oldChild);
       if (morphed !== oldChild) {
-        oldNode.replaceChild(morphed, oldChild)
-        offset++
+        oldNode.replaceChild(morphed, oldChild);
+        offset++;
       }
 
     // Both nodes do not share an ID or a placeholder, try reorder
     } else {
-      oldMatch = null
+      oldMatch = null;
 
       // Try and find a similar node somewhere in the tree
       for (var j = i; j < oldNode.childNodes.length; j++) {
         if (same(oldNode.childNodes[j], newChild)) {
-          oldMatch = oldNode.childNodes[j]
-          break
+          oldMatch = oldNode.childNodes[j];
+          break;
         }
       }
 
       // If there was a node with the same ID or placeholder in the old list
       if (oldMatch) {
-        morphed = walk(newChild, oldMatch)
-        if (morphed !== oldMatch) offset++
-        oldNode.insertBefore(morphed, oldChild)
+        morphed = walk(newChild, oldMatch);
+        if (morphed !== oldMatch) offset++;
+        oldNode.insertBefore(morphed, oldChild);
 
       // It's safe to morph two nodes in-place if neither has an ID
       } else if (!newChild.id && !oldChild.id) {
-        morphed = walk(newChild, oldChild)
+        morphed = walk(newChild, oldChild);
         if (morphed !== oldChild) {
-          oldNode.replaceChild(morphed, oldChild)
-          offset++
+          oldNode.replaceChild(morphed, oldChild);
+          offset++;
         }
 
       // Insert the node at the index if we couldn't morph or find a matching node
       } else {
-        oldNode.insertBefore(newChild, oldChild)
-        offset++
+        oldNode.insertBefore(newChild, oldChild);
+        offset++;
       }
     }
   }
 }
 
 function same (a, b) {
-  if (a.id) return a.id === b.id
-  if (a.isSameNode) return a.isSameNode(b)
-  if (a.tagName !== b.tagName) return false
-  if (a.type === TEXT_NODE) return a.nodeValue === b.nodeValue
-  return false
+  if (a.id) return a.id === b.id;
+  if (a.isSameNode) return a.isSameNode(b);
+  if (a.tagName !== b.tagName) return false;
+  if (a.type === TEXT_NODE) return a.nodeValue === b.nodeValue;
+  return false;
 }
