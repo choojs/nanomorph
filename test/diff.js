@@ -440,3 +440,11 @@ tape('use id as a key hint', function (t) {
     t.end()
   })
 })
+
+tape('disallow document fragments', function (t) {
+  var a = html`<div><div>a</div></div>`
+  var b = html`<div>a</div><div>b</div>`
+
+  t.throws(nanomorph.bind(null, a, b), /newTree should have one root node/, 'no fragments')
+  t.end()
+})

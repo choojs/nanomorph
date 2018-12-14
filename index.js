@@ -29,6 +29,12 @@ function nanomorph (oldTree, newTree) {
   // }
   assert.equal(typeof oldTree, 'object', 'nanomorph: oldTree should be an object')
   assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object')
+  assert.notEqual(
+    newTree.nodeType,
+    11,
+    'nanomorph: newTree should have one root node (which is not a DocumentFragment)'
+  )
+
   var tree = walk(newTree, oldTree)
   // if (DEBUG) console.log('=> morphed\n  %s', tree.outerHTML)
   return tree
