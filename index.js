@@ -29,16 +29,17 @@ function nanomorph (oldTree, newTree, options) {
   // }
   assert.equal(typeof oldTree, 'object', 'nanomorph: oldTree should be an object')
   assert.equal(typeof newTree, 'object', 'nanomorph: newTree should be an object')
-  assert.notEqual(
-    newTree.nodeType,
-    11,
-    'nanomorph: newTree should have one root node (which is not a DocumentFragment)'
-  )
 
   if (options && options.childrenOnly) {
     updateChildren(newTree, oldTree)
     return oldTree
   }
+
+  assert.notEqual(
+    newTree.nodeType,
+    11,
+    'nanomorph: newTree should have one root node (which is not a DocumentFragment)'
+  )
 
   return walk(newTree, oldTree)
 }
