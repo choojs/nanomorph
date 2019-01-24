@@ -1,5 +1,5 @@
 {
-  "name": "nanomorph",
+  "name": "@hyperdivision/nanomorph",
   "version": "5.2.0",
   "description": "Hyper fast diffing algorithm for real DOM nodes",
   "main": "index.js",
