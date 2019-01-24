@@ -1,4 +1,4 @@
-var assert = require('assert')
+var assert = require('nanoassert')
 var morph = require('./lib/morph')
 
 var TEXT_NODE = 3
@@ -19,7 +19,7 @@ module.exports = nanomorph
 //   -> diff nodes and apply patch to old node
 // nodes are the same
 //   -> walk all child nodes and append to old node
-function nanomorph (oldTree, newTree) {
+function nanomorph (oldTree, newTree, options) {
   // if (DEBUG) {
   //   console.log(
   //   'nanomorph\nold\n  %s\nnew\n  %s',
@@ -35,9 +35,12 @@ function nanomorph (oldTree, newTree) {
     'nanomorph: newTree should have one root node (which is not a DocumentFragment)'
   )
 
-  var tree = walk(newTree, oldTree)
-  // if (DEBUG) console.log('=> morphed\n  %s', tree.outerHTML)
-  return tree
+  if (options && options.childrenOnly) {
+    updateChildren(newTree, oldTree)
+    return oldTree
+  }
+
+  return walk(newTree, oldTree)
 }
 
 // Walk and morph a dom tree
