@@ -60,11 +60,17 @@ function walk (newNode, oldNode) {
     return oldNode
   } else if (newNode.tagName !== oldNode.tagName) {
     return newNode
+  } else if (isGuarded(oldNode) || isGuarded(newNode)) {
+    return newNode
   } else {
     morph(newNode, oldNode)
     updateChildren(newNode, oldNode)
     return oldNode
   }
+}
+
+function isGuarded (node) {
+  return node.dataset && node.dataset.nanomorphGuardId
 }
 
 // Update the children of elements
