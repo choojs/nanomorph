@@ -1,4 +1,4 @@
-var assert = require('assert')
+var assert = require('nanoassert')
 var morph = require('./lib/morph')
 
 var TEXT_NODE = 3
