@@ -16,6 +16,26 @@ function abstractMorph (morph) {
         t.equal(res.outerHTML, expected, 'result was expected')
       })
 
+      t.test('should replace a component', function (t) {
+        t.plan(2)
+        function ComponentA () {
+          return html`<div data-nanomorph-component-id="a">hello world</div>`
+        }
+        function ComponentB () {
+          return html`<div data-nanomorph-component-id="b">bye moon</div>`
+        }
+
+        var a = ComponentA()
+        var b = ComponentB()
+
+        var expectedA = a.outerHTML
+        var expectedB = b.outerHTML
+
+        var res = morph(a, b)
+        t.equal(res.outerHTML, expectedB, 'result was expected')
+        t.equal(a.outerHTML, expectedA, 'did not mutate input tree')
+      })
+
       t.test('should morph a node', function (t) {
         t.plan(1)
         var a = html`<p>hello world</p>`
