@@ -34,7 +34,7 @@
     "math-random-seed": "^1.0.0",
     "nanohtml": "^1.4.0",
     "standard": "^10.0.3",
-    "tape": "^4.6.0",
+    "tape": "4.9.x",
     "tape-run": "^3.0.0"
   }
 }
