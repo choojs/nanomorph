@@ -20,5 +20,6 @@ function specificTests (morph) {
       t.throws(morph, /a/)
       t.throws(morph.bind(null, {}), /b/)
     })
+    t.end()
   })
 }
