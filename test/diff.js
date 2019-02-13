@@ -41,6 +41,8 @@ function abstractMorph (morph) {
         var res = morph(a, a)
         t.equal(res.outerHTML, expected, 'result was expected')
       })
+
+      t.end()
     })
 
     t.test('nested', function (t) {
@@ -96,6 +98,8 @@ function abstractMorph (morph) {
         var res = morph(a, b, { childrenOnly: true })
         t.equal(res.outerHTML, expected, 'result was expected')
       })
+
+      t.end()
     })
 
     t.test('values', function (t) {
@@ -140,6 +144,8 @@ function abstractMorph (morph) {
         res = morph(a, b)
         t.equal(res.value, 'hi')
       })
+
+      t.end()
     })
 
     t.test('isSameNode', function (t) {
@@ -164,6 +170,8 @@ function abstractMorph (morph) {
         var res = morph(a, b)
         t.equal(res.childNodes[0].data, 'FOMO')
       })
+
+      t.end()
     })
 
     t.test('lists', function (t) {
@@ -184,6 +192,8 @@ function abstractMorph (morph) {
         var expected = b.outerHTML
         t.equal(res.outerHTML, expected, 'result was expected')
       })
+
+      t.end()
     })
 
     t.test('selectables', function (t) {
@@ -249,6 +259,8 @@ function abstractMorph (morph) {
         var res = morph(a, b)
         t.equal(res.outerHTML, expected, 'result was expected')
       })
+
+      t.end()
     })
 
     t.test('should replace nodes', function (t) {
@@ -276,6 +288,8 @@ function abstractMorph (morph) {
       a = morph(a, b)
       t.equal(a.outerHTML, expected, 'result was expected')
     })
+
+    t.end()
   })
 }
 
@@ -448,6 +462,8 @@ tape('use id as a key hint', function (t) {
     t.equal(c.children[0].children[0], child, 'is the same node')
     t.end()
   })
+
+  t.end()
 })
 
 tape('disallow document fragments', function (t) {
