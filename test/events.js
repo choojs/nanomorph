@@ -21,7 +21,7 @@ Failing tests have been commented. They include the following:
 
 function abstractMorphEvents (morph) {
   tape('events', function (t) {
-    t.test('should have onabort events(html attribute) ', function (t) {
+    t.test('should have onabort events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onabort=${pass}></input>`
@@ -51,7 +51,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onabort events(html arrtibute)', function (t) {
+    t.test('should copy onabort events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -67,7 +67,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onblur events(html attribute) ', function (t) {
+    t.test('should have onblur events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onblur=${pass}></input>`
@@ -97,7 +97,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onblur events(html arrtibute)', function (t) {
+    t.test('should copy onblur events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -113,7 +113,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onchange events(html attribute) ', function (t) {
+    t.test('should have onchange events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onchange=${pass}></input>`
@@ -143,7 +143,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onchange events(html arrtibute)', function (t) {
+    t.test('should copy onchange events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -159,7 +159,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onclick events(html attribute) ', function (t) {
+    t.test('should have onclick events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onclick=${pass}></input>`
@@ -189,7 +189,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onclick events(html arrtibute)', function (t) {
+    t.test('should copy onclick events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -205,7 +205,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have oncontextmenu events(html attribute) ', function (t) {
+    t.test('should have oncontextmenu events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input oncontextmenu=${pass}></input>`
@@ -235,7 +235,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy oncontextmenu events(html arrtibute)', function (t) {
+    t.test('should copy oncontextmenu events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -251,7 +251,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have ondblclick events(html attribute) ', function (t) {
+    t.test('should have ondblclick events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ondblclick=${pass}></input>`
@@ -281,7 +281,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ondblclick events(html arrtibute)', function (t) {
+    t.test('should copy ondblclick events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -297,7 +297,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have ondrag events(html attribute) ', function (t) {
+    t.test('should have ondrag events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ondrag=${pass}></input>`
@@ -327,7 +327,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ondrag events(html arrtibute)', function (t) {
+    t.test('should copy ondrag events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -343,7 +343,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have ondragend events(html attribute) ', function (t) {
+    t.test('should have ondragend events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ondragend=${pass}></input>`
@@ -373,7 +373,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ondragend events(html arrtibute)', function (t) {
+    t.test('should copy ondragend events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -389,7 +389,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have ondragenter events(html attribute) ', function (t) {
+    t.test('should have ondragenter events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ondragenter=${pass}></input>`
@@ -419,7 +419,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ondragenter events(html arrtibute)', function (t) {
+    t.test('should copy ondragenter events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -435,7 +435,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have ondragleave events(html attribute) ', function (t) {
+    t.test('should have ondragleave events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ondragleave=${pass}></input>`
@@ -465,7 +465,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ondragleave events(html arrtibute)', function (t) {
+    t.test('should copy ondragleave events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -481,7 +481,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have ondragover events(html attribute) ', function (t) {
+    t.test('should have ondragover events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ondragover=${pass}></input>`
@@ -511,7 +511,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ondragover events(html arrtibute)', function (t) {
+    t.test('should copy ondragover events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -527,7 +527,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have ondragstart events(html attribute) ', function (t) {
+    t.test('should have ondragstart events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ondragstart=${pass}></input>`
@@ -557,7 +557,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ondragstart events(html arrtibute)', function (t) {
+    t.test('should copy ondragstart events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -573,7 +573,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have ondrop events(html attribute) ', function (t) {
+    t.test('should have ondrop events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ondrop=${pass}></input>`
@@ -603,7 +603,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ondrop events(html arrtibute)', function (t) {
+    t.test('should copy ondrop events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -619,7 +619,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onerror events(html attribute) ', function (t) {
+    t.test('should have onerror events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onerror=${pass}></input>`
@@ -649,7 +649,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onerror events(html arrtibute)', function (t) {
+    t.test('should copy onerror events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -665,7 +665,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onfocus events(html attribute) ', function (t) {
+    t.test('should have onfocus events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onfocus=${pass}></input>`
@@ -695,7 +695,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onfocus events(html arrtibute)', function (t) {
+    t.test('should copy onfocus events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -712,7 +712,7 @@ function abstractMorphEvents (morph) {
       t.equal(expectationMet, true, 'result was expected')
     })
     /*
-    t.test('should have onfocusin events(html attribute) ', function (t) {
+    t.test('should have onfocusin events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onfocusin=${pass}></input>`
@@ -742,7 +742,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onfocusin events(html arrtibute)', function (t) {
+    t.test('should copy onfocusin events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -760,7 +760,7 @@ function abstractMorphEvents (morph) {
     })
     */
     /*
-    t.test('should have onfocusout events(html attribute) ', function (t) {
+    t.test('should have onfocusout events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onfocusout=${pass}></input>`
@@ -790,7 +790,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onfocusout events(html arrtibute)', function (t) {
+    t.test('should copy onfocusout events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -807,7 +807,7 @@ function abstractMorphEvents (morph) {
       t.equal(expectationMet, true, 'result was expected')
     })
     */
-    t.test('should have oninput events(html attribute) ', function (t) {
+    t.test('should have oninput events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input oninput=${pass}></input>`
@@ -837,7 +837,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy oninput events(html arrtibute)', function (t) {
+    t.test('should copy oninput events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -853,7 +853,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onkeydown events(html attribute) ', function (t) {
+    t.test('should have onkeydown events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onkeydown=${pass}></input>`
@@ -883,7 +883,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onkeydown events(html arrtibute)', function (t) {
+    t.test('should copy onkeydown events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -899,7 +899,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onkeypress events(html attribute) ', function (t) {
+    t.test('should have onkeypress events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onkeypress=${pass}></input>`
@@ -929,7 +929,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onkeypress events(html arrtibute)', function (t) {
+    t.test('should copy onkeypress events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -945,7 +945,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onkeyup events(html attribute) ', function (t) {
+    t.test('should have onkeyup events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onkeyup=${pass}></input>`
@@ -975,7 +975,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onkeyup events(html arrtibute)', function (t) {
+    t.test('should copy onkeyup events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -991,7 +991,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onmousedown events(html attribute) ', function (t) {
+    t.test('should have onmousedown events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onmousedown=${pass}></input>`
@@ -1021,7 +1021,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onmousedown events(html arrtibute)', function (t) {
+    t.test('should copy onmousedown events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1037,7 +1037,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onmouseenter events(html attribute) ', function (t) {
+    t.test('should have onmouseenter events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onmouseenter=${pass}></input>`
@@ -1067,7 +1067,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onmouseenter events(html arrtibute)', function (t) {
+    t.test('should copy onmouseenter events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1083,7 +1083,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onmouseleave events(html attribute) ', function (t) {
+    t.test('should have onmouseleave events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onmouseleave=${pass}></input>`
@@ -1113,7 +1113,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onmouseleave events(html arrtibute)', function (t) {
+    t.test('should copy onmouseleave events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1129,7 +1129,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onmousemove events(html attribute) ', function (t) {
+    t.test('should have onmousemove events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onmousemove=${pass}></input>`
@@ -1159,7 +1159,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onmousemove events(html arrtibute)', function (t) {
+    t.test('should copy onmousemove events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1175,7 +1175,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onmouseout events(html attribute) ', function (t) {
+    t.test('should have onmouseout events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onmouseout=${pass}></input>`
@@ -1205,7 +1205,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onmouseout events(html arrtibute)', function (t) {
+    t.test('should copy onmouseout events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1221,7 +1221,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onmouseover events(html attribute) ', function (t) {
+    t.test('should have onmouseover events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onmouseover=${pass}></input>`
@@ -1251,7 +1251,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onmouseover events(html arrtibute)', function (t) {
+    t.test('should copy onmouseover events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1267,7 +1267,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onmouseup events(html attribute) ', function (t) {
+    t.test('should have onmouseup events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onmouseup=${pass}></input>`
@@ -1297,7 +1297,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onmouseup events(html arrtibute)', function (t) {
+    t.test('should copy onmouseup events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1313,7 +1313,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onreset events(html attribute) ', function (t) {
+    t.test('should have onreset events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onreset=${pass}></input>`
@@ -1343,7 +1343,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onreset events(html arrtibute)', function (t) {
+    t.test('should copy onreset events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1359,7 +1359,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onresize events(html attribute) ', function (t) {
+    t.test('should have onresize events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onresize=${pass}></input>`
@@ -1389,7 +1389,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onresize events(html arrtibute)', function (t) {
+    t.test('should copy onresize events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1405,7 +1405,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onscroll events(html attribute) ', function (t) {
+    t.test('should have onscroll events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onscroll=${pass}></input>`
@@ -1435,7 +1435,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onscroll events(html arrtibute)', function (t) {
+    t.test('should copy onscroll events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1451,7 +1451,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onselect events(html attribute) ', function (t) {
+    t.test('should have onselect events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onselect=${pass}></input>`
@@ -1481,7 +1481,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onselect events(html arrtibute)', function (t) {
+    t.test('should copy onselect events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1497,7 +1497,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should have onsubmit events(html attribute) ', function (t) {
+    t.test('should have onsubmit events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input onsubmit=${pass}></input>`
@@ -1527,7 +1527,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onsubmit events(html arrtibute)', function (t) {
+    t.test('should copy onsubmit events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1544,7 +1544,7 @@ function abstractMorphEvents (morph) {
       t.equal(expectationMet, true, 'result was expected')
     })
     /*
-    t.test('should have ontouchcancel events(html attribute) ', function (t) {
+    t.test('should have ontouchcancel events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ontouchcancel=${pass}></input>`
@@ -1574,7 +1574,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ontouchcancel events(html arrtibute)', function (t) {
+    t.test('should copy ontouchcancel events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1592,7 +1592,7 @@ function abstractMorphEvents (morph) {
     })
     */
     /*
-    t.test('should have ontouchend events(html attribute) ', function (t) {
+    t.test('should have ontouchend events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ontouchend=${pass}></input>`
@@ -1622,7 +1622,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ontouchend events(html arrtibute)', function (t) {
+    t.test('should copy ontouchend events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1640,7 +1640,7 @@ function abstractMorphEvents (morph) {
     })
     */
     /*
-    t.test('should have ontouchmove events(html attribute) ', function (t) {
+    t.test('should have ontouchmove events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ontouchmove=${pass}></input>`
@@ -1670,7 +1670,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ontouchmove events(html arrtibute)', function (t) {
+    t.test('should copy ontouchmove events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1688,7 +1688,7 @@ function abstractMorphEvents (morph) {
     })
     */
     /*
-    t.test('should have ontouchstart events(html attribute) ', function (t) {
+    t.test('should have ontouchstart events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<input ontouchstart=${pass}></input>`
@@ -1718,7 +1718,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy ontouchstart events(html arrtibute)', function (t) {
+    t.test('should copy ontouchstart events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<input></input>`
@@ -1735,7 +1735,7 @@ function abstractMorphEvents (morph) {
       t.equal(expectationMet, true, 'result was expected')
     })
     /*
-    t.test('should have onunload events(html attribute) ', function (t) {
+    t.test('should have onunload events (html attribute) ', function (t) {
       t.plan(1)
       let expectationMet = false
       let res = html`<body onunload=${pass}></body>`
@@ -1765,7 +1765,7 @@ function abstractMorphEvents (morph) {
 
       t.equal(expectationMet, true, 'result was expected')
     })
-    t.test('should copy onunload events(html arrtibute)', function (t) {
+    t.test('should copy onunload events (html attribute)', function (t) {
       t.plan(1)
       let expectationMet = false
       let a = html`<body></body>`
