@@ -476,11 +476,11 @@ tape('fragments', function (t) {
   })
 
   t.test('allow document fragments with `childrenOnly`', function (t) {
-    var a = html`<div><div>a</div></div>`
+    var a = html`<main><div>a</div></main>`
     var b = html`<div>a</div><div>b</div>`
 
     var c = nanomorph(a, b, { childrenOnly: true })
-    t.equals(c.outerHTML, '<div><div>a</div><div>b</div></div>')
+    t.equals(c.outerHTML, '<main><div>a</div><div>b</div></main>')
     t.end()
   })
 
