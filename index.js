@@ -59,13 +59,17 @@ function walk (newNode, oldNode) {
     return null
   } else if (newNode.isSameNode && newNode.isSameNode(oldNode)) {
     return oldNode
-  } else if (newNode.tagName !== oldNode.tagName) {
+  } else if (newNode.tagName !== oldNode.tagName || getComponentId(newNode) !== getComponentId(oldNode)) {
     return newNode
   } else {
     morph(newNode, oldNode)
     updateChildren(newNode, oldNode)
     return oldNode
   }
+}
+
+function getComponentId (node) {
+  return node.dataset ? node.dataset.nanomorphComponentId : undefined
 }
 
 // Update the children of elements
