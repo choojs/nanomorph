@@ -168,6 +168,67 @@ function abstractMorph (morph) {
       t.end()
     })
 
+    function booleanPropertyTest (property) {
+      return function (t) {
+        t.test(`if new tree has no ${property} and old tree does, remove value`, function (t) {
+          t.plan(1)
+          var a = html`<input type="checkbox" ${property}=${true} />`
+          var b = html`<input type="checkbox" />`
+          var res = morph(a, b)
+          t.equal(res[property], false)
+        })
+
+        t.test(`if new tree has ${property} and old tree does not, add value`, function (t) {
+          t.plan(1)
+          var a = html`<input type="checkbox" />`
+          var b = html`<input type="checkbox" ${property}=${true} />`
+          var res = morph(a, b)
+          t.equal(res[property], true)
+        })
+
+        t.test(`if new tree has ${property} and old tree does too, set value from new tree`, function (t) {
+          t.plan(6)
+          var a = html`<input type="checkbox" ${property}=${false} />`
+          var b = html`<input type="checkbox" ${property}=${true} />`
+          var res = morph(a, b)
+          t.equal(res[property], true)
+
+          a = html`<input type="checkbox" ${property}=${true} />`
+          b = html`<input type="checkbox" ${property}=${false} />`
+          res = morph(a, b)
+          t.equal(res[property], false)
+
+          a = html`<input type="checkbox"/>`
+          b = html`<input type="checkbox"/>`
+          b[property] = true
+          res = morph(a, b)
+          t.equal(res[property], true)
+
+          a = html`<input type="checkbox" ${property}=${false}/>`
+          b = html`<input type="checkbox"/>`
+          b[property] = true
+          res = morph(a, b)
+          t.equal(res[property], true)
+
+          a = html`<input type="checkbox" ${property}=${true}/>`
+          b = html`<input type="checkbox"/>`
+          b[property] = false
+          res = morph(a, b)
+          t.equal(res[property], false)
+
+          a = html`<input type="checkbox"/>`
+          b = html`<input type="checkbox" ${property}=${true}/>`
+          res = morph(a, b)
+          t.equal(res[property], true)
+        })
+
+        t.end()
+      }
+    }
+
+    t.test('checked', booleanPropertyTest('checked'))
+    t.test('disabled', booleanPropertyTest('disabled'))
+
     t.test('isSameNode', function (t) {
       t.test('should return a if true', function (t) {
         t.plan(1)
