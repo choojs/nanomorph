@@ -229,6 +229,21 @@ function abstractMorph (morph) {
     t.test('checked', booleanPropertyTest('checked'))
     t.test('disabled', booleanPropertyTest('disabled'))
 
+    t.test('indeterminate', function (t) {
+      t.plan(2)
+      var a = html`<input type="checkbox"/>`
+      var b = html`<input type="checkbox"/>`
+      b.indeterminate = true
+      var res = morph(a, b)
+      t.equal(res.indeterminate, true)
+
+      a = html`<input type="checkbox"/>`
+      b = html`<input type="checkbox"/>`
+      a.indeterminate = true
+      res = morph(a, b)
+      t.equal(res.indeterminate, false)
+    })
+
     t.test('isSameNode', function (t) {
       t.test('should return a if true', function (t) {
         t.plan(1)
