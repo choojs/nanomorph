@@ -111,14 +111,6 @@ function updateChildren (newNode, oldNode) {
       oldNode.appendChild(newChild)
       offset++
 
-    // Both nodes are the same, morph
-    } else if (same(newChild, oldChild)) {
-      morphed = walk(newChild, oldChild)
-      if (morphed !== oldChild) {
-        oldNode.replaceChild(morphed, oldChild)
-        offset++
-      }
-
     // Both nodes do not share an ID or a placeholder, try reorder
     } else {
       oldMatch = null
