@@ -159,5 +159,10 @@ function same (a, b) {
   if (a.isSameNode) return a.isSameNode(b)
   if (a.tagName !== b.tagName) return false
   if (a.type === TEXT_NODE) return a.nodeValue === b.nodeValue
+  if (
+    a.dataset.diffkey &&
+    b.dataset.diffkey &&
+    a.dataset.diffkey === b.dataset.key
+  ) return true
   return false
 }
