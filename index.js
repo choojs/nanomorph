@@ -59,7 +59,7 @@ function walk (newNode, oldNode) {
     return null
   } else if (newNode.isSameNode && newNode.isSameNode(oldNode)) {
     return oldNode
-  } else if (newNode.tagName !== oldNode.tagName || getComponentId(newNode) !== getComponentId(oldNode)) {
+  } else if (newNode.nodeName !== oldNode.nodeName || getComponentId(newNode) !== getComponentId(oldNode)) {
     return newNode
   } else {
     morph(newNode, oldNode)
